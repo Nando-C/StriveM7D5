@@ -1,0 +1,54 @@
+#menu {
+    background-color: #030303;
+}
+
+.main-container {
+    height: 80vh;
+    margin-bottom: 90px;
+}
+
+.spotify-logo {
+    padding: 0 24px;
+    margin-bottom: 18px !important;
+}
+
+#menu .nav-link {
+    text-decoration: none;
+    color: #B1B1B1;
+}
+#menu .nav-link:hover {
+    text-decoration: none;
+    color: white;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: rgba(128, 128, 128, 0.3);
+}
+
+#menu-button {
+    padding: 8px 24px !important;
+    color: #B1B1B1;
+}
+
+#menu-button:hover {
+    /* padding: 8px 24px !important; */
+    color: white;
+}
+
+#plus-icon:hover {
+    background-color: white;
+}
+#plus-icon {
+    padding: 0 6px;
+    margin-right: 16px;
+    border-radius: 1px;
+    align-items: center;
+    background-color: #B1B1B1;
+}
+
+#heart-songs-icon {
+    padding: 0 6px;
+    margin-right: 16px;
+    border-radius: 1px;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+}
