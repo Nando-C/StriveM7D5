@@ -7,10 +7,10 @@
   margin-bottom: 90px;
 }
 
-.spotify-logo {
+/* .spotify-logo {
   padding: 0 24px;
   margin-bottom: 18px !important;
-}
+} */
 
 #menu .nav-link {
   text-decoration: none;
@@ -35,18 +35,18 @@
   color: white;
 }
 
-#plus-icon:hover {
+/* #plus-icon:hover {
   background-color: white;
-}
-#plus-icon {
+} */
+/* #plus-icon {
   padding: 0 6px;
   margin-right: 16px;
   border-radius: 1px;
   align-items: center;
   background-color: #b1b1b1;
-}
+} */
 
-#heart-songs-icon {
+/* #heart-songs-icon {
   padding: 0 6px;
   margin-right: 16px;
   border-radius: 1px;
@@ -56,4 +56,4 @@
     rgba(63, 94, 251, 1) 0%,
     rgba(252, 70, 107, 1) 100%
   );
-}
+} */
