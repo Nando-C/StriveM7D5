@@ -7,3 +7,32 @@
 .spotify-logo {
   height: 40px;
 }
+
+.SideNavBar .nav-link {
+  text-decoration: none;
+  color: #b1b1b1;
+}
+
+.SideNavBar .nav-link .home-active-icon {
+  display: none;
+}
+
+.SideNavBar .nav-link:hover .home-icon,
+.SideNavBar .nav-link:hover {
+  text-decoration: none;
+  color: white;
+  transition: 0.2s;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: rgba(128, 128, 128, 0.3);
+}
+
+.nav-pills .nav-link.active .home-icon {
+  display: none;
+}
+
+.nav-pills .nav-link.active .home-active-icon {
+  display: block;
+}
