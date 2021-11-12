@@ -1,0 +1,9 @@
+.SideNavBar {
+  background-color: rgb(0, 0, 0);
+  width: 240px;
+  height: calc(100vh - 90px);
+}
+
+.spotify-logo {
+  height: 40px;
+}

@@ -1,0 +1,7 @@
+.Player {
+  background-color: rgb(19, 19, 19);
+  border-top: solid 1px rgb(40, 40, 40);
+  height: 90px;
+  position: fixed;
+  bottom: 0;
+}

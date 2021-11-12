@@ -1,0 +1,6 @@
+.Content {
+  background-color: rgb(15, 15, 15);
+  width: calc(100vw - 240px);
+  height: calc(100vh - 90px);
+  overflow-y: scroll;
+}

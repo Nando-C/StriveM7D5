@@ -1,15 +1,12 @@
-import { Component } from 'react'
-import './player.css'
+import { Container, Row } from "react-bootstrap"
+import "./Player.css"
 
-class Player extends Component {
-    state = {  }
-    render() { 
-        return (
-            <>
-            <h3>Player</h3>
-            </>
-        );
-    }
+const Player = () => {
+    return(
+        <Container className="Player" fluid>
+            <Row></Row>
+        </Container>
+    )
 }
- 
-export default Player;
+
+export default Player

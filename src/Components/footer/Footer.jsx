@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
 import NowPlaying from '../nowPlaying/NowPlaying'
-import Player from '../player/Player'
+import Play from '../play/Play'
 import Volume from '../volume/Volume'
 import './footer.css'
 
@@ -16,7 +16,7 @@ class Footer extends Component {
                                 <NowPlaying />
                             </Col>
                             <Col sm={12} md={6}>
-                                <Player />
+                                <Play />
                             </Col>
                             <Col sm={12} md={3}>
                                 <Volume />
