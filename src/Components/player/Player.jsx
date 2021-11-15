@@ -11,15 +11,13 @@ const Player = () => {
         <Col>
           <NowPlaying />
         </Col>
-        <Col>
-          {/* <Row className="justify-content-center align-items-center h-100"> */}
+        <Col className="">
           <PlayerControls />
-          {/* </Row> */}
         </Col>
         <Col>
-          <Row className="justify-content-center align-items-center h-100">
-            <Volume />
-          </Row>
+          {/* <Row className="justify-content-center align-items-center h-100"> */}
+          <Volume />
+          {/* </Row> */}
         </Col>
       </Row>
     </Container>

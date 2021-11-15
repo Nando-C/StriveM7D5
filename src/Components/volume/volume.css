@@ -1,0 +1,19 @@
+.Volume div {
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: #b3b3b3;
+}
+
+.Volume div:hover {
+  fill: white;
+}
+
+.Volume .volume-bar {
+  width: 93px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: greenyellow;
+}
