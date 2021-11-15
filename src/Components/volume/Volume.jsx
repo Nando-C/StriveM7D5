@@ -1,15 +1,11 @@
-import { Component } from 'react'
-import './volume.css'
+import "./Volume.css";
 
-class Volume extends Component {
-    state = {  }
-    render() { 
-        return (
-            <>
-            <h3>Volume</h3>
-            </>
-        );
-    }
-}
- 
+const Volume = () => {
+  return (
+    <>
+      <h3>Volume</h3>
+    </>
+  );
+};
+
 export default Volume;

@@ -1,10 +1,10 @@
 import { Row, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "./nowPlaying.css";
+import "./NowPlaying.css";
 
 const NowPlaying = () => {
   return (
-    <Row className="NowPlaying justify-content-start align-items-center">
+    <Row className="NowPlaying justify-content-start align-items-center align-content-center">
       <div className="cover-img">
         <Image src="https://picsum.photos/200" fluid />
       </div>
