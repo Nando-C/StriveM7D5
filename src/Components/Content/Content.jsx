@@ -1,14 +1,20 @@
-import { Container, Row } from "react-bootstrap"
-import "./Content.css"
+import { Container, Row } from "react-bootstrap";
+import { Route } from "react-router";
+import AlbumPage from "./AlbumPage/AlbumPage";
+import Artist from "./Artist/Artist";
+import Home from "./Home/Home";
+import Navbar from "../NavBar";
+import "./Content.css";
 
 const Content = () => {
-    return(
-        <Container className="Content" fluid>
-            <Row>
-                <h1>Content goes here Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel nemo laboriosam eius, aperiam saepe voluptates facere amet ducimus repudiandae, accusamus consectetur placeat sit ex sapiente. Ab facilis dignissimos ad eos deleniti quasi quia minus ex mollitia culpa error, id temporibus enim nulla necessitatibus fugiat iusto accusantium rerum nobis quisquam modi! Corrupti ipsam consectetur accusantium officia voluptate esse delectus dicta debitis mollitia fugiat molestias, magnam optio deleniti quas alias quae est tempora placeat ad, quo, dolor facere reprehenderit ut unde. Molestias quidem praesentium harum quod eos cumque earum error adipisci similique eaque in nesciunt tempora assumenda accusamus id quaerat minima, quos placeat enim ullam. Aperiam fugiat ad mollitia recusandae rem commodi animi dolores, perferendis voluptates quaerat inventore ut, accusantium corrupti ea ratione! Maiores ipsum, ea optio modi fugit dolore? Quisquam numquam vel eaque ut adipisci ea omnis, enim, aliquid harum quam, quas delectus voluptatum. Et numquam ipsam, autem aperiam debitis libero assumenda ipsum? Velit at iste, consequatur molestias soluta magni, voluptatibus illum esse id animi quaerat nam? Consequatur distinctio nihil fuga quasi quaerat magni sapiente recusandae sequi ipsam laudantium! Autem, dignissimos quasi! Suscipit veniam culpa numquam saepe iste fugit vero labore facere, inventore molestiae distinctio esse vel assumenda. A tenetur aut dolorum! Autem id similique cupiditate magni dolore labore, dolor adipisci mollitia dolorem ipsa sit odio vero libero nulla nemo sed a consequatur quis culpa ullam porro eligendi aut, pariatur voluptatem. Nisi minus ducimus, reiciendis fuga dolor excepturi, perspiciatis optio quidem quia molestias officia ipsum libero repudiandae. Voluptatum, eius numquam, necessitatibus repellat reiciendis exercitationem eum aspernatur alias vitae incidunt velit assumenda, aperiam voluptatem corporis soluta dolorem. Doloribus, voluptatibus natus recusandae quia perferendis molestiae quae tenetur aspernatur doloremque cum nisi culpa cupiditate id dolore nobis repellendus inventore aliquam, minima eaque quasi vitae quis vel omnis. Quis enim, ipsam error, ullam magnam explicabo modi in molestias earum perspiciatis quas aut accusantium, praesentium id aperiam tenetur ut nam eligendi? Officiis sed labore perspiciatis, officia id exercitationem soluta quia! Aut aperiam labore aspernatur minus voluptate autem possimus odit delectus, molestias eius accusamus quasi facere illo magnam tempore praesentium exercitationem consequuntur fuga dolorem, laborum rerum quis natus incidunt! Impedit odit dicta ipsum ducimus blanditiis cupiditate doloremque earum numquam, dolorem molestias minima praesentium, exercitationem quam ex sapiente cum odio magnam esse aliquam corrupti quod dolores. Quam voluptatibus nam quidem vero, quasi repudiandae. Quam nam laudantium qui beatae. Repellendus numquam quos inventore eveniet, sapiente esse itaque dignissimos quis commodi? Maiores aspernatur veniam nam aliquam quisquam quis? Velit nemo, cumque incidunt ad ratione expedita nulla fugit pariatur illum earum minus exercitationem vero enim quis. Reiciendis quam nesciunt exercitationem dolor numquam necessitatibus cumque, optio voluptate, earum laboriosam in corporis modi deserunt alias maiores maxime pariatur inventore, sequi voluptates quo odit. Ducimus consequuntur laborum molestias explicabo itaque numquam cumque! Nisi eveniet aut alias numquam sint. Ipsum, sed incidunt! Incidunt at non saepe sapiente, doloribus recusandae atque nemo eveniet hic quam aperiam ducimus ea molestias eaque, enim suscipit. Ipsum aspernatur facere alias ad quas praesentium doloremque, ea aut impedit quo! Veritatis, laborum!</h1>
-            </Row>
-        </Container>
-    )
-}
+  return (
+    <Container className="Content p-0" fluid>
+      {/* <Navbar /> */}
+      <Route exact path="/" component={Home} />
+      <Route path="/Artist/:artistId" component={Artist} />
+      <Route path="/Album/:albumId" component={AlbumPage} />
+    </Container>
+  );
+};
 
-export default Content
+export default Content;

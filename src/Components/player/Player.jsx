@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
-import NowPlaying from "../NowPlaying/NowPlaying";
-import PlayerControls from "../PlayerControls/PlayerControls";
-import Volume from "../Volume/Volume";
+import NowPlaying from "./NowPlaying/NowPlaying";
+import PlayerControls from "./PlayerControls/PlayerControls";
+import Volume from "./Volume/Volume";
 import "./Player.css";
 
 const Player = () => {
@@ -11,13 +11,11 @@ const Player = () => {
         <Col>
           <NowPlaying />
         </Col>
-        <Col className="">
+        <Col>
           <PlayerControls />
         </Col>
         <Col>
-          {/* <Row className="justify-content-center align-items-center h-100"> */}
           <Volume />
-          {/* </Row> */}
         </Col>
       </Row>
     </Container>

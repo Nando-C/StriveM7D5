@@ -48,6 +48,7 @@ const PlayerControls = () => {
                 class="Svg-sc-1bi12j5-0 gSLhUO"
               >
                 <path d="M4.018 14L14.41 8 4.018 2z"></path>
+                {/* <path d="M3 2h3v12H3zm7 0h3v12h-3z"></path> */}
               </svg>
             </div>
           </Col>
