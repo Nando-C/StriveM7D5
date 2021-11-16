@@ -3,7 +3,40 @@
 } */
 
 .Artist .banner {
-  width: 100px;
-  height: 500px;
-  background-color: coral;
+  position: relative;
+  width: 100%;
+  height: 40vh;
+  min-height: 340px;
+  /* background-color: coral; */
+}
+
+.Artist .banner img {
+  width: 100%;
+  height: 40vh;
+  min-height: 340px;
+  object-fit: cover;
+  object-position: 0px -4em;
+}
+
+.Artist .info {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 24px;
+  top: 0;
+  color: white;
+  /* background-color: rgba(255, 127, 80, 0.358); */
+}
+
+.Artist .info h1 {
+  font-size: 96px;
+  line-height: 96px;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+.Artist .info h4 {
+  font-size: 18px;
+  line-height: 2;
+  margin-top: 4px;
 }

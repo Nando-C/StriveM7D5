@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
+import "./Artist.css";
 
 class Artist extends Component {
   state = {
@@ -31,16 +32,23 @@ class Artist extends Component {
 
   render() {
     return (
-      <Container fluid className="Artist">
-        <Row>
-          <div className="banner"></div>
-          {/* <Image src={this.state.artist.picture_xl} /> */}
-          {/* <Col id="content">
-            <h1>{this.state.artist.name} </h1>
-            <Image src={this.state.artist.picture_big} fluid />
-            <h1>Number of Followers{this.state.artist.nb_fan} </h1>
-          </Col> */}
-        </Row>
+      <Container fluid className="Artist p-0">
+        {this.state.isLoading && <h1>Loading...</h1>}
+        {this.state.isError && <h1>There was an error</h1>}
+        {!this.state.isLoading && (
+          <>
+            <Row className="banner m-0">
+              <Image src={this.state.artist.picture_xl} />
+              <Row className="info flex-column justify-content-end">
+                <h1>{this.state.artist.name}</h1>
+                <h4>
+                  {this.state.artist.nb_fan.toLocaleString()} Monthly Listeners
+                </h4>
+              </Row>
+            </Row>
+            <Row className="mx-3">Albums</Row>
+          </>
+        )}
       </Container>
     );
   }
