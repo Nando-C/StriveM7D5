@@ -1,0 +1,9 @@
+/* .Artist {
+  display: flex;
+} */
+
+.Artist .banner {
+  width: 100px;
+  height: 500px;
+  background-color: coral;
+}

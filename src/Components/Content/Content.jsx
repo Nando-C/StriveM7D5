@@ -1,4 +1,4 @@
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { Route } from "react-router";
 import AlbumPage from "./AlbumPage/AlbumPage";
 import Artist from "./Artist/Artist";
