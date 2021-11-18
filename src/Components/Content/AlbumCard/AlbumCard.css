@@ -7,14 +7,37 @@
   border: none;
   border-radius: 0.5em;
 }
+.AlbumCard .card .img-container {
+  position: relative;
+}
 
 .AlbumCard .card img {
-  border-radius: 12px;
+  border-radius: 6px;
   margin-bottom: 16px;
+}
+.AlbumCard .card .play-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: #1db954;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 8px;
+  bottom: 16px;
+  box-shadow: 0 8px 8px 0px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.4s cubic-bezier(0.3, 0, 0, 1);
+}
+
+.AlbumCard .card:hover .play-btn {
+  opacity: 1;
+  transform: translateY(-8px);
 }
 
 .AlbumCard .card:hover {
-  /* transform: scale(1.01); */
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.2);
   transition: 0.2s;
