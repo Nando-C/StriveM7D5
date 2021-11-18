@@ -1,0 +1,76 @@
+.Popular h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 28px;
+  margin-bottom: 20px;
+}
+
+.Popular .table {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+.Popular .table .table-row {
+  height: 54px;
+  border-radius: 4px;
+}
+
+.Popular .table .play-btn {
+  display: none;
+}
+
+.Popular .table .table-row:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+  user-select: none;
+}
+
+.Popular .table .table-row:hover .track-number {
+  display: none;
+}
+
+.Popular .table .table-row:hover .play-btn {
+  display: flex;
+  align-self: center;
+}
+
+.Popular .table .table-row .img-container {
+  height: 40px;
+  width: 40px;
+  margin-right: 16px;
+}
+.Popular .table .table-row .track-title {
+  color: white;
+  min-width: 180px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.Popular .table .table-row .heart-icon {
+  display: flex;
+  fill: rgba(255, 255, 255, 0.7);
+  margin-right: 16px;
+  opacity: 0;
+}
+
+.Popular .table .table-row:hover .heart-icon {
+  opacity: 1;
+}
+
+.Popular .table .table-row .heart-icon:hover {
+  fill: white;
+}
+
+.Popular .see-more-btn {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  padding: 18px;
+}
+
+.Popular .see-more-btn:hover {
+  color: white;
+  user-select: none;
+}

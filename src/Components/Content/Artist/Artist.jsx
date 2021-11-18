@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
+import Popular from "../Popular/Popular";
 import "./Artist.css";
 
 class Artist extends Component {
@@ -99,6 +100,7 @@ class Artist extends Component {
                   </svg>
                 </div>
               </Row>
+              <Popular />
               <Row className="mx-0 ">Albums</Row>
             </Row>
           </>
