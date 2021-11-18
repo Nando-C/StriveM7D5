@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Image, Row, Table } from "react-bootstrap";
 import "./Popular.css";
 
-const Popular = () => {
+const Popular = (props) => {
   const [trackList, setTrackList] = useState({
     trList: [],
     isLoading: true,
@@ -10,14 +10,14 @@ const Popular = () => {
   });
 
   const fetchTrackList = async () => {
-    const artistId = 120;
+    const artistId = props.artistId;
     try {
       const response = await fetch(
         `https://striveschool-api.herokuapp.com/api/deezer/artist/${artistId}/top?limit=10`
       );
       const trackInfo = await response.json();
       trackInfo.data.sort((a, b) => b.rank - a.rank);
-      //   console.log("Tracks: ", ordered);
+      console.log("Tracks: ", trackInfo.data);
       setTrackList({
         trList: trackInfo.data,
         isLoading: false,
@@ -43,7 +43,7 @@ const Popular = () => {
       {trackList.isError && <h1>There was an error</h1>}
       {!trackList.isLoading && (
         <Row className="Popular mx-0">
-          <h1>Popular</h1>
+          <h2>Popular</h2>
           <Container className="table" fluid>
             {trackList.trList.map((track, i) => (
               <Row key={track.id} className="table-row align-items-center">

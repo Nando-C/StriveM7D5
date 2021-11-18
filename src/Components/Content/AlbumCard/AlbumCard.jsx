@@ -7,15 +7,22 @@ const AlbumCard = (props) => {
     <Col className="AlbumCard">
       <Card>
         <Card.Body>
-          <Link to={"/Album/" + props.album.album.id}>
-            <Card.Img fluid src={props.album.album.cover_medium} />
+          <Link to={"/Album/" + (props.album.id || props.album.album.id)}>
+            <Card.Img
+              fluid
+              src={props.album.cover_medium || props.album.album.cover_medium}
+            />
           </Link>
-          <Link to={"/Album/" + props.album.album.id}>
-            <Card.Title>{props.album.album.title}</Card.Title>
+          <Link to={"/Album/" + (props.album.id || props.album.album.id)}>
+            <Card.Title>
+              {props.album.title || props.album.album.title}
+            </Card.Title>
           </Link>
-          <Link to={"/Artist/" + props.album.artist.id}>
-            <Card.Subtitle>{props.album.artist.name}</Card.Subtitle>
-          </Link>
+          {props.album.artist && (
+            <Link to={"/Artist/" + props.album.artist.id}>
+              <Card.Subtitle>{props.album.artist.name}</Card.Subtitle>
+            </Link>
+          )}
         </Card.Body>
       </Card>
     </Col>
