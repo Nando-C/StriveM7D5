@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import TrackList from "../../TrackList/TrackList";
 import "./AlbumPage.css";
 
 const AlbumPage = (props) => {
@@ -137,6 +138,7 @@ const AlbumPage = (props) => {
                 </svg>
               </div>
             </Row>
+            <TrackList albumId={albumData.albumInfo.id} />
           </Row>
         </>
       )}

@@ -1,0 +1,77 @@
+.TrackList {
+  margin-bottom: 40px;
+}
+
+.TrackList .table {
+  color: rgb(179, 179, 179);
+  margin: 0;
+}
+.TrackList .table .table-row {
+  height: 54px;
+  border-radius: 4px;
+}
+
+.TrackList .table .play-btn {
+  display: none;
+}
+
+.TrackList .table .table-row:hover {
+  /* color: white; */
+  background-color: rgba(255, 255, 255, 0.1);
+  user-select: none;
+}
+
+.TrackList .table .table-row:hover .track-number {
+  display: none;
+}
+
+.TrackList .table .table-row:hover .play-btn {
+  display: flex;
+  align-self: center;
+}
+
+.TrackList .table .table-row .track-text {
+  display: flex;
+  flex-direction: column;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.TrackList .table .table-row .track-text .track-title {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.TrackList .table .table-row .track-text span {
+  font-size: 14px;
+  line-height: 16px;
+}
+.TrackList .table .table-row .track-text span a {
+  color: rgb(179, 179, 179);
+}
+.TrackList .table .table-row .track-text span a:hover {
+  color: white;
+}
+
+/* .TrackList .table .table-row .track-title {
+  color: white;
+  min-width: 180px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+} */
+
+.TrackList .table .table-row .heart-icon {
+  display: flex;
+  fill: rgba(255, 255, 255, 0.7);
+  margin-right: 16px;
+  opacity: 0;
+}
+
+.TrackList .table .table-row:hover .heart-icon {
+  opacity: 1;
+}
+
+.TrackList .table .table-row .heart-icon:hover {
+  fill: white;
+}
