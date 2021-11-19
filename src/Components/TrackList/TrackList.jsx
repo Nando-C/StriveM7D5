@@ -45,6 +45,30 @@ const TrackList = (props) => {
       {trackList.isError && <h1>There was an error</h1>}
       {!trackList.isLoading && (
         <Container className="table" fluid>
+          <Row className="table-header">
+            <Col xs={1}>
+              <div className="d-flex justify-content-center">#</div>
+            </Col>
+            <Col className="header-title p-0">
+              <div className="d-flex">
+                <span>TITLE</span>
+              </div>
+            </Col>
+            <Col xs={3}>
+              <div className="time-icon">
+                <svg
+                  role="img"
+                  height="16"
+                  width="16"
+                  viewBox="0 0 16 16"
+                  class="Svg-sc-1bi12j5-0 gSLhUO"
+                >
+                  <path d="M7.999 3h-1v5h3V7h-2V3zM7.5 0a7.5 7.5 0 100 15 7.5 7.5 0 000-15zm0 14C3.916 14 1 11.084 1 7.5S3.916 1 7.5 1 14 3.916 14 7.5 11.084 14 7.5 14z"></path>
+                  <path fill="none" d="M16 0v16H0V0z"></path>
+                </svg>
+              </div>
+            </Col>
+          </Row>
           {trackList.tracks.map((track, i) => (
             <Row key={track.id} className="table-row align-items-center">
               <Col className="d-flex flex-row justify-content-center" xs={1}>

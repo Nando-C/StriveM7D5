@@ -7,6 +7,25 @@
   color: rgb(179, 179, 179);
   margin: 0;
 }
+
+.TrackList .table .table-header {
+  min-height: 36px;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.TrackList .table .table-header .header-title span {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+}
+.TrackList .table .table-header .time-icon {
+  display: flex;
+  justify-content: center;
+  fill: rgb(179, 179, 179);
+}
+
 .TrackList .table .table-row {
   height: 54px;
   border-radius: 4px;
