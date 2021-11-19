@@ -43,7 +43,7 @@ const AlbumPage = (props) => {
   }, []);
 
   return (
-    <Container className="AlbumPage">
+    <Container fluid className="AlbumPage">
       {albumData.isLoading && <h1>Loading...</h1>}
       {albumData.isError && <h1>There was an error</h1>}
       {!albumData.isLoading && (

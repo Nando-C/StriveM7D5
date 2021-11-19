@@ -1,5 +1,6 @@
 .TrackList {
   margin-bottom: 40px;
+  z-index: 1;
 }
 
 .TrackList .table {
