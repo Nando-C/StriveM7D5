@@ -51,8 +51,20 @@
   margin-top: 4px;
 }
 
+.Artist .mid-bg-colour {
+  position: absolute;
+  bottom: -232px;
+  left: 15px;
+  height: 232px;
+  width: 100%;
+  background-color: rgb(104, 104, 104);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6) 0, #121212 100%);
+  z-index: 0;
+}
+
 .Artist .artist-content {
   flex-direction: column;
+  z-index: 1;
 }
 
 .Artist .options {

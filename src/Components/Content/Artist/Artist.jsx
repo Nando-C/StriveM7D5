@@ -47,6 +47,7 @@ class Artist extends Component {
                   {this.state.artist.nb_fan.toLocaleString()} Monthly Listeners
                 </h4>
               </Row>
+              <Row className="mid-bg-colour"></Row>
             </Row>
             <Row className="artist-content m-0 px-3">
               <Row className="options mx-0">
