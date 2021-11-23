@@ -125,3 +125,23 @@
 .AlbumPage .options .ellipsis-btn:hover {
   fill: white;
 }
+@media screen and (max-width: 667px) {
+  .AlbumPage .cover .cover-text h1 {
+    font-size: 32px;
+    /* font-weight: 320; */
+    line-height: 32px;
+  }
+}
+@media screen and (max-width: 568px) {
+  .AlbumPage {
+    padding-bottom: 60px;
+  }
+  .AlbumPage .cover .cover-text h1 {
+    /* margin: 0; */
+    /* padding: 0.08em 0px; */
+    font-size: 30px;
+    /* font-weight: 400; */
+    line-height: 30px;
+    /* letter-spacing: -0.04em; */
+  }
+}

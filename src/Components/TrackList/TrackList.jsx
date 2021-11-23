@@ -100,7 +100,7 @@ const TrackList = (props) => {
                   </div>
                 </Row>
               </Col>
-              <Col sm={2}>
+              <Col xs={1} sm={2}>
                 <Row className="align-items-center">
                   <div className="heart-icon d-none d-md-flex">
                     <svg

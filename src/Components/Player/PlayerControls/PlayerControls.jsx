@@ -5,7 +5,7 @@ const PlayerControls = () => {
   return (
     <>
       <Row className="PlayerControls flex-column justify-content-center align-items-center">
-        <Row className="player-buttons w-100">
+        <Row className="player-buttons w-100 mb-sm-2">
           <Col className="d-flex justify-content-end p-0">
             {/* <Row className="left-buttons justify-content-end"> */}
             <div>
@@ -83,7 +83,7 @@ const PlayerControls = () => {
             </div>
           </Col>
         </Row>
-        <Row className="Progress-Bar">
+        <Row className="Progress-Bar d-none d-sm-flex">
           <Col sm={2} className="text-right p-0">
             <span>0:00</span>
           </Col>

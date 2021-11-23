@@ -64,7 +64,7 @@ const Popular = (props) => {
                     </svg>
                   </div>
                 </Col>
-                <Col>
+                <Col xs={9} md={7}>
                   <Row className="align-items-center">
                     <div className="img-container">
                       <Image fluid src={track.album.cover_small} />
@@ -74,10 +74,10 @@ const Popular = (props) => {
                     </div>
                   </Row>
                 </Col>
-                <Col className="d-none d-md-block" xs={2}>
+                <Col className="d-none d-md-block" md={2}>
                   {track.rank.toLocaleString()}
                 </Col>
-                <Col sm={2}>
+                <Col xs={1} sm={2}>
                   <Row className="align-items-center">
                     <div className="heart-icon d-none d-md-flex">
                       <svg

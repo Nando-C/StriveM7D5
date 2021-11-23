@@ -20,7 +20,7 @@ const NowPlaying = () => {
           </Link>
         </div>
       </div>
-      <div className="like-heart">
+      <div className="like-heart d-none d-sm-flex">
         <svg
           role="img"
           height="16"
@@ -35,7 +35,7 @@ const NowPlaying = () => {
           ></path> */}
         </svg>
       </div>
-      <div className="pip-toggle">
+      <div className="pip-toggle d-none d-md-flex">
         <svg width="16" height="16">
           {/* <g fill="currentColor" fill-rule="evenodd"> */}
           <path d="M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"></path>

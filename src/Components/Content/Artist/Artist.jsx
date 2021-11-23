@@ -34,7 +34,7 @@ class Artist extends Component {
 
   render() {
     return (
-      <Container fluid className="Artist p-0">
+      <Container fluid className="Artist">
         {this.state.isLoading && <h1>Loading...</h1>}
         {this.state.isError && <h1>There was an error</h1>}
         {!this.state.isLoading && (

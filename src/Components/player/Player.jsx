@@ -14,7 +14,7 @@ const Player = () => {
         <Col>
           <PlayerControls />
         </Col>
-        <Col>
+        <Col className="d-none d-sm-block">
           <Volume />
         </Col>
       </Row>

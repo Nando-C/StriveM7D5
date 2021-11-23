@@ -25,17 +25,17 @@
   transition: 0.2s;
 }
 
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
+.SideNavBar .nav-pills .nav-link.active,
+.SideNavBar .nav-pills .show > .nav-link {
   background-color: rgba(128, 128, 128, 0.3);
   border-radius: 5px;
 }
 
-.nav-pills .nav-link.active .home-icon {
+.SideNavBar .nav-pills .nav-link.active .home-icon {
   display: none;
 }
 
-.nav-pills .nav-link.active .home-active-icon {
+.SideNavBar .nav-pills .nav-link.active .home-active-icon {
   display: block;
 }
 
