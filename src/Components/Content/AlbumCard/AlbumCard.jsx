@@ -16,7 +16,7 @@ const AlbumCard = (props) => {
             <div className="img-container">
               <Card.Img
                 fluid
-                src={props.album.cover_medium || props.album.album.cover_medium}
+                src={props.album.cover_big || props.album.album.cover_big}
               />
               <div className="play-btn">
                 <svg

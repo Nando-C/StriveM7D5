@@ -1,0 +1,35 @@
+.Search {
+  color: white;
+}
+.Search > .row {
+  padding: 12px 16px;
+}
+.Search form {
+  max-width: 364px;
+}
+
+.Search form input {
+  border: transparent;
+  border-radius: 200px;
+  color: black;
+  height: 40px;
+  padding: 6px 48px;
+  text-overflow: ellipsis;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+}
+.Search form .form-control:focus {
+  color: black;
+  box-shadow: none;
+}
+
+.Search .form-container {
+  position: relative;
+}
+.Search .form-container .search-icon {
+  position: absolute;
+  bottom: 8px;
+  left: 24px;
+}

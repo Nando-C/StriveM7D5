@@ -6,6 +6,7 @@ import Home from "./Home/Home";
 import Navbar from "../NavBar";
 import "./Content.css";
 import YourLibrary from "../YourLibrary/YourLibrary";
+import Search from "../Search/Search";
 
 const Content = () => {
   return (
@@ -13,6 +14,7 @@ const Content = () => {
       {/* <Navbar /> */}
       <Route exact path="/home" component={Home} />
       <Route exact path="/library" component={YourLibrary} />
+      <Route exact path="/search" component={Search} />
       <Route path="/Artist/:artistId" component={Artist} />
       <Route path="/Album/:albumId" component={AlbumPage} />
     </Container>
