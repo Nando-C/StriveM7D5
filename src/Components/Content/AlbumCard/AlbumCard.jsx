@@ -7,7 +7,12 @@ const AlbumCard = (props) => {
     <Col className="AlbumCard">
       <Card>
         <Card.Body>
-          <Link to={"/Album/" + (props.album.id || props.album.album.id)}>
+          <Link
+            to={
+              "/Album/" +
+              (props.source === "home" ? props.album.album.id : props.album.id)
+            }
+          >
             <div className="img-container">
               <Card.Img
                 fluid
@@ -29,7 +34,12 @@ const AlbumCard = (props) => {
               </div>
             </div>
           </Link>
-          <Link to={"/Album/" + (props.album.id || props.album.album.id)}>
+          <Link
+            to={
+              "/Album/" +
+              (props.source === "home" ? props.album.album.id : props.album.id)
+            }
+          >
             <Card.Title>
               {props.album.title || props.album.album.title}
             </Card.Title>

@@ -1,7 +1,8 @@
 .Home {
+  color: white;
   background: linear-gradient(
     135deg,
-    rgba(38, 66, 103, 1) 20%,
+    rgba(38, 66, 103, 1) 0%,
     rgba(19, 19, 19, 1) 100%
   );
 }

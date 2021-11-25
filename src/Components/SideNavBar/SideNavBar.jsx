@@ -1,5 +1,5 @@
 import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./SideNavBar.css";
 
 const SideNavBar = () => {
@@ -19,10 +19,10 @@ const SideNavBar = () => {
         </Col>
         <Nav
           variant="pills"
-          defaultActiveKey="/home"
+          defaultActiveKey="home"
           className="px-2 flex-column w-100"
         >
-          <Nav.Link eventKey="link-1" className="d-flex nav-link" to="/">
+          <NavLink eventKey="home" className="d-flex nav-link" to="/home">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -54,8 +54,8 @@ const SideNavBar = () => {
                 <strong>Home</strong>
               </small>
             </span>
-          </Nav.Link>
-          <Nav.Link eventKey="link-2" className="d-flex nav-link" to="/">
+          </NavLink>
+          <NavLink eventKey="search" className="d-flex nav-link" to="/search">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -88,8 +88,8 @@ const SideNavBar = () => {
                 <strong>Search</strong>
               </small>
             </span>
-          </Nav.Link>
-          <Nav.Link eventKey="link-3" className="d-flex nav-link" to="/">
+          </NavLink>
+          <NavLink eventKey="library" className="d-flex nav-link" to="/library">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -121,7 +121,7 @@ const SideNavBar = () => {
                 <strong>Your Library</strong>
               </small>
             </span>
-          </Nav.Link>
+          </NavLink>
           <Nav.Link className="mt-4 d-flex">
             <div id="plus-icon" className="d-flex">
               <svg
