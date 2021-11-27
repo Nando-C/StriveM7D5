@@ -1,4 +1,4 @@
-import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
+import { Col, Container, Nav, Row } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import "./SideNavBar.css";
 
@@ -7,7 +7,7 @@ const SideNavBar = () => {
     <Container className="SideNavBar d-none d-sm-block" fluid>
       <Row className="d-column pt-4">
         <Col className="pb-2">
-          <Link to="/">
+          <Link to="/home">
             <svg viewBox="0 0 1134 340" className="spotify-logo pl-2">
               <title>Spotify</title>
               <path

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Image, Row, Table } from "react-bootstrap";
+import { Col, Container, Image, Row } from "react-bootstrap";
 import "./Popular.css";
 
 const Popular = (props) => {
@@ -35,7 +35,7 @@ const Popular = (props) => {
 
   useEffect(() => {
     fetchTrackList();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./TrackList.css";
 
@@ -37,7 +37,7 @@ const TrackList = (props) => {
 
   useEffect(() => {
     fetchAlbumData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container className="TrackList" fluid>

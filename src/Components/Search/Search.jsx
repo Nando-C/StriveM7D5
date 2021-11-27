@@ -36,7 +36,7 @@ const Search = () => {
     fetchAlbum();
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (query === "") {
       fetchAlbum();
     } else {

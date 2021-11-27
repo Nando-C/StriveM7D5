@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Container, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import TrackList from "../../TrackList/TrackList";
 import "./AlbumPage.css";
@@ -15,7 +15,6 @@ const AlbumPage = (props) => {
   console.log("albumId: ", albumId);
 
   const fetchAlbumData = async () => {
-    // const artistId = props.artistId;
     try {
       const response = await fetch(
         `https://striveschool-api.herokuapp.com/api/deezer/album/${albumId}`
@@ -40,7 +39,7 @@ const AlbumPage = (props) => {
 
   useEffect(() => {
     fetchAlbumData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container fluid className="AlbumPage">
@@ -56,23 +55,27 @@ const AlbumPage = (props) => {
               <div className="cover-text">
                 <h2>ALBUM</h2>
                 <h1>{albumData.albumInfo.title}</h1>
-                <div className="album-info d-flex">
-                  <div>
-                    <Image
-                      roundedCircle
-                      src={albumData.albumInfo.artist.picture_small}
-                    />
-                    <Link to={`/Artist/${albumData.albumInfo.artist.id}`}>
-                      {albumData.albumInfo.artist.name}
-                    </Link>
+                <Row className="album-info">
+                  <div className="d-flex align-items-center">
+                    <div>
+                      <Image
+                        roundedCircle
+                        src={albumData.albumInfo.artist.picture_small}
+                      />
+                      <Link to={`/Artist/${albumData.albumInfo.artist.id}`}>
+                        {albumData.albumInfo.artist.name}
+                      </Link>
+                    </div>
+                    <span>{albumData.albumInfo.release_date.slice(0, 4)}</span>
                   </div>
-                  <span>{albumData.albumInfo.release_date.slice(0, 4)}</span>
-                  <span>
-                    {albumData.albumInfo.nb_tracks} songs,{" "}
-                    {Math.floor(albumData.albumInfo.duration / 60)} min{" "}
-                    {albumData.albumInfo.duration % 60} sec
-                  </span>
-                </div>
+                  <div>
+                    <span>
+                      {albumData.albumInfo.nb_tracks} songs,{" "}
+                      {Math.floor(albumData.albumInfo.duration / 60)} min{" "}
+                      {albumData.albumInfo.duration % 60} sec
+                    </span>
+                  </div>
+                </Row>
               </div>
             </Row>
             <Row className="mid-bg-colour"></Row>

@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { Row } from "react-bootstrap";
 import AlbumCard from "./Content/AlbumCard/AlbumCard";
-import SingleAlbum from "./SingleAlbum";
 
 class CardsDeck extends Component {
   state = {
@@ -50,7 +49,6 @@ class CardsDeck extends Component {
             <h2>We dont have this collection</h2>
           ) : (
             this.state.albumCollection.map((album) => (
-              // <SingleAlbum key={album.id} album={album} />
               <AlbumCard key={album.id} album={album} source="home" />
             ))
           )}

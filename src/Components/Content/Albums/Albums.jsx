@@ -36,7 +36,7 @@ const Albums = (props) => {
 
   useEffect(() => {
     fetchAlbumList();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

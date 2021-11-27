@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Container, Image, Row } from "react-bootstrap";
 import Albums from "../Albums/Albums";
 import Popular from "../Popular/Popular";
 import "./Artist.css";

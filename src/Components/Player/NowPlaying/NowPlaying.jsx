@@ -1,4 +1,4 @@
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./NowPlaying.css";
 
