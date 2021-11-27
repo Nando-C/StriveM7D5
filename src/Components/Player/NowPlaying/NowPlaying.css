@@ -1,0 +1,48 @@
+.NowPlaying {
+  height: 56px;
+}
+
+.cover-img {
+  height: 56px;
+  width: 56px;
+}
+
+.info-playing {
+  padding: 14px 14px;
+  color: white;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+div.info-playing > a {
+  /* padding: 0px; */
+  /* margin: 0px; */
+  color: #b1b1b1;
+  text-decoration-color: white;
+}
+
+.info-playing > div > span:hover,
+div.info-playing > a:hover {
+  color: white;
+}
+
+.like-heart {
+  height: 32px;
+  width: 32px;
+  padding: 0px 8px;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  fill: #b1b1b1;
+}
+.like-heart:hover {
+  fill: white;
+}
+
+.pip-toggle {
+  padding: 0px 8px;
+  fill: #b1b1b1;
+}
+.pip-toggle:hover {
+  fill: white;
+}

@@ -1,0 +1,48 @@
+.Search {
+  color: white;
+}
+.Search > .row-form {
+  padding: 12px 0px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+.Search form {
+  max-width: 364px;
+}
+
+.Search form input {
+  border: transparent;
+  border-radius: 200px;
+  color: black;
+  height: 40px;
+  padding: 6px 48px;
+  text-overflow: ellipsis;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+}
+.Search form .form-control:focus {
+  color: black;
+  box-shadow: none;
+}
+
+.Search .form-container {
+  position: relative;
+}
+.Search .form-container .search-icon {
+  position: absolute;
+  bottom: 8px;
+  left: 24px;
+}
+
+.Search h2 {
+  padding-left: 16px;
+  /* margin-bottom: 8px; */
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 28px;
+}

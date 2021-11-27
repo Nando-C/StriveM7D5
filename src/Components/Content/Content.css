@@ -1,0 +1,12 @@
+.Content {
+  background-color: #121212;
+  width: calc(100vw - 240px);
+  height: calc(100vh - 90px);
+  overflow-y: scroll;
+}
+
+@media screen and (max-width: 568px) {
+  .Content {
+    width: 100vh;
+  }
+}

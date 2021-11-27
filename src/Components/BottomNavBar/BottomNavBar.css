@@ -1,0 +1,38 @@
+.BottomNavBar {
+  background-color: black;
+  color: #b1b1b1;
+  border-top: solid 1px rgb(40, 40, 40);
+  height: 60px;
+  position: fixed;
+  bottom: 0px;
+}
+
+.BottomNavBar .nav-link {
+  text-decoration: none;
+  color: #b1b1b1;
+}
+
+.BottomNavBar .nav-link .home-active-icon {
+  display: none;
+}
+
+.BottomNavBar .nav-link:hover .home-icon,
+.BottomNavBar .nav-link:hover {
+  text-decoration: none;
+  color: white;
+  transition: 0.2s;
+}
+
+.BottomNavBar .nav-pills .nav-link.active,
+.BottomNavBar .nav-pills .show > .nav-link {
+  background-color: rgba(128, 128, 128, 0);
+  border-radius: 5px;
+}
+
+.BottomNavBar .nav-pills .nav-link.active .home-icon {
+  display: none;
+}
+
+.BottomNavBar .nav-pills .nav-link.active .home-active-icon {
+  display: block;
+}
