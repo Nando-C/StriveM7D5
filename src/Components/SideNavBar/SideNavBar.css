@@ -12,6 +12,7 @@
 .SideNavBar .nav-link {
   text-decoration: none;
   color: #b1b1b1;
+  gap: 16px;
 }
 
 .SideNavBar .nav-link .home-active-icon {
@@ -41,7 +42,7 @@
 
 #plus-icon {
   padding: 0 6px;
-  margin-right: 16px;
+  /* margin-right: 16px; */
   border-radius: 1px;
   align-items: center;
   background-color: #b1b1b1;
@@ -54,7 +55,7 @@
 
 #heart-songs-icon {
   padding: 0 6px;
-  margin-right: 16px;
+  /* margin-right: 16px; */
   border-radius: 1px;
   align-items: center;
   background: linear-gradient(

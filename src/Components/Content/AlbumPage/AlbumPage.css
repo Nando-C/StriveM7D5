@@ -79,7 +79,7 @@
 .AlbumPage .mid-bg-colour {
   position: absolute;
   bottom: -232px;
-  left: 15px;
+  left: 12px;
   height: 232px;
   width: 100%;
   background-color: rgb(72, 192, 200);
@@ -90,6 +90,7 @@
 .AlbumPage .options {
   align-items: center;
   padding: 24px 0px;
+  margin: 0;
   width: 100%;
   z-index: 1;
 }
@@ -112,6 +113,7 @@
 .AlbumPage .options .heart-btn {
   height: 32px;
   width: 32px;
+  padding: 0;
   margin-right: 24px;
   fill: #b3b3b3;
 }
@@ -120,6 +122,7 @@
 }
 
 .AlbumPage .options .ellipsis-btn {
+  padding: 0;
   fill: #b3b3b3;
 }
 .AlbumPage .options .ellipsis-btn:hover {

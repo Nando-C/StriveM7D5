@@ -18,6 +18,9 @@
   height: 54px;
   border-radius: 4px;
 }
+.table > :not(:first-child) {
+  border: none;
+}
 
 .Popular .table .play-btn {
   display: none;
@@ -41,18 +44,26 @@
 .Popular .table .table-row .img-container {
   height: 40px;
   width: 40px;
+  padding: 0;
   margin-right: 16px;
 }
 .Popular .table .table-row .track-title {
   color: white;
-  min-width: 180px;
+  width: fit-content;
+  padding: 0;
   overflow-x: hidden;
   text-overflow: ellipsis;
+}
+.Popular .table .table-row .track-title span {
+  font-weight: 500;
+  /* overflow-x: hidden;
+  text-overflow: ellipsis; */
 }
 
 .Popular .table .table-row .heart-icon {
   display: flex;
   fill: rgba(255, 255, 255, 0.7);
+  padding: 0;
   margin-right: 16px;
   opacity: 0;
 }
@@ -77,4 +88,23 @@
 .Popular .see-more-btn:hover {
   color: white;
   user-select: none;
+}
+
+@media screen and (max-width: 667px) {
+  .Popular .table .table-row .track-title {
+    height: 24px;
+    width: 54vh;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+@media screen and (max-width: 568px) {
+  .Popular .table .table-row .track-title {
+    height: 24px;
+    width: 22vh;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

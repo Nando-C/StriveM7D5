@@ -6,6 +6,7 @@
 .TrackList .table {
   color: rgb(179, 179, 179);
   margin: 0;
+  padding: 0;
 }
 
 .TrackList .table .table-header {
@@ -29,6 +30,9 @@
 .TrackList .table .table-row {
   height: 54px;
   border-radius: 4px;
+  margin: 0;
+  padding: 0 12px;
+  align-items: center;
 }
 
 .TrackList .table .play-btn {
@@ -53,6 +57,7 @@
 .TrackList .table .table-row .track-text {
   display: flex;
   flex-direction: column;
+  width: fit-content;
   word-break: break-all;
 }
 .TrackList .table .table-row .track-text .track-title {
@@ -78,6 +83,7 @@
 .TrackList .table .table-row .heart-icon {
   display: flex;
   fill: rgba(255, 255, 255, 0.7);
+  padding: 0;
   margin-right: 16px;
   opacity: 0;
 }
@@ -93,7 +99,7 @@
 @media screen and (max-width: 667px) {
   .TrackList .table .table-row .track-text .track-title {
     height: 24px;
-    width: 38vw;
+    width: 30vw;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -103,7 +109,7 @@
 @media screen and (max-width: 568px) {
   .TrackList .table .table-row .track-text .track-title {
     height: 24px;
-    width: 58vw;
+    width: 50vw;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

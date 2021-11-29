@@ -4,7 +4,7 @@ import "./YourLibrary.css";
 const YourLibrary = () => {
   return (
     <Container className="YourLibrary">
-      <Row className="flex-column align-items-center">
+      <Row className="flex-column text-center">
         <div>
           <svg
             width="80"
@@ -22,7 +22,9 @@ const YourLibrary = () => {
         </div>
         <h2>Create your first playlist</h2>
         <span>It's easy, we'll help you.</span>
-        <Button variant="light">CREATE PLAYLIST</Button>
+        <div>
+          <Button variant="light">CREATE PLAYLIST</Button>
+        </div>
       </Row>
     </Container>
   );
