@@ -38,7 +38,7 @@ const Artist = () => {
 
   useEffect(() => {
     fetchArtist();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container fluid className="Artist">
