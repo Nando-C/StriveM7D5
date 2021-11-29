@@ -1,11 +1,11 @@
 import { Container } from "react-bootstrap";
-import { Route, Routes } from "react-router";
+import { Route, Routes } from "react-router-dom";
 import AlbumPage from "./AlbumPage/AlbumPage";
 import Artist from "./Artist/Artist";
 import Home from "./Home/Home";
-import "./Content.css";
 import YourLibrary from "../YourLibrary/YourLibrary";
 import Search from "../Search/Search";
+import "./Content.css";
 
 const Content = () => {
   return (
