@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import { RootState } from "../app/store";
+import backend from "../../backend/axios";
 
 const initialState = {
   albums: [],
@@ -8,11 +8,8 @@ const initialState = {
 };
 
 export const fetchAlbums = createAsyncThunk("albums/fetchAlbums", async () => {
-  const response = await fetch(
-    "https://striveschool-api.herokuapp.com/api/deezer/search?q=the"
-  );
-  const albumList = response.json();
-  return albumList;
+  const { data } = await backend.get("/search?q=the");
+  return data;
 });
 
 const albumsSlice = createSlice({
@@ -25,7 +22,7 @@ const albumsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchAlbums.fulfilled, (state, action) => {
-        state.status = " succeded";
+        state.status = "succeded";
         state.albums = action.payload.data;
       })
       .addCase(fetchAlbums.rejected, (state, action) => {

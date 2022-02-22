@@ -9,15 +9,18 @@ import "./Home.css";
 const Home = () => {
   // ============== Testing Redux
   const dispatch = useDispatch();
-  const albumStatus = useSelector((state) => state.albums.status);
   const albums = useSelector(selectAllAlbums);
-  console.log("From Redux: ", albums);
+
+  const albumStatus = useSelector((state) => state.albums.status);
+  // const error = useSelector((state) => state.albums.error);
 
   useEffect(() => {
     if (albumStatus === "idle") {
       dispatch(fetchAlbums());
     }
   }, [albumStatus, dispatch]);
+
+  console.log("From Redux: ", albums);
   // ==============
   return (
     <>
