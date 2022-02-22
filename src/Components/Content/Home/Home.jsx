@@ -3,7 +3,8 @@ import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { fetchAlbums, selectAllAlbums } from "../../../redux/slices/albumList";
-import CardsDeck from "../../CardsDeck";
+// import CardsDeck from "../../CardsDeck";
+import AlbumDeck from "../../AlbumDeck";
 import "./Home.css";
 
 const Home = () => {
@@ -20,12 +21,13 @@ const Home = () => {
     }
   }, [albumStatus, dispatch]);
 
-  console.log("From Redux: ", albums);
+  // console.log("From Redux: ", albums);
   // ==============
   return (
     <>
       <Container fluid className="Home m-0">
-        <CardsDeck />
+        {/* <CardsDeck /> */}
+        <AlbumDeck />
       </Container>
     </>
   );
