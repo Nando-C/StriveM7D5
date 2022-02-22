@@ -60,7 +60,7 @@ const Search = () => {
                   role="img"
                   height="24"
                   width="24"
-                  class="Svg-sc-1bi12j5-0 gSLhUO _pxQadHFO3vmadLs8OPr"
+                  // class="Svg-sc-1bi12j5-0 gSLhUO _pxQadHFO3vmadLs8OPr"
                   aria-hidden="true"
                   viewBox="0 0 24 24"
                 >
