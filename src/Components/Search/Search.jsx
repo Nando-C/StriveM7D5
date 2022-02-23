@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
-import backend from "../../backend/axios";
 import AlbumCard from "../Content/AlbumCard/AlbumCard";
 import "./Search.css";
 
 const Search = () => {
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
   const [query, setQuery] = useState("");
   const [albumInfo, setAlbumInfo] = useState({
     albumList: [],
@@ -14,13 +14,10 @@ const Search = () => {
 
   const fetchAlbum = async (query = "i") => {
     try {
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`
-      );
-      console.log(response);
+      const response = await fetch(`${baseURL}/search?q=${query}`);
       if (response.ok) {
         const albumResponse = await response.json();
-        console.log("albumResponse: ", albumResponse);
+        console.log("albumResponse: ", albumResponse.data);
         setAlbumInfo({
           albumList: albumResponse.data,
           isLoading: false,
@@ -37,10 +34,6 @@ const Search = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    fetchAlbum();
-  }, []);
 
   useEffect(() => {
     if (query === "") {
