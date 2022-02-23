@@ -28,6 +28,7 @@ const albumsSlice = createSlice({
       .addCase(fetchAlbums.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+        console.log(state.error);
       });
   },
 });
