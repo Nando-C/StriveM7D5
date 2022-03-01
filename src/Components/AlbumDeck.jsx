@@ -13,7 +13,7 @@ const AlbumDeck = () => {
 
   return (
     <>
-      {albumStatus === "loading" && <h1 className="p-4">Loading...</h1>}
+      {albumStatus === "loading" && <h2 className="p-4">Loading...</h2>}
       {error && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}

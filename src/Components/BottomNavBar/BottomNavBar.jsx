@@ -1,5 +1,5 @@
 import { Container, Nav, Row } from "react-bootstrap";
-// import { Nav.Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./BottomNavBar.css";
 
 const BottomNavBar = () => {
@@ -14,7 +14,7 @@ const BottomNavBar = () => {
           variant="pills"
           defaultActiveKey="/home"
         >
-          <Nav.Link eventKey="home" className="d-flex nav-link" to="/home">
+          <NavLink eventKey="home" className="d-flex nav-link" to="/home">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -46,8 +46,8 @@ const BottomNavBar = () => {
                   <strong>Home</strong>
                 </small>
               </span> */}
-          </Nav.Link>
-          <Nav.Link eventKey="search" className="d-flex nav-link" to="/search">
+          </NavLink>
+          <NavLink eventKey="search" className="d-flex nav-link" to="/search">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -80,12 +80,8 @@ const BottomNavBar = () => {
                   <strong>Search</strong>
                 </small>
               </span> */}
-          </Nav.Link>
-          <Nav.Link
-            eventKey="library"
-            className="d-flex nav-link"
-            to="/library"
-          >
+          </NavLink>
+          <NavLink eventKey="library" className="d-flex nav-link" to="/library">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -117,7 +113,7 @@ const BottomNavBar = () => {
                   <strong>Your Library</strong>
                 </small>
               </span> */}
-          </Nav.Link>
+          </NavLink>
         </Nav>
       </Row>
     </Container>

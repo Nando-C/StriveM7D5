@@ -70,7 +70,7 @@ const Search = () => {
           </Form>
         </Col>
       </Row>
-      {albumInfo.isLoading && <h1 className="p-4">Loading...</h1>}
+      {albumInfo.isLoading && <h2 className="p-4">Loading...</h2>}
       {albumInfo.isError && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}

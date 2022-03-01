@@ -10,10 +10,12 @@ const Popular = (props) => {
   });
 
   const fetchTrackList = async () => {
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const artistId = props.artistId;
     try {
       const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/deezer/artist/${artistId}/top?limit=10`
+        `${baseURL}/artist/${artistId}/top?limit=10`
       );
       const trackInfo = await response.json();
       trackInfo.data.sort((a, b) => b.rank - a.rank);
