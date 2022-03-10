@@ -15,7 +15,9 @@ const Artist = () => {
   const dispatch = useDispatch();
 
   // const artistStatus = useSelector((state) => state.chosen.status);
-  const artistSelected = useSelector((state) => state.selectedArtist.artist);
+  const artistSelected = useSelector(
+    (state) => state.selectedArtist.artistInfo.artist
+  );
   console.log("Artist in Redux: ", artistSelected);
 
   useEffect(() => {

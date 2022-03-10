@@ -2,9 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import backend from "../../backend/axios";
 
 const initialState = {
-  artist: {},
-  status: "idle",
-  error: null,
+  artistInfo: {
+    artist: {},
+    status: "idle",
+    error: null,
+  },
 };
 
 export const fetchArtist = createAsyncThunk(
@@ -22,20 +24,20 @@ const selectedArtistSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchArtist.pending, (state, action) => {
-        state.status = "loading";
+        state.artistInfo.status = "loading";
       })
       .addCase(fetchArtist.fulfilled, (state, action) => {
-        state.status = "succeded";
-        state.artist = action.payload;
+        state.artistInfo.status = "succeded";
+        state.artistInfo.artist = action.payload;
       })
       .addCase(fetchArtist.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-        console.log(state.error);
+        state.artistInfo.status = "failed";
+        state.artistInfo.error = action.error.message;
+        console.log(state.artistInfo.error);
       });
   },
 });
 
 export default selectedArtistSlice.reducer;
 
-export const selectedArtist = (state) => state;
+export const selectedArtist = (state) => state.artistInfo;
