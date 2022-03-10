@@ -15,8 +15,8 @@ export const fetchArtist = createAsyncThunk(
   }
 );
 
-const chosenSlice = createSlice({
-  name: "chosen",
+const selectedArtistSlice = createSlice({
+  name: "selectedArtist",
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -36,6 +36,6 @@ const chosenSlice = createSlice({
   },
 });
 
-export default chosenSlice.reducer;
+export default selectedArtistSlice.reducer;
 
 export const selectedArtist = (state) => state;

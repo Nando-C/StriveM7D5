@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchArtist } from "../../../redux/slices/chosen";
+import { fetchArtist } from "../../../redux/slices/selectedArtist";
 import Albums from "../Albums/Albums";
 import Popular from "../Popular/Popular";
 import "./Artist.css";
@@ -15,7 +15,7 @@ const Artist = () => {
   const dispatch = useDispatch();
 
   // const artistStatus = useSelector((state) => state.chosen.status);
-  const artistSelected = useSelector((state) => state.chosen.artist);
+  const artistSelected = useSelector((state) => state.selectedArtist.artist);
   console.log("Artist in Redux: ", artistSelected);
 
   useEffect(() => {
