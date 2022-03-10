@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
-import { selectAllAlbums } from "../redux/slices/albumList";
+import { selectAllAlbums } from "../redux/slices/home";
 import { Row } from "react-bootstrap";
 import AlbumCard from "./Content/AlbumCard/AlbumCard";
 
 const AlbumDeck = () => {
   const albums = useSelector(selectAllAlbums);
 
-  const albumStatus = useSelector((state) => state.albums.status);
-  const error = useSelector((state) => state.albums.error);
+  const albumStatus = useSelector((state) => state.home.status);
+  const error = useSelector((state) => state.home.error);
 
   console.log("From Redux: ", albums);
 

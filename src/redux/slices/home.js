@@ -7,13 +7,13 @@ const initialState = {
   error: null,
 };
 
-export const fetchAlbums = createAsyncThunk("albums/fetchAlbums", async () => {
+export const fetchAlbums = createAsyncThunk("home/fetchAlbums", async () => {
   const { data } = await backend.get("/search?q=the");
   return data;
 });
 
-const albumsSlice = createSlice({
-  name: "albums",
+const homeSlice = createSlice({
+  name: "home",
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -33,9 +33,9 @@ const albumsSlice = createSlice({
   },
 });
 
-export default albumsSlice.reducer;
+export default homeSlice.reducer;
 
-export const selectAllAlbums = (state) => state.albums.albums;
+export const selectAllAlbums = (state) => state.home.albums;
 
 export const selectAlbumById = (state, albumId) =>
-  state.albums.albums.find((album) => album.id === albumId);
+  state.home.albums.find((album) => album.id === albumId);

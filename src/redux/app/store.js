@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import albumsReducer from "../slices/albumList";
+import homeReducer from "../slices/home";
 import chosenReducer from "../slices/chosen";
 
 export const store = configureStore({
   reducer: {
-    albums: albumsReducer,
+    home: homeReducer,
     chosen: chosenReducer,
   },
 });

@@ -3,7 +3,6 @@ import backend from "../../backend/axios";
 
 const initialState = {
   artist: {},
-  album: {},
   status: "idle",
   error: null,
 };
