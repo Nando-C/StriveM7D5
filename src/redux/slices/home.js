@@ -7,10 +7,13 @@ const initialState = {
   error: null,
 };
 
-export const fetchAlbums = createAsyncThunk("home/fetchAlbums", async () => {
-  const { data } = await backend.get("/search?q=the");
-  return data;
-});
+export const fetchHomeAlbums = createAsyncThunk(
+  "home/fetchHomeAlbums",
+  async () => {
+    const { data } = await backend.get("/search?q=the");
+    return data;
+  }
+);
 
 const homeSlice = createSlice({
   name: "home",
@@ -18,14 +21,14 @@ const homeSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchAlbums.pending, (state, action) => {
+      .addCase(fetchHomeAlbums.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchAlbums.fulfilled, (state, action) => {
+      .addCase(fetchHomeAlbums.fulfilled, (state, action) => {
         state.status = "succeded";
         state.albums = action.payload.data;
       })
-      .addCase(fetchAlbums.rejected, (state, action) => {
+      .addCase(fetchHomeAlbums.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         console.log(state.error);

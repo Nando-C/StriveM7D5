@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { fetchAlbums } from "../../../redux/slices/home";
+import { fetchHomeAlbums } from "../../../redux/slices/home";
 // import CardsDeck from "../../CardsDeck";
 import AlbumDeck from "../../AlbumDeck";
 import "./Home.css";
@@ -15,7 +15,7 @@ const Home = () => {
 
   useEffect(() => {
     if (albumStatus === "idle") {
-      dispatch(fetchAlbums());
+      dispatch(fetchHomeAlbums());
     }
   }, [albumStatus, dispatch]);
   // ==============
