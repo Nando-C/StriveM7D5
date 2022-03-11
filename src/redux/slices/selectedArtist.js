@@ -66,6 +66,3 @@ const selectedArtistSlice = createSlice({
 });
 
 export default selectedArtistSlice.reducer;
-
-export const selectedArtistInfo = (state) => state.selectedArtist.artistInfo;
-export const selectedAlbumsInfo = (state) => state.selectedArtist.albumInfo;
