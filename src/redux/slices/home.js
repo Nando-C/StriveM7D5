@@ -40,5 +40,5 @@ export default homeSlice.reducer;
 
 export const selectAllAlbums = (state) => state.home.albums;
 
-export const selectAlbumById = (state, albumId) =>
-  state.home.albums.find((album) => album.id === albumId);
+// export const selectAlbumById = (state, albumId) =>
+//   state.home.albums.find((alb) => alb.album.id === albumId);

@@ -5,6 +5,26 @@ import TrackList from "../../TrackList/TrackList";
 import "./AlbumPage.css";
 
 const AlbumPage = (props) => {
+  // =============    Testing Redux   ==========
+  // const { albumId } = useParams();
+  // const homeStatus = useSelector((state) => state.home.status);
+  // const homeInfo = useSelector((state) =>
+  //   state.home.albums.find((alb) => alb.album.id === parseInt(albumId))
+  // );
+  // const albumStatus = useSelector(
+  //   (state) => state.selectedArtist.albumInfo.status
+  // );
+  // const albumInfo = useSelector((state) =>
+  //   state.selectedArtist.albumInfo.albums.find(
+  //     (album) => album.id === parseInt(albumId)
+  //   )
+  // );
+  // const artistInfo = useSelector(
+  //   (state) => state.selectedArtist.artistInfo.artist
+  // );
+  // console.log("Album Page Info: ", albumInfo);
+  // console.log("Home Page Info: ", homeInfo);
+  // ===========================================
   const [albumData, setAlbumData] = useState({
     albumInfo: {},
     isLoading: true,
@@ -43,8 +63,10 @@ const AlbumPage = (props) => {
 
   return (
     <Container fluid className="AlbumPage">
-      {albumData.isLoading && <h1>Loading...</h1>}
-      {albumData.isError && <h1>There was an error</h1>}
+      {albumData.isLoading && <h2 className="p-4">Loading...</h2>}
+      {albumData.isError && (
+        <h1 className="p-4">There was an error retrieving the information</h1>
+      )}
       {!albumData.isLoading && (
         <>
           <Row className="backgnd">

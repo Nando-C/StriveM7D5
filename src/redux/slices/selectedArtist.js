@@ -8,7 +8,7 @@ const initialState = {
     error: null,
   },
   albumInfo: {
-    albums: {},
+    albums: [],
     status: "idle",
     error: null,
   },
@@ -42,7 +42,7 @@ const selectedArtistSlice = createSlice({
       .addCase(fetchArtist.fulfilled, (state, action) => {
         state.artistInfo.status = "succeded";
         state.artistInfo.artist = action.payload;
-        console.log("Artist Load: ", action.payload);
+        // console.log("Artist Payload: ", action.payload);
       })
       .addCase(fetchArtist.rejected, (state, action) => {
         state.artistInfo.status = "failed";

@@ -10,7 +10,6 @@ import "./Artist.css";
 const Artist = () => {
   const { artistId } = useParams();
 
-  // =============    Testing Redux   ==========
   const dispatch = useDispatch();
   const artistStatus = useSelector(
     (state) => state.selectedArtist.artistInfo.status
@@ -26,40 +25,6 @@ const Artist = () => {
       dispatch(fetchAlbums(artistId));
     }
   }, [artistId]);
-  // ===========================================
-
-  // const [artistData, setArtistData] = useState({
-  //   artist: {},
-  //   isLoading: true,
-  //   isError: false,
-  // });
-
-  // const fetchArtist = async () => {
-  //   // console.log("artistId: ", artistId);
-  //   // const artistId = this.props.match.params.artistId;
-  //   try {
-  //     const response = await fetch(
-  //       "https://striveschool-api.herokuapp.com/api/deezer/artist/" + artistId
-  //     );
-  //     const artistInfo = await response.json();
-  //     console.log(artistInfo);
-  //     setArtistData({
-  //       artist: artistInfo,
-  //       isLoading: false,
-  //       isError: false,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     setArtistData({
-  //       isLoading: false,
-  //       isError: true,
-  //     });
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchArtist();
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container fluid className="Artist">
