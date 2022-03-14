@@ -2,16 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import backend from "../../backend/axios";
 
 const initialState = {
-  albumInfo: {
-    album: {},
-    status: "idle",
-    error: null,
-  },
-  trackList: {
-    tracks: [],
-    status: "idle",
-    error: null,
-  },
+  album: {},
+  status: "idle",
+  error: null,
 };
 
 export const fetchAlbum = createAsyncThunk(
@@ -29,17 +22,17 @@ const selectedAlbumSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchAlbum.pending, (state, action) => {
-        state.albumInfo.status = "loading";
+        state.status = "loading";
       })
       .addCase(fetchAlbum.fulfilled, (state, action) => {
-        state.albumInfo.status = "succeded";
-        state.albumInfo.album = action.payload;
+        state.status = "succeded";
+        state.album = action.payload;
         console.log("Album Payload: ", action.payload);
       })
       .addCase(fetchAlbum.rejected, (state, action) => {
-        state.albumInfo.status = "failed";
-        state.albumInfo.error = action.error.message;
-        console.log(state.albumInfo.error);
+        state.status = "failed";
+        state.error = action.error.message;
+        console.log(state.error);
       });
   },
 });

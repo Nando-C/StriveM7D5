@@ -1,100 +1,96 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { fetchAlbum } from "../../../redux/slices/selectedAlbum";
 import TrackList from "../../TrackList/TrackList";
 import "./AlbumPage.css";
 
 const AlbumPage = (props) => {
   // =============    Testing Redux   ==========
-  // const { albumId } = useParams();
-  // const homeStatus = useSelector((state) => state.home.status);
-  // const homeInfo = useSelector((state) =>
-  //   state.home.albums.find((alb) => alb.album.id === parseInt(albumId))
-  // );
-  // const albumStatus = useSelector(
-  //   (state) => state.selectedArtist.albumInfo.status
-  // );
-  // const albumInfo = useSelector((state) =>
-  //   state.selectedArtist.albumList.albums.find(
-  //     (album) => album.id === parseInt(albumId)
-  //   )
-  // );
-  // const artistInfo = useSelector(
-  //   (state) => state.selectedArtist.artistInfo.artist
-  // );
-  // console.log("Album Page Info: ", albumInfo);
-  // console.log("Home Page Info: ", homeInfo);
-  // ===========================================
-  const [albumData, setAlbumData] = useState({
-    albumInfo: {},
-    isLoading: true,
-    isError: false,
-  });
-
   const { albumId } = useParams();
-  // console.log("albumId: ", albumId);
 
-  const fetchAlbumData = async () => {
-    try {
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/deezer/album/${albumId}`
-      );
-      const albumDataFetched = await response.json();
-      //   albumDataFetched.data.sort((a, b) => b.rank - a.rank);
-      console.log("albumDataFetched: ", albumDataFetched);
-      setAlbumData({
-        albumInfo: albumDataFetched,
-        isLoading: false,
-        isError: false,
-      });
-    } catch (error) {
-      console.log(error);
-      setAlbumData({
-        albumInfo: [],
-        isLoading: false,
-        isError: true,
-      });
-    }
-  };
+  const dispatch = useDispatch();
+  const albumStatus = useSelector((state) => state.selectedAlbum.status);
+  const albumSelected = useSelector((state) => state.selectedAlbum.album);
 
   useEffect(() => {
-    fetchAlbumData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if (parseInt(albumId) !== albumSelected.id) {
+      dispatch(fetchAlbum(albumId));
+    }
+  }, [albumId]);
+  // ===========================================
+
+  // const [albumData, setAlbumData] = useState({
+  //   albumInfo: {},
+  //   isLoading: true,
+  //   isError: false,
+  // });
+
+  // const { albumId } = useParams();
+  // console.log("albumId: ", albumId);
+
+  // const fetchAlbumData = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://striveschool-api.herokuapp.com/api/deezer/album/${albumId}`
+  //     );
+  //     const albumDataFetched = await response.json();
+  //     //   albumDataFetched.data.sort((a, b) => b.rank - a.rank);
+  //     console.log("albumDataFetched: ", albumDataFetched);
+  //     setAlbumData({
+  //       albumInfo: albumDataFetched,
+  //       isLoading: false,
+  //       isError: false,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     setAlbumData({
+  //       albumInfo: [],
+  //       isLoading: false,
+  //       isError: true,
+  //     });
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchAlbumData();
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container fluid className="AlbumPage">
-      {albumData.isLoading && <h2 className="p-4">Loading...</h2>}
-      {albumData.isError && (
+      {albumStatus === "loading" && <h2 className="p-4">Loading...</h2>}
+      {albumStatus === "failed" && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}
-      {!albumData.isLoading && (
+      {albumStatus === "succeded" && (
         <>
           <Row className="backgnd">
             <Row className="cover">
               <div className="cover-img">
-                <Image fluid src={albumData.albumInfo.cover_big} />
+                <Image fluid src={albumSelected.cover_big} />
               </div>
               <div className="cover-text">
                 <h2>ALBUM</h2>
-                <h1>{albumData.albumInfo.title}</h1>
+                <h1>{albumSelected.title}</h1>
                 <Row xs="auto" className="album-info">
                   <Col className="d-flex align-items-center p-0">
                     <div>
                       <Image
                         roundedCircle
-                        src={albumData.albumInfo.artist.picture_small}
+                        src={albumSelected.artist.picture_small}
                       />
-                      <Link to={`/Artist/${albumData.albumInfo.artist.id}`}>
-                        {albumData.albumInfo.artist.name}
+                      <Link to={`/Artist/${albumSelected.artist.id}`}>
+                        {albumSelected.artist.name}
                       </Link>
                     </div>
-                    <span>{albumData.albumInfo.release_date.slice(0, 4)}</span>
+                    <span>{albumSelected.release_date.slice(0, 4)}</span>
                   </Col>
                   <Col className="p-0">
                     <span>
-                      {albumData.albumInfo.nb_tracks} songs,{" "}
-                      {Math.floor(albumData.albumInfo.duration / 60)} min{" "}
-                      {albumData.albumInfo.duration % 60} sec
+                      {albumSelected.nb_tracks} songs,{" "}
+                      {Math.floor(albumSelected.duration / 60)} min{" "}
+                      {albumSelected.duration % 60} sec
                     </span>
                   </Col>
                 </Row>
@@ -163,7 +159,7 @@ const AlbumPage = (props) => {
                 </svg>
               </Col>
             </Row>
-            <TrackList albumId={albumData.albumInfo.id} />
+            <TrackList albumId={albumSelected.id} />
           </Row>
         </>
       )}
