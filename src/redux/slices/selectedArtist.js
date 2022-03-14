@@ -7,7 +7,7 @@ const initialState = {
     status: "idle",
     error: null,
   },
-  albumInfo: {
+  albumList: {
     albums: [],
     status: "idle",
     error: null,
@@ -23,7 +23,7 @@ export const fetchArtist = createAsyncThunk(
 );
 
 export const fetchAlbums = createAsyncThunk(
-  "albumInfo/fetchAlbums",
+  "albumList/fetchAlbums",
   async (artistId) => {
     const { data } = await backend.get(`/artist/${artistId}/albums`);
     return data;
@@ -50,17 +50,17 @@ const selectedArtistSlice = createSlice({
         console.log(state.artistInfo.error);
       })
       .addCase(fetchAlbums.pending, (state, action) => {
-        state.albumInfo.status = "loading";
+        state.albumList.status = "loading";
       })
       .addCase(fetchAlbums.fulfilled, (state, action) => {
-        state.albumInfo.status = "succeded";
-        state.albumInfo.albums = action.payload.data;
+        state.albumList.status = "succeded";
+        state.albumList.albums = action.payload.data;
         // console.log("Albums Payload: ", action.payload.data);
       })
       .addCase(fetchAlbums.rejected, (state, action) => {
-        state.albumInfo.status = "failed";
-        state.albumInfo.error = action.error.message;
-        console.log(state.albumInfo.error);
+        state.albumList.status = "failed";
+        state.albumList.error = action.error.message;
+        console.log(state.albumList.error);
       });
   },
 });

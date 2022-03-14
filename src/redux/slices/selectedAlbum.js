@@ -7,7 +7,7 @@ const initialState = {
     status: "idle",
     error: null,
   },
-  tracksInfo: {
+  trackList: {
     tracks: [],
     status: "idle",
     error: null,

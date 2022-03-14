@@ -5,10 +5,10 @@ import "./Albums.css";
 
 const Albums = () => {
   const albumStatus = useSelector(
-    (state) => state.selectedArtist.albumInfo.status
+    (state) => state.selectedArtist.albumList.status
   );
   const albumList = useSelector(
-    (state) => state.selectedArtist.albumInfo.albums
+    (state) => state.selectedArtist.albumList.albums
   );
 
   return (

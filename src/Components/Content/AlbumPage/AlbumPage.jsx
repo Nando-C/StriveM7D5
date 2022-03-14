@@ -15,7 +15,7 @@ const AlbumPage = (props) => {
   //   (state) => state.selectedArtist.albumInfo.status
   // );
   // const albumInfo = useSelector((state) =>
-  //   state.selectedArtist.albumInfo.albums.find(
+  //   state.selectedArtist.albumList.albums.find(
   //     (album) => album.id === parseInt(albumId)
   //   )
   // );
