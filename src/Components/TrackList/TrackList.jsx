@@ -1,49 +1,59 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./TrackList.css";
 
 const TrackList = (props) => {
-  const [trackList, setTrackList] = useState({
-    tracks: [],
-    isLoading: true,
-    isError: false,
-  });
+  // =============    Testing Redux   ==========
+  const albumStatus = useSelector((state) => state.selectedAlbum.status);
+  const trackList = useSelector(
+    (state) => state.selectedAlbum.album.tracks.data
+  );
+  // ===========================================
 
-  const fetchAlbumData = async () => {
-    try {
-      const albumId = props.albumId;
-      console.log("albumId: ", albumId);
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/deezer/album/${albumId}`
-      );
-      const albumDataFetched = await response.json();
-      //   albumDataFetched.data.sort((a, b) => b.rank - a.rank);
-      console.log("albumDataFetched: ", albumDataFetched);
-      setTrackList({
-        tracks: albumDataFetched.tracks.data,
-        isLoading: false,
-        isError: false,
-      });
-    } catch (error) {
-      console.log(error);
-      setTrackList({
-        tracks: [],
-        isLoading: false,
-        isError: true,
-      });
-    }
-  };
+  // const [trackList, setTrackList] = useState({
+  //   tracks: [],
+  //   isLoading: true,
+  //   isError: false,
+  // });
 
-  useEffect(() => {
-    fetchAlbumData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // const fetchAlbumData = async () => {
+  //   try {
+  //     const albumId = props.albumId;
+  //     console.log("albumId: ", albumId);
+  //     const response = await fetch(
+  //       `https://striveschool-api.herokuapp.com/api/deezer/album/${albumId}`
+  //     );
+  //     const albumDataFetched = await response.json();
+  //     //   albumDataFetched.data.sort((a, b) => b.rank - a.rank);
+  //     console.log("albumDataFetched: ", albumDataFetched);
+  //     setTrackList({
+  //       tracks: albumDataFetched.tracks.data,
+  //       isLoading: false,
+  //       isError: false,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     setTrackList({
+  //       tracks: [],
+  //       isLoading: false,
+  //       isError: true,
+  //     });
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchAlbumData();
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container className="TrackList" fluid>
-      {trackList.isLoading && <h1>Loading...</h1>}
-      {trackList.isError && <h1>There was an error</h1>}
-      {!trackList.isLoading && (
+      {albumStatus === "loading" && <h2 className="p-4">Loading...</h2>}
+      {albumStatus === "failed" && (
+        <h1 className="p-4">There was an error retrieving the information</h1>
+      )}
+      {albumStatus === "succeded" && (
         <Container className="table" fluid>
           <Row className="table-header">
             <Col xs={1}>
@@ -69,7 +79,7 @@ const TrackList = (props) => {
               </div>
             </Col>
           </Row>
-          {trackList.tracks.map((track, i) => (
+          {trackList?.map((track, i) => (
             <Row key={track.id} className="table-row">
               <Col className="d-flex flex-row justify-content-center" xs={1}>
                 <div className="track-number">{i + 1}</div>
