@@ -2,23 +2,20 @@ import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { fetchHomeAlbums } from "../../../redux/slices/home";
-// import CardsDeck from "../../CardsDeck";
+import { fetchHomeTrackList } from "../../../redux/slices/home";
 import AlbumDeck from "../../AlbumDeck";
 import "./Home.css";
 
 const Home = () => {
-  // ============== Testing Redux
   const dispatch = useDispatch();
 
-  const albumStatus = useSelector((state) => state.home.status);
+  const trackListStatus = useSelector((state) => state.home.status);
 
   useEffect(() => {
-    if (albumStatus === "idle") {
-      dispatch(fetchHomeAlbums());
+    if (trackListStatus === "idle") {
+      dispatch(fetchHomeTrackList());
     }
-  }, [albumStatus, dispatch]);
-  // ==============
+  }, [trackListStatus, dispatch]);
 
   return (
     <>

@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import backend from "../../backend/axios";
 
 const initialState = {
-  albums: [],
+  trackList: [],
   status: "idle",
   error: null,
 };
 
-export const fetchHomeAlbums = createAsyncThunk(
-  "home/fetchHomeAlbums",
+export const fetchHomeTrackList = createAsyncThunk(
+  "home/fetchHomeTrackList",
   async () => {
     const { data } = await backend.get("/search?q=the");
     return data;
@@ -21,14 +21,14 @@ const homeSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchHomeAlbums.pending, (state, action) => {
+      .addCase(fetchHomeTrackList.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchHomeAlbums.fulfilled, (state, action) => {
+      .addCase(fetchHomeTrackList.fulfilled, (state, action) => {
         state.status = "succeded";
-        state.albums = action.payload.data;
+        state.trackList = action.payload.data;
       })
-      .addCase(fetchHomeAlbums.rejected, (state, action) => {
+      .addCase(fetchHomeTrackList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         console.log(state.error);
@@ -38,7 +38,4 @@ const homeSlice = createSlice({
 
 export default homeSlice.reducer;
 
-export const selectAllAlbums = (state) => state.home.albums;
-
-// export const selectAlbumById = (state, albumId) =>
-//   state.home.albums.find((alb) => alb.album.id === albumId);
+export const selectTrackList = (state) => state.home.trackList;
