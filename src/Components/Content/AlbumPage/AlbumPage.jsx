@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -6,8 +6,7 @@ import { fetchAlbum } from "../../../redux/slices/selectedAlbum";
 import TrackList from "../../TrackList/TrackList";
 import "./AlbumPage.css";
 
-const AlbumPage = (props) => {
-  // =============    Testing Redux   ==========
+const AlbumPage = () => {
   const { albumId } = useParams();
 
   const dispatch = useDispatch();
@@ -18,44 +17,7 @@ const AlbumPage = (props) => {
     if (parseInt(albumId) !== albumSelected.id) {
       dispatch(fetchAlbum(albumId));
     }
-  }, [albumId]);
-  // ===========================================
-
-  // const [albumData, setAlbumData] = useState({
-  //   albumInfo: {},
-  //   isLoading: true,
-  //   isError: false,
-  // });
-
-  // const { albumId } = useParams();
-  // console.log("albumId: ", albumId);
-
-  // const fetchAlbumData = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://striveschool-api.herokuapp.com/api/deezer/album/${albumId}`
-  //     );
-  //     const albumDataFetched = await response.json();
-  //     //   albumDataFetched.data.sort((a, b) => b.rank - a.rank);
-  //     console.log("albumDataFetched: ", albumDataFetched);
-  //     setAlbumData({
-  //       albumInfo: albumDataFetched,
-  //       isLoading: false,
-  //       isError: false,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     setAlbumData({
-  //       albumInfo: [],
-  //       isLoading: false,
-  //       isError: true,
-  //     });
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchAlbumData();
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [albumId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container fluid className="AlbumPage">
@@ -159,7 +121,7 @@ const AlbumPage = (props) => {
                 </svg>
               </Col>
             </Row>
-            <TrackList albumId={albumSelected.id} />
+            <TrackList />
           </Row>
         </>
       )}

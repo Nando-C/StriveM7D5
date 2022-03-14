@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -24,7 +24,7 @@ const Artist = () => {
       dispatch(fetchArtist(artistId));
       dispatch(fetchAlbums(artistId));
     }
-  }, [artistId]);
+  }, [artistId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container fluid className="Artist">

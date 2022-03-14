@@ -1,51 +1,13 @@
-import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./TrackList.css";
 
-const TrackList = (props) => {
-  // =============    Testing Redux   ==========
+const TrackList = () => {
   const albumStatus = useSelector((state) => state.selectedAlbum.status);
   const trackList = useSelector(
     (state) => state.selectedAlbum.album.tracks.data
   );
-  // ===========================================
-
-  // const [trackList, setTrackList] = useState({
-  //   tracks: [],
-  //   isLoading: true,
-  //   isError: false,
-  // });
-
-  // const fetchAlbumData = async () => {
-  //   try {
-  //     const albumId = props.albumId;
-  //     console.log("albumId: ", albumId);
-  //     const response = await fetch(
-  //       `https://striveschool-api.herokuapp.com/api/deezer/album/${albumId}`
-  //     );
-  //     const albumDataFetched = await response.json();
-  //     //   albumDataFetched.data.sort((a, b) => b.rank - a.rank);
-  //     console.log("albumDataFetched: ", albumDataFetched);
-  //     setTrackList({
-  //       tracks: albumDataFetched.tracks.data,
-  //       isLoading: false,
-  //       isError: false,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     setTrackList({
-  //       tracks: [],
-  //       isLoading: false,
-  //       isError: true,
-  //     });
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchAlbumData();
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container className="TrackList" fluid>

@@ -41,7 +41,7 @@ const Search = () => {
     } else {
       fetchAlbum(query);
     }
-  }, [query]);
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container className="Search">
