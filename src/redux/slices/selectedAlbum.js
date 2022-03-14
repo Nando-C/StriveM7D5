@@ -27,7 +27,7 @@ const selectedAlbumSlice = createSlice({
       .addCase(fetchAlbum.fulfilled, (state, action) => {
         state.status = "succeded";
         state.album = action.payload;
-        console.log("Album Payload: ", action.payload);
+        // console.log("Album Payload: ", action.payload);
       })
       .addCase(fetchAlbum.rejected, (state, action) => {
         state.status = "failed";

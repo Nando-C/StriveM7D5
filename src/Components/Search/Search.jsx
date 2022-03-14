@@ -17,7 +17,7 @@ const Search = () => {
       const response = await fetch(`${baseURL}/search?q=${query}`);
       if (response.ok) {
         const albumResponse = await response.json();
-        console.log("albumResponse: ", albumResponse.data);
+        // console.log("albumResponse: ", albumResponse.data);
         setAlbumInfo({
           albumList: albumResponse.data,
           isLoading: false,

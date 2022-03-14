@@ -2,7 +2,11 @@ import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchAlbums, fetchArtist } from "../../../redux/slices/selectedArtist";
+import {
+  fetchAlbums,
+  fetchArtist,
+  fetchArtistTopTracks,
+} from "../../../redux/slices/selectedArtist";
 import Albums from "../Albums/Albums";
 import Popular from "../Popular/Popular";
 import "./Artist.css";
@@ -23,6 +27,7 @@ const Artist = () => {
     if (parseInt(artistId) !== artistSelected.id) {
       dispatch(fetchArtist(artistId));
       dispatch(fetchAlbums(artistId));
+      dispatch(fetchArtistTopTracks(artistId));
     }
   }, [artistId]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -89,7 +94,7 @@ const Artist = () => {
                 </svg>
               </Col>
             </Row>
-            <Popular artistId={artistId} />
+            <Popular />
             <Albums />
           </Row>
         </>

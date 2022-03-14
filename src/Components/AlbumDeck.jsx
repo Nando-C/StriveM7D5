@@ -9,8 +9,6 @@ const AlbumDeck = () => {
   const trackListStatus = useSelector((state) => state.home.status);
   const error = useSelector((state) => state.home.error);
 
-  console.log("From Redux: ", trackList);
-
   return (
     <>
       {trackListStatus === "loading" && <h2 className="p-4">Loading...</h2>}
