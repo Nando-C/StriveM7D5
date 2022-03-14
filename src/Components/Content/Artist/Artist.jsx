@@ -1,57 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import {
+  fetchAlbums,
+  fetchArtist,
+  fetchArtistTopTracks,
+} from "../../../redux/slices/selectedArtist";
 import Albums from "../Albums/Albums";
 import Popular from "../Popular/Popular";
 import "./Artist.css";
 
 const Artist = () => {
-  const [artistData, setArtistData] = useState({
-    artist: {},
-    isLoading: true,
-    isError: false,
-  });
-
   const { artistId } = useParams();
-  const fetchArtist = async () => {
-    console.log("artistId: ", artistId);
-    // const artistId = this.props.match.params.artistId;
-    try {
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/deezer/artist/" + artistId
-      );
-      const artistInfo = await response.json();
-      console.log(artistInfo);
-      setArtistData({
-        artist: artistInfo,
-        isLoading: false,
-        isError: false,
-      });
-    } catch (error) {
-      console.log(error);
-      setArtistData({
-        isLoading: false,
-        isError: true,
-      });
-    }
-  };
+
+  const dispatch = useDispatch();
+  const artistStatus = useSelector(
+    (state) => state.selectedArtist.artistInfo.status
+  );
+
+  const artistSelected = useSelector(
+    (state) => state.selectedArtist.artistInfo.artist
+  );
 
   useEffect(() => {
-    fetchArtist();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if (parseInt(artistId) !== artistSelected.id) {
+      dispatch(fetchArtist(artistId));
+      dispatch(fetchAlbums(artistId));
+      dispatch(fetchArtistTopTracks(artistId));
+    }
+  }, [artistId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container fluid className="Artist">
-      {artistData.isLoading && <h1>Loading...</h1>}
-      {artistData.isError && <h1>There was an error</h1>}
-      {!artistData.isLoading && (
+      {artistStatus === "loading" && <h2 className="p-4">Loading...</h2>}
+      {artistStatus === "failed" && (
+        <h1 className="p-4">There was an error retrieving the information</h1>
+      )}
+      {artistStatus === "succeded" && (
         <>
           <Row className="banner">
-            <Image src={artistData.artist.picture_xl} />
+            <Image src={artistSelected.picture_xl} />
             <Row className="banner-text flex-column justify-content-end">
-              <h1>{artistData.artist.name}</h1>
+              <h1>{artistSelected.name}</h1>
               <h4>
-                {artistData.artist.nb_fan.toLocaleString()} Monthly Listeners
+                {artistSelected.nb_fan.toLocaleString()} Monthly Listeners
               </h4>
             </Row>
             <Row className="mid-bg-colour"></Row>
@@ -96,19 +89,13 @@ const Artist = () => {
               </Col>
               <Col className="follow-btn">FOLLOW</Col>
               <Col className="ellipsis-btn">
-                <svg
-                  role="img"
-                  height="32"
-                  width="32"
-                  viewBox="0 0 32 32"
-                  class="Svg-sc-1bi12j5-0 gSLhUO"
-                >
+                <svg role="img" height="32" width="32" viewBox="0 0 32 32">
                   <path d="M5.998 13.999A2 2 0 105.999 18a2 2 0 00-.001-4zm10.001 0A2 2 0 1016 18a2 2 0 000-4zm10.001 0A2 2 0 1026.001 18 2 2 0 0026 14z"></path>
                 </svg>
               </Col>
             </Row>
-            <Popular artistId={artistId} />
-            <Albums artistId={artistId} />
+            <Popular />
+            <Albums />
           </Row>
         </>
       )}

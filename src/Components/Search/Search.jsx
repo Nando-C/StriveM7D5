@@ -4,8 +4,9 @@ import AlbumCard from "../Content/AlbumCard/AlbumCard";
 import "./Search.css";
 
 const Search = () => {
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
   const [query, setQuery] = useState("");
-  const [albumInfo, setAlabumInfo] = useState({
+  const [albumInfo, setAlbumInfo] = useState({
     albumList: [],
     isLoading: true,
     isError: false,
@@ -13,28 +14,26 @@ const Search = () => {
 
   const fetchAlbum = async (query = "i") => {
     try {
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`
-      );
-      const albumResponse = await response.json();
-      console.log("albumResponse: ", albumResponse);
-      setAlabumInfo({
-        albumList: albumResponse.data,
-        isLoading: false,
-        isError: false,
-      });
+      const response = await fetch(`${baseURL}/search?q=${query}`);
+      if (response.ok) {
+        const albumResponse = await response.json();
+        // console.log("albumResponse: ", albumResponse.data);
+        setAlbumInfo({
+          albumList: albumResponse.data,
+          isLoading: false,
+          isError: false,
+        });
+      } else {
+        console.log("There was an error retrieving the information!");
+        setAlbumInfo({
+          isLoading: false,
+          isError: true,
+        });
+      }
     } catch (error) {
       console.log(error);
-      setAlabumInfo({
-        isLoading: false,
-        isError: true,
-      });
     }
   };
-
-  useEffect(() => {
-    fetchAlbum();
-  }, []);
 
   useEffect(() => {
     if (query === "") {
@@ -42,7 +41,7 @@ const Search = () => {
     } else {
       fetchAlbum(query);
     }
-  }, [query]);
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container className="Search">
@@ -60,7 +59,7 @@ const Search = () => {
                   role="img"
                   height="24"
                   width="24"
-                  class="Svg-sc-1bi12j5-0 gSLhUO _pxQadHFO3vmadLs8OPr"
+                  // class="Svg-sc-1bi12j5-0 gSLhUO _pxQadHFO3vmadLs8OPr"
                   aria-hidden="true"
                   viewBox="0 0 24 24"
                 >
@@ -71,19 +70,24 @@ const Search = () => {
           </Form>
         </Col>
       </Row>
-      {query === "" && (
-        <Row className="pt-3">
-          <h2>Trending</h2>
-        </Row>
+      {albumInfo.isLoading && <h2 className="p-4">Loading...</h2>}
+      {albumInfo.isError && (
+        <h1 className="p-4">There was an error retrieving the information</h1>
       )}
-      <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 py-4">
-        {albumInfo.isLoading && <h1>Loading...</h1>}
-        {albumInfo.isError && <h1>There was an error</h1>}
-        {albumInfo.isLoading === false &&
-          albumInfo.albumList.map((album) => (
-            <AlbumCard key={album.id} album={album} source="home" />
-          ))}
-      </Row>
+      {!albumInfo.isLoading && !albumInfo.isError && (
+        <>
+          {query === "" && !albumInfo.isLoading && !albumInfo.isError && (
+            <Row className="pt-3">
+              <h2>Trending</h2>
+            </Row>
+          )}
+          <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 py-4">
+            {albumInfo.albumList.map((album) => (
+              <AlbumCard key={album.id} album={album} source="home" />
+            ))}
+          </Row>
+        </>
+      )}
     </Container>
   );
 };
