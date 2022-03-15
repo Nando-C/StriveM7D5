@@ -121,7 +121,7 @@ The work flow of this application is similar to the real spotify. However, not a
 
 ## Player
 
-The option to play any available track (or a sample of it, to be more precise) will be available in the next release. Watch this space! 😉
+The option to play any available track (or a sample of it, to be more precise) will be available in the next release. Watch this space! 🛠
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
