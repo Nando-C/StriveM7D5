@@ -36,6 +36,7 @@
         <li><a href="#search">Search</a></li>
       </ul>
     </li>
+    <li><a href="#player">Player</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
