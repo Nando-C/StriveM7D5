@@ -44,7 +44,7 @@
 
 ## About The Project
 
-[public/nandotify-screenshot.png](https://nandotify.vercel.app)
+<img src="public/nandotify-screenshot.png" alt="album">
 
 This is the Front-End for a Spotify clone project. Started as part of the Full Stack Master Camp at Strive School on another repo, during the first modules (one of my first real world projects), but then I decided to create this new repo and built it again from scratch, as I have a much better understanding of the technologies and code practises.
 
