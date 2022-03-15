@@ -1,11 +1,9 @@
-# StriveM7D5
-
 <div id="top"></div>
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Nando-C/Buildweek2">
+  <a href="https://github.com/Nando-C/StriveM7D5">
     <img src="public/spotify-logo.png" alt="Logo" height="100">
   </a>
 
@@ -63,7 +61,31 @@ All the information is retrieved from the dezzer API.
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+## App Usage
+
+The work flow of this application is similar to the real spotify
+
+### Home
+
+When the app is openend you will land in the home page.
+Here you have some recomendations of the day.
+By clicking on the album cover or the song title, you will be directed to the album page.
+
+<img src="public/assets/home-album.gif" alt="to-album">
+
+Otherwise, clicking on the artist name will take you to the artist page.
+
+<img src="public/assets/home-artist.gif" alt="to-artist">
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Search
+
+Go to the search page by clicking on the search option on the navigation bar.
+Here you have a preselection of "trending" tracks.
+To perform a search, start typing the name of your favorite song or artist on the search box.
+
+<img src="public/assets/search.gif" alt="search">
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
