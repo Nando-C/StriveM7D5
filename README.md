@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Nando-C/StriveM7D5">
-    <img src="public/spotify-logo.png" alt="Logo" height="100">
+    <img src="public/assets/spotify-logo.png" alt="Logo" height="100">
   </a>
 
 <h3 align="center">Spotify - Clone  -> [Front-End]</h3>
@@ -45,7 +45,7 @@
 
 ## About The Project
 
-<img src="public/nandotify-screenshot.png" alt="album">
+<img src="public/assets/nandotify-screenshot.png" alt="album">
 
 A Spotify clone project to put in practise our Front-End skills, as part of the Full Stack Master Camp at Strive School. This was my first real world project, started during the first modules of the program, but then I decided to create this new repo and built it again from scratch, as I have a much better understanding of the technologies and code practises.
 
