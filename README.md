@@ -65,15 +65,15 @@ All the information is retrieved from the dezzer API.
 
 Part of the objectives for this project was to consolidate my knowledge using Redux and Redux Tool Kit. So I created three Redux slices to handle the state on this project.
 
-- home
+- Home
 
     <img src="public/assets/redux-home.png" alt="redux-home">
 
-- selectedArtist
+- Artist
 
     <img src="public/assets/redux-artist.png" alt="redux-artist">
 
-- selectedAlbum: to handle all the information related to the album selected.
+- Album
 
     <img src="public/assets/redux-album.png" alt="redux-album">
 
@@ -81,7 +81,7 @@ Part of the objectives for this project was to consolidate my knowledge using Re
 
     <img src="public/assets/redux-graph.png" alt="redux-state">
 
-I did not see the point of including the search information in the redux store, so this is managed on the component's local state.
+I did not see the point of including the search page information in the redux store, so this is managed on the component's local state.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
