@@ -27,6 +27,7 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#redux-store">Redux Store</a>
       </ul>
     </li>
     <li><a href="#app-use">App Use</a>
@@ -35,7 +36,6 @@
         <li><a href="#search">Search</a></li>
       </ul>
     </li>
-    <li><a href="#redux-store">Redux Store</a>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -58,6 +58,30 @@ All the information is retrieved from the dezzer API.
 - [React.js](https://reactjs.org/)
 - [Bootstrap](https://getbootstrap.com)
 - [Redux](https://redux.js.org/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Redux Store
+
+Part of the objectives for this project was to consolidate my knowledge using Redux and Redux Tool Kit. So I created three Redux slices to handle the state on this project.
+
+- home
+
+    <img src="public/assets/redux-home.png" alt="redux-home">
+
+- selectedArtist
+
+    <img src="public/assets/redux-artist.png" alt="redux-artist">
+
+- selectedAlbum: to handle all the information related to the album selected.
+
+    <img src="public/assets/redux-album.png" alt="redux-album">
+
+- A full picture of the state
+
+    <img src="public/assets/redux-graph.png" alt="redux-state">
+
+I did not see the point of including the search information in the redux store, so this is managed on the component's local state.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -89,21 +113,6 @@ The work flow of this application is similar to the real spotify. However, not a
     <img src="public/assets/search.gif" alt="search">
 
 - Once you have found what you are looking for, access the content in the same way as in the home page.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-## Redux Store
-
-Part of this project objectives was to experiment with Redux and Redux Tool Kit.
-So I have created 3 slices:
-
-- home: to fetch the info just once and store it to be reused everytime needed.
-- selectedArtist: to handle all the information related to the artist selected.
-- selectedAlbum: to handle all the information related to the album selected.
-
-    <img src="public/assets/redux-graph.png" alt="redux-graph">
-
-I did not see the point of including the search information in the redux store, that is managed on the local state.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
