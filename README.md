@@ -29,12 +29,13 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li><a href="#app-usage">App Usage</a>
+    <li><a href="#app-use">App Use</a>
      <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#search">Search</a></li>
       </ul>
     </li>
+    <li><a href="#redux-store">Redux Store</a>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -45,7 +46,7 @@
 
 <img src="public/nandotify-screenshot.png" alt="album">
 
-This is the Front-End for a Spotify clone project. Started as part of the Full Stack Master Camp at Strive School on another repo, during the first modules (one of my first real world projects), but then I decided to create this new repo and built it again from scratch, as I have a much better understanding of the technologies and code practises.
+A Spotify clone project to put in practise our Front-End skills, as part of the Full Stack Master Camp at Strive School. This was my first real world project, started during the first modules of the program, but then I decided to create this new repo and built it again from scratch, as I have a much better understanding of the technologies and code practises.
 
 All the information is retrieved from the dezzer API.
 
@@ -62,14 +63,13 @@ All the information is retrieved from the dezzer API.
 
 <!-- USAGE EXAMPLES -->
 
-## App Usage
+## App Use
 
-The work flow of this application is similar to the real spotify
+The work flow of this application is similar to the real spotify. However, not all features have been implemented, yet.
 
 ### Home
 
-- When the app is openend you will land in the home page.
-- Here you have some recomendations of the day.
+- Home is the landing page, you will start from here, where you have some recomendations of the day.
 - By clicking on the album cover or the song title, you will be directed to the album page.
 
     <img src="public/assets/home-album.gif" alt="to-album">
@@ -83,10 +83,27 @@ The work flow of this application is similar to the real spotify
 ### Search
 
 - Go to the search page by clicking on the search option on the navigation bar.
-- Here you have a preselection of "trending" tracks.
+- Here you have a pre-selection of "trending" tracks.
 - To perform a search, start typing the name of your favorite song or artist on the search box.
 
     <img src="public/assets/search.gif" alt="search">
+
+- Once you have found what you are looking for, access the content in the same way as in the home page.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Redux Store
+
+Part of this project objectives was to experiment with Redux and Redux Tool Kit.
+So I have created 3 slices:
+
+- home: to fetch the info just once and store it to be reused everytime needed.
+- selectedArtist: to handle all the information related to the artist selected.
+- selectedAlbum: to handle all the information related to the album selected.
+
+    <img src="public/assets/redux-graph.png" alt="redux-graph">
+
+I did not see the point of including the search information in the redux store, that is managed on the local state.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
