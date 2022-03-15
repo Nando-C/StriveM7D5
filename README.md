@@ -118,6 +118,12 @@ The work flow of this application is similar to the real spotify. However, not a
 
 <!-- CONTACT -->
 
+## Player
+
+The option to play any available track (or a sample of it, to be more precise) will be available in the next release. Watch this space! 😉
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Contact
 
 [@Nando](https://hernando-crespo.vercel.app/) - Get in touch and let me know what do you think of this project! 😉
