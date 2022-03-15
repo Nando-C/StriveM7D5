@@ -29,9 +29,10 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a>
+    <li><a href="#app-usage">App Usage</a>
      <ul>
-        <li><a href="#">feature</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#search">Search</a></li>
       </ul>
     </li>
     <li><a href="#contact">Contact</a></li>
@@ -67,25 +68,25 @@ The work flow of this application is similar to the real spotify
 
 ### Home
 
-When the app is openend you will land in the home page.
-Here you have some recomendations of the day.
-By clicking on the album cover or the song title, you will be directed to the album page.
+- When the app is openend you will land in the home page.
+- Here you have some recomendations of the day.
+- By clicking on the album cover or the song title, you will be directed to the album page.
 
-<img src="public/assets/home-album.gif" alt="to-album">
+    <img src="public/assets/home-album.gif" alt="to-album">
 
-Otherwise, clicking on the artist name will take you to the artist page.
+- Otherwise, clicking on the artist name will take you to the artist page.
 
-<img src="public/assets/home-artist.gif" alt="to-artist">
+    <img src="public/assets/home-artist.gif" alt="to-artist">
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Search
 
-Go to the search page by clicking on the search option on the navigation bar.
-Here you have a preselection of "trending" tracks.
-To perform a search, start typing the name of your favorite song or artist on the search box.
+- Go to the search page by clicking on the search option on the navigation bar.
+- Here you have a preselection of "trending" tracks.
+- To perform a search, start typing the name of your favorite song or artist on the search box.
 
-<img src="public/assets/search.gif" alt="search">
+    <img src="public/assets/search.gif" alt="search">
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
