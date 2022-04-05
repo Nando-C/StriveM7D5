@@ -1,10 +1,81 @@
+import { useEffect, useRef, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import "./PlayerControls.css";
 
 const PlayerControls = () => {
+  // state
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  // references
+  const audioPlayer = useRef(); // reference our audio component
+  const progressBar = useRef(); // reference our progress bar
+  const animationRef = useRef(); // reference the animation of progress bar
+
+  useEffect(() => {
+    const seconds = Math.floor(audioPlayer.current.duration);
+    setDuration(seconds);
+    progressBar.current.max = seconds;
+  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
+
+  const calculateTime = (secs) => {
+    const minutes = Math.floor(secs / 60);
+    const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const seconds = Math.floor(secs % 60);
+    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    return `${returnedMinutes}:${returnedSeconds}`;
+  };
+
+  const togglePlayPause = () => {
+    const prevValue = isPlaying;
+    setIsPlaying(!prevValue);
+    if (!prevValue) {
+      audioPlayer.current.play();
+      animationRef.current = requestAnimationFrame(whilePlaying);
+    } else {
+      audioPlayer.current.pause();
+      cancelAnimationFrame(animationRef.current);
+    }
+  };
+
+  const whilePlaying = () => {
+    progressBar.current.value = audioPlayer.current.currentTime;
+    animationRef.current = requestAnimationFrame(whilePlaying);
+    changePlayerCurrentTime();
+  };
+
+  const changeRange = () => {
+    audioPlayer.current.currentTime = progressBar.current.value;
+    changePlayerCurrentTime();
+  };
+
+  const changePlayerCurrentTime = () => {
+    setCurrentTime(progressBar.current.value);
+    progressBar.current.style.setProperty(
+      "--seek-before-width",
+      `${(progressBar.current.value / duration) * 100}%`
+    );
+  };
+
+  const backfive = () => {
+    progressBar.current.value = parseInt(progressBar.current.value) - 5;
+    changeRange();
+  };
+
+  const forwardfive = () => {
+    progressBar.current.value = parseInt(progressBar.current.value) + 5;
+    changeRange();
+  };
+
   return (
     <>
       <Row className="PlayerControls flex-column justify-content-center align-items-center">
+        <audio
+          ref={audioPlayer}
+          src="https://cdns-preview-a.dzcdn.net/stream/c-a840ca0ecb57afc73f45fb4114beb724-4.mp3"
+          preload="metadata"
+        ></audio>
         <Row className="player-buttons w-100 mb-sm-2">
           <Col className="d-flex justify-content-end p-0">
             {/* <Row className="left-buttons justify-content-end"> */}
@@ -22,7 +93,7 @@ const PlayerControls = () => {
                 ></path>
               </svg>
             </div>
-            <div>
+            <div onClick={backfive}>
               <svg
                 role="img"
                 height="16"
@@ -39,7 +110,7 @@ const PlayerControls = () => {
             {/* </Row> */}
           </Col>
           <Col className="col-play d-flex justify-content-center p-0">
-            <div className="play">
+            <div className="play" onClick={togglePlayPause}>
               <svg
                 role="img"
                 height="16"
@@ -47,13 +118,16 @@ const PlayerControls = () => {
                 viewBox="0 0 16 16"
                 // class="Svg-sc-1bi12j5-0 gSLhUO"
               >
-                <path d="M4.018 14L14.41 8 4.018 2z"></path>
-                {/* <path d="M3 2h3v12H3zm7 0h3v12h-3z"></path> */}
+                {isPlaying ? (
+                  <path d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
+                ) : (
+                  <path d="M4.018 14L14.41 8 4.018 2z"></path>
+                )}
               </svg>
             </div>
           </Col>
           <Col className="d-flex justify-content-start p-0">
-            <div>
+            <div onClick={forwardfive}>
               <svg
                 role="img"
                 height="16"
@@ -84,14 +158,23 @@ const PlayerControls = () => {
           </Col>
         </Row>
         <Row className="Progress-Bar d-none d-sm-flex">
-          <Col sm={2} className="text-right p-0">
-            <span>0:00</span>
+          <Col sm={2} className="text-end p-0">
+            <span>{calculateTime(currentTime)} </span>
           </Col>
           <Col>
-            <div className="bar"></div>
+            <div>
+              <input
+                type="range"
+                className="bar"
+                defaultValue="0"
+                ref={progressBar}
+                onChange={changeRange}
+                step="0.05"
+              />
+            </div>
           </Col>
-          <Col sm={2} className="text-left p-0">
-            <span>4:10</span>
+          <Col sm={2} className="text-start p-0">
+            <span>{!isNaN(duration) && calculateTime(duration)}</span>
           </Col>
         </Row>
       </Row>
