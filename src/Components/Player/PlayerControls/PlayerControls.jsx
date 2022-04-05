@@ -13,11 +13,17 @@ const PlayerControls = () => {
   const progressBar = useRef(); // reference our progress bar
   const animationRef = useRef(); // reference the animation of progress bar
 
-  useEffect(() => {
+  const onLoadedMetadata = () => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
     progressBar.current.max = seconds;
-  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
+  };
+
+  // useEffect(() => {
+  //   const seconds = Math.floor(audioPlayer.current.duration);
+  //   setDuration(seconds);
+  //   progressBar.current.max = seconds;
+  // }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);
@@ -40,9 +46,13 @@ const PlayerControls = () => {
   };
 
   const whilePlaying = () => {
-    progressBar.current.value = audioPlayer.current.currentTime;
-    animationRef.current = requestAnimationFrame(whilePlaying);
-    changePlayerCurrentTime();
+    if (!audioPlayer.current.ended) {
+      progressBar.current.value = audioPlayer.current.currentTime;
+      animationRef.current = requestAnimationFrame(whilePlaying);
+      changePlayerCurrentTime();
+    } else {
+      setIsPlaying(false);
+    }
   };
 
   const changeRange = () => {
@@ -75,10 +85,10 @@ const PlayerControls = () => {
           ref={audioPlayer}
           src="https://cdns-preview-a.dzcdn.net/stream/c-a840ca0ecb57afc73f45fb4114beb724-4.mp3"
           preload="metadata"
+          onLoadedMetadata={onLoadedMetadata}
         ></audio>
         <Row className="player-buttons w-100 mb-sm-2">
           <Col className="d-flex justify-content-end p-0">
-            {/* <Row className="left-buttons justify-content-end"> */}
             <div>
               <svg
                 role="img"
@@ -94,30 +104,17 @@ const PlayerControls = () => {
               </svg>
             </div>
             <div onClick={backfive}>
-              <svg
-                role="img"
-                height="16"
-                width="16"
-                viewBox="0 0 16 16"
-                // class="Svg-sc-1bi12j5-0 gSLhUO"
-              >
+              <svg role="img" height="16" width="16" viewBox="0 0 16 16">
                 <path
                   //   fill="#b3b3b3"
                   d="M13 2.5L5 7.119V3H3v10h2V8.881l8 4.619z"
                 ></path>
               </svg>
             </div>
-            {/* </Row> */}
           </Col>
           <Col className="col-play d-flex justify-content-center p-0">
             <div className="play" onClick={togglePlayPause}>
-              <svg
-                role="img"
-                height="16"
-                width="16"
-                viewBox="0 0 16 16"
-                // class="Svg-sc-1bi12j5-0 gSLhUO"
-              >
+              <svg role="img" height="16" width="16" viewBox="0 0 16 16">
                 {isPlaying ? (
                   <path d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
                 ) : (
