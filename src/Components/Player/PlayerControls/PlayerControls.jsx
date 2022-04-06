@@ -1,12 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setIsPlaying,
+  setDuration,
+  setCurrentTime,
+} from "../../../redux/slices/currentSong";
 import "./PlayerControls.css";
 
 const PlayerControls = () => {
   // state
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  // const [duration, setDuration] = useState(0);
+  // const [currentTime, setCurrentTime] = useState(0);
+  // ==========  Testing Redux ==============
+  const track = useSelector((state) => state.currentSong.track);
+  const isPlaying = useSelector((state) => state.currentSong.isPlaying);
+  const duration = useSelector((state) => state.currentSong.duration);
+  const currentTime = useSelector((state) => state.currentSong.currentTime);
+
+  const dispatch = useDispatch();
+  // ========================================
 
   // references
   const audioPlayer = useRef(); // reference our audio component
@@ -15,7 +29,7 @@ const PlayerControls = () => {
 
   const onLoadedMetadata = () => {
     const seconds = Math.floor(audioPlayer.current.duration);
-    setDuration(seconds);
+    dispatch(setDuration(seconds));
     progressBar.current.max = seconds;
   };
 
@@ -35,7 +49,7 @@ const PlayerControls = () => {
 
   const togglePlayPause = () => {
     const prevValue = isPlaying;
-    setIsPlaying(!prevValue);
+    dispatch(setIsPlaying(!prevValue));
     if (!prevValue) {
       audioPlayer.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying);
@@ -51,7 +65,7 @@ const PlayerControls = () => {
       animationRef.current = requestAnimationFrame(whilePlaying);
       changePlayerCurrentTime();
     } else {
-      setIsPlaying(false);
+      dispatch(setIsPlaying(false));
     }
   };
 
@@ -61,7 +75,7 @@ const PlayerControls = () => {
   };
 
   const changePlayerCurrentTime = () => {
-    setCurrentTime(progressBar.current.value);
+    dispatch(setCurrentTime(progressBar.current.value));
     progressBar.current.style.setProperty(
       "--seek-before-width",
       `${(progressBar.current.value / duration) * 100}%`
@@ -83,7 +97,7 @@ const PlayerControls = () => {
       <Row className="PlayerControls flex-column justify-content-center align-items-center">
         <audio
           ref={audioPlayer}
-          src="https://cdns-preview-a.dzcdn.net/stream/c-a840ca0ecb57afc73f45fb4114beb724-4.mp3"
+          src={track.album?.preview}
           preload="metadata"
           onLoadedMetadata={onLoadedMetadata}
         ></audio>

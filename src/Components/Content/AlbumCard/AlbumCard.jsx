@@ -1,8 +1,18 @@
 import { Card, Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
 import "./AlbumCard.css";
 
 const AlbumCard = (props) => {
+  const isPlaying = useSelector((state) => state.currentSong.isPlaying);
+  const dispatch = useDispatch();
+
+  const playSong = () => {
+    dispatch(selectSong(props));
+    // dispatch(dispatch(setIsPlaying(!isPlaying)));
+  };
+
   return (
     <Col className="AlbumCard">
       <Card>
@@ -17,7 +27,7 @@ const AlbumCard = (props) => {
               <Card.Img
                 src={props.album.cover_big || props.album.album.cover_big}
               />
-              <div className="play-btn">
+              <div className="play-btn" onClick={playSong}>
                 <svg
                   height="16"
                   role="img"
