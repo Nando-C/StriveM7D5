@@ -10,6 +10,9 @@ const TrackList = () => {
     (state) => state.selectedAlbum.album.tracks.data
   );
 
+  const album = useSelector((state) => state.selectedAlbum.album);
+  // console.log("Album: ", album);
+
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const selectedTrack = useSelector((state) => state.currentSong.track);
 
@@ -17,7 +20,12 @@ const TrackList = () => {
 
   const togglePlayPause = (track) => {
     if (selectedTrack.id !== track.id) {
-      dispatch(selectSong(track));
+      const trackInfo = {
+        ...track,
+        album,
+      };
+      // console.log(trackInfo);
+      dispatch(selectSong(trackInfo));
     }
     dispatch(setIsPlaying(!isPlaying));
   };

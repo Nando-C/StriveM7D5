@@ -1,24 +1,29 @@
 import { Row, Image, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./NowPlaying.css";
 
 const NowPlaying = () => {
+  const currentSong = useSelector((state) => state.currentSong.track);
+
   return (
     <Row
       xs="auto"
       className="NowPlaying justify-content-start align-items-center align-content-center"
     >
       <Col className="cover-img">
-        <Image src="https://picsum.photos/200" fluid />
+        <Link to={`/Album/${currentSong.album.id}`}>
+          <Image src={currentSong.album.cover_small} fluid />
+        </Link>
       </Col>
       <Col className="p-0">
         <div className="info-playing">
           <div>
-            <span>Everlong</span>
+            <span>{currentSong.title_short}</span>
           </div>
-          <Link to="/home">
+          <Link to={`/Artist/${currentSong.artist.id}`}>
             <span>
-              <small>Foo Fighters</small>
+              <small>{currentSong.artist.name}</small>
             </span>
           </Link>
         </div>

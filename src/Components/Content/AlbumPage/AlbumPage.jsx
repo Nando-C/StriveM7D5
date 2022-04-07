@@ -28,7 +28,11 @@ const AlbumPage = () => {
 
   const togglePlayPause = () => {
     if (track.md5_image !== albumSelected.md5_image) {
-      dispatch(selectSong(firstSong));
+      const trackInfo = {
+        ...firstSong,
+        album: albumSelected,
+      };
+      dispatch(selectSong(trackInfo));
     }
     dispatch(setIsPlaying(!isPlaying));
   };

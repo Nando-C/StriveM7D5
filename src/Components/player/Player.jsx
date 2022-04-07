@@ -3,14 +3,14 @@ import NowPlaying from "./NowPlaying/NowPlaying";
 import PlayerControls from "./PlayerControls/PlayerControls";
 import Volume from "./Volume/Volume";
 import "./Player.css";
+import { useSelector } from "react-redux";
 
 const Player = () => {
+  const currentSong = useSelector((state) => state.currentSong.track);
   return (
     <Container className="Player" fluid>
       <Row className="px-3 h-100 align-items-center">
-        <Col>
-          <NowPlaying />
-        </Col>
+        <Col>{currentSong.album?.id && <NowPlaying />}</Col>
         <Col>
           <PlayerControls />
         </Col>
