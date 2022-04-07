@@ -1,13 +1,7 @@
-import { useRef } from "react";
 import { Card, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  selectSong,
-  setCurrentTime,
-  setDuration,
-  setIsPlaying,
-} from "../../../redux/slices/currentSong";
+import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
 import "./AlbumCard.css";
 
 const AlbumCard = (props) => {
@@ -17,8 +11,9 @@ const AlbumCard = (props) => {
   const dispatch = useDispatch();
 
   const togglePlayPause = (id) => {
-    if (track.album?.id !== id) {
-      dispatch(selectSong(props));
+    if (track.id !== id) {
+      dispatch(selectSong(props.album));
+      console.log(props.album);
     }
     dispatch(setIsPlaying(!isPlaying));
   };
@@ -44,7 +39,7 @@ const AlbumCard = (props) => {
               className="play-btn"
               onClick={() => togglePlayPause(props.album.id)}
               style={{
-                opacity: isPlaying && track.album?.id === props.album.id && 1,
+                opacity: isPlaying && track.id === props.album.id && 1,
               }}
             >
               <svg
@@ -54,7 +49,7 @@ const AlbumCard = (props) => {
                 viewBox="0 0 16 16"
                 aria-hidden="true"
               >
-                {isPlaying && track.album?.id === props.album.id ? (
+                {isPlaying && track.id === props.album.id ? (
                   <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
                 ) : (
                   <path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path>

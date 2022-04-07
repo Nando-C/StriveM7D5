@@ -50,15 +50,15 @@ const PlayerControls = () => {
     if (isNewTrack) {
       dispatch(setIsPlaying(true));
       play();
-    } else if (track.album && isPlaying) {
+    } else if (track.preview && isPlaying) {
       play();
-    } else if (track.album && !isPlaying) {
+    } else if (track.preview && !isPlaying) {
       pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const togglePlayPause = () => {
-    if (track.album) {
+    if (track.preview) {
       const prevValue = isPlaying;
       dispatch(setIsPlaying(!prevValue));
     }
@@ -102,7 +102,7 @@ const PlayerControls = () => {
       <Row className="PlayerControls flex-column justify-content-center align-items-center">
         <audio
           ref={audioPlayer}
-          src={track.album?.preview}
+          src={track?.preview}
           preload="metadata"
           onLoadedMetadata={onLoadedMetadata}
         ></audio>

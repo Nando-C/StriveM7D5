@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
 import { fetchAlbum } from "../../../redux/slices/selectedAlbum";
 import TrackList from "../../TrackList/TrackList";
 import "./AlbumPage.css";
@@ -13,11 +14,27 @@ const AlbumPage = () => {
   const albumStatus = useSelector((state) => state.selectedAlbum.status);
   const albumSelected = useSelector((state) => state.selectedAlbum.album);
 
+  const isPlaying = useSelector((state) => state.currentSong.isPlaying);
+  const track = useSelector((state) => state.currentSong.track);
+  const firstSong = useSelector(
+    (state) => state.selectedAlbum.album.tracks?.data[0]
+  );
+  console.log("Album Image: ", albumSelected.md5_image);
+  console.log("Track Image: ", track.md5_image);
+  // console.log("AlbumId: ", parseInt(albumId));
+
   useEffect(() => {
     if (parseInt(albumId) !== albumSelected.id) {
       dispatch(fetchAlbum(albumId));
     }
   }, [albumId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const togglePlayPause = () => {
+    if (track.md5_image !== albumSelected.md5_image) {
+      dispatch(selectSong(firstSong));
+    }
+    dispatch(setIsPlaying(!isPlaying));
+  };
 
   return (
     <Container fluid className="AlbumPage">
@@ -62,18 +79,23 @@ const AlbumPage = () => {
           </Row>
           <Row className="album-content px-3">
             <Row xs="auto" className="options mx-0">
-              <Col className="play-btn">
+              <Col className="play-btn" onClick={togglePlayPause}>
                 <svg
                   height="28"
                   role="img"
                   width="28"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 16 16"
                   aria-hidden="true"
                 >
-                  <polygon
+                  {isPlaying && track.md5_image === albumSelected.md5_image ? (
+                    <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
+                  ) : (
+                    <path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path>
+                  )}
+                  {/* <polygon
                     points="21.57 12 5.98 3 5.98 21 21.57 12"
                     fill="currentColor"
-                  ></polygon>
+                  ></polygon> */}
                 </svg>
                 {/* <svg
                     height="32"
