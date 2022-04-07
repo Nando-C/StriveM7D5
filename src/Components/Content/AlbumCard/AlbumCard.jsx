@@ -38,6 +38,7 @@ const AlbumCard = (props) => {
               className="play-btn"
               onClick={() => togglePlayPause(props.album.id)}
               style={{
+                display: props.source !== "home" && "none",
                 opacity: isPlaying && track.id === props.album.id && 1,
               }}
             >
