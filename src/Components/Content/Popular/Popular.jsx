@@ -1,5 +1,6 @@
 import { Col, Container, Image, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
 import "./Popular.css";
 
 const Popular = () => {
@@ -9,6 +10,18 @@ const Popular = () => {
   const trackList = useSelector(
     (state) => state.selectedArtist.topTrackList.topTracks
   );
+
+  const isPlaying = useSelector((state) => state.currentSong.isPlaying);
+  const selectedTrack = useSelector((state) => state.currentSong.track);
+
+  const dispatch = useDispatch();
+
+  const togglePlayPause = (track) => {
+    if (selectedTrack.id !== track.id) {
+      dispatch(selectSong(track));
+    }
+    dispatch(setIsPlaying(!isPlaying));
+  };
 
   return (
     <>
@@ -23,13 +36,32 @@ const Popular = () => {
             {trackList.map((track, i) => (
               <Row key={track.id} className="table-row align-items-center">
                 <Col className="d-flex flex-row justify-content-center" xs={1}>
-                  <div className="track-number">{i + 1}</div>
-                  <div className="play-btn">
-                    <svg height="16" role="img" width="16" viewBox="0 0 24 24">
-                      <polygon
-                        points="21.57 12 5.98 3 5.98 21 21.57 12"
-                        fill="currentColor"
-                      ></polygon>
+                  <div
+                    className="track-number"
+                    style={{
+                      display:
+                        isPlaying && selectedTrack.id === track.id && "none",
+                    }}
+                  >
+                    {i + 1}
+                  </div>
+                  <div
+                    className="play-btn"
+                    style={{
+                      display:
+                        isPlaying && selectedTrack.id === track.id && "flex",
+                    }}
+                    onClick={() => togglePlayPause(track)}
+                  >
+                    <svg height="16" role="img" width="16" viewBox="0 0 16 16">
+                      {isPlaying && selectedTrack.id === track.id ? (
+                        <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
+                      ) : (
+                        <path
+                          fill="white"
+                          d="M4.018 14L14.41 8 4.018 2z"
+                        ></path>
+                      )}
                     </svg>
                   </div>
                 </Col>

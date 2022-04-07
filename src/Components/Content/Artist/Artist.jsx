@@ -23,14 +23,12 @@ const Artist = () => {
   const artistSelected = useSelector(
     (state) => state.selectedArtist.artistInfo.artist
   );
-  // =======================================================
+
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const track = useSelector((state) => state.currentSong.track);
   const firstSong = useSelector(
     (state) => state.selectedArtist.topTrackList?.topTracks[0]
   );
-  console.log("Popular: ", firstSong);
-  // =======================================================
 
   useEffect(() => {
     if (parseInt(artistId) !== artistSelected.id) {
