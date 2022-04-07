@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
 import {
   fetchAlbums,
   fetchArtist,
@@ -22,6 +23,14 @@ const Artist = () => {
   const artistSelected = useSelector(
     (state) => state.selectedArtist.artistInfo.artist
   );
+  // =======================================================
+  const isPlaying = useSelector((state) => state.currentSong.isPlaying);
+  const track = useSelector((state) => state.currentSong.track);
+  const firstSong = useSelector(
+    (state) => state.selectedArtist.topTrackList?.topTracks[0]
+  );
+  console.log("Popular: ", firstSong);
+  // =======================================================
 
   useEffect(() => {
     if (parseInt(artistId) !== artistSelected.id) {
@@ -30,6 +39,13 @@ const Artist = () => {
       dispatch(fetchArtistTopTracks(artistId));
     }
   }, [artistId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const togglePlayPause = () => {
+    if (track.artist.id !== artistSelected.id) {
+      dispatch(selectSong(firstSong));
+    }
+    dispatch(setIsPlaying(!isPlaying));
+  };
 
   return (
     <Container fluid className="Artist">
@@ -51,41 +67,24 @@ const Artist = () => {
           </Row>
           <Row className="artist-content m-0 px-3">
             <Row xs="auto" className="options">
-              <Col className="play-btn">
+              <Col className="play-btn" onClick={togglePlayPause}>
                 <svg
                   height="32"
                   role="img"
                   width="32"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 16 16"
                   aria-hidden="true"
                 >
-                  <polygon
+                  {isPlaying && track.artist.id === artistSelected.id ? (
+                    <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
+                  ) : (
+                    <path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path>
+                  )}
+                  {/* <polygon
                     points="21.57 12 5.98 3 5.98 21 21.57 12"
                     fill="currentColor"
-                  ></polygon>
+                  ></polygon> */}
                 </svg>
-                {/* <svg
-                    height="32"
-                    role="img"
-                    width="32"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <rect
-                      x="5"
-                      y="3"
-                      width="4"
-                      height="18"
-                      fill="currentColor"
-                    ></rect>
-                    <rect
-                      x="15"
-                      y="3"
-                      width="4"
-                      height="18"
-                      fill="currentColor"
-                    ></rect>
-                  </svg> */}
               </Col>
               <Col className="follow-btn">FOLLOW</Col>
               <Col className="ellipsis-btn">
