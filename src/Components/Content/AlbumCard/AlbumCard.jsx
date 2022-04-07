@@ -44,8 +44,7 @@ const AlbumCard = (props) => {
               className="play-btn"
               onClick={() => togglePlayPause(props.album.id)}
               style={{
-                opacity:
-                  isPlaying && track.album?.id === props.album.id ? 1 : "",
+                opacity: isPlaying && track.album?.id === props.album.id && 1,
               }}
             >
               <svg
