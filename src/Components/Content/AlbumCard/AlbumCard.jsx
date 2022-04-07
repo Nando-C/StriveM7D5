@@ -13,7 +13,6 @@ const AlbumCard = (props) => {
   const togglePlayPause = (id) => {
     if (track.id !== id) {
       dispatch(selectSong(props.album));
-      console.log(props.album);
     }
     dispatch(setIsPlaying(!isPlaying));
   };
