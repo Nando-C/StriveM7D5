@@ -6,6 +6,7 @@ import {
   setDuration,
   setCurrentTime,
 } from "../../../redux/slices/currentSong";
+import { calculateTime, useHasChanged } from "../../../utils/audioPlayer";
 import "./PlayerControls.css";
 
 const PlayerControls = () => {
@@ -33,30 +34,39 @@ const PlayerControls = () => {
     progressBar.current.max = seconds;
   };
 
-  // useEffect(() => {
-  //   const seconds = Math.floor(audioPlayer.current.duration);
-  //   setDuration(seconds);
-  //   progressBar.current.max = seconds;
-  // }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
-
-  const calculateTime = (secs) => {
-    const minutes = Math.floor(secs / 60);
-    const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    const seconds = Math.floor(secs % 60);
-    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-    return `${returnedMinutes}:${returnedSeconds}`;
+  const play = () => {
+    audioPlayer.current.play();
+    animationRef.current = requestAnimationFrame(whilePlaying);
   };
 
-  const togglePlayPause = () => {
-    const prevValue = isPlaying;
-    dispatch(setIsPlaying(!prevValue));
-    if (!prevValue) {
-      audioPlayer.current.play();
-      animationRef.current = requestAnimationFrame(whilePlaying);
-    } else {
-      audioPlayer.current.pause();
-      cancelAnimationFrame(animationRef.current);
+  const pause = () => {
+    audioPlayer.current.pause();
+    cancelAnimationFrame(animationRef.current);
+  };
+
+  const isNewTrack = useHasChanged(track);
+
+  useEffect(() => {
+    if (isNewTrack) {
+      dispatch(setIsPlaying(true));
+      play();
+    } else if (track.album && isPlaying) {
+      play();
+    } else if (track.album && !isPlaying) {
+      pause();
     }
+  }, [isPlaying]);
+
+  const togglePlayPause = () => {
+    if (track.album) {
+      const prevValue = isPlaying;
+      dispatch(setIsPlaying(!prevValue));
+    }
+    // if (!prevValue) {
+    //   play();
+    // } else {
+    //   pause();
+    // }
   };
 
   const whilePlaying = () => {
