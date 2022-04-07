@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -62,11 +62,6 @@ const PlayerControls = () => {
       const prevValue = isPlaying;
       dispatch(setIsPlaying(!prevValue));
     }
-    // if (!prevValue) {
-    //   play();
-    // } else {
-    //   pause();
-    // }
   };
 
   const whilePlaying = () => {
