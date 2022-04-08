@@ -10,18 +10,13 @@ import { calculateTime, useHasChanged } from "../../../utils/audioPlayer";
 import "./PlayerControls.css";
 
 const PlayerControls = () => {
-  // state
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [duration, setDuration] = useState(0);
-  // const [currentTime, setCurrentTime] = useState(0);
-  // ==========  Testing Redux ==============
   const track = useSelector((state) => state.currentSong.track);
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const duration = useSelector((state) => state.currentSong.duration);
   const currentTime = useSelector((state) => state.currentSong.currentTime);
+  const currentVolume = useSelector((state) => state.currentSong.volume);
 
   const dispatch = useDispatch();
-  // ========================================
 
   // references
   const audioPlayer = useRef(); // reference our audio component
@@ -56,6 +51,11 @@ const PlayerControls = () => {
       pause();
     }
   }, [isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    audioPlayer.current.volume = currentVolume;
+    console.log("Volume: ", currentVolume);
+  }, [currentVolume]);
 
   const togglePlayPause = () => {
     if (track.preview) {

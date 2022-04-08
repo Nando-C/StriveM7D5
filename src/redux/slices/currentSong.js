@@ -24,9 +24,17 @@ const currentSongSlice = createSlice({
     setCurrentTime(state, action) {
       state.currentTime = action.payload;
     },
+    setCurrentVolume(state, action) {
+      state.volume = action.payload;
+    },
   },
 });
-export const { selectSong, setIsPlaying, setDuration, setCurrentTime } =
-  currentSongSlice.actions;
+export const {
+  selectSong,
+  setIsPlaying,
+  setDuration,
+  setCurrentTime,
+  setCurrentVolume,
+} = currentSongSlice.actions;
 
 export default currentSongSlice.reducer;

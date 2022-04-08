@@ -1,4 +1,4 @@
-import { Row, Image, Col } from "react-bootstrap";
+import { Row, Image } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./NowPlaying.css";

@@ -15,6 +15,47 @@
 .Volume .volume-bar {
   width: 93px;
   height: 4px;
+}
+
+.Volume .volume-bar .bar {
+  --seek-before-width: 0;
+  appearance: none;
+  background: #b3b3b3;
   border-radius: 2px;
-  background-color: greenyellow;
+  position: relative;
+  height: 4px;
+  width: 93px;
+  outline: none;
+}
+
+.Volume .volume-bar .bar::before{
+  content: '';
+  height: 4px;
+  width: var(--seek-before-width);
+  background-color: coral;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.Volume .volume-bar .bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  position: relative;
+  z-index: 4;
+  box-sizing: border-box;
+}
+
+.Volume .volume-bar .bar:active::-webkit-slider-thumb {
+  transform: scale(1.1);
+  background: white;
 }
