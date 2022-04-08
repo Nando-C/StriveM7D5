@@ -49,7 +49,7 @@ const Volume = () => {
           width="16"
           aria-label="Volume high"
           id="volume-icon"
-          viewBox="0 0 16 16"
+          viewBox="0 0 16 12"
           // class="Svg-sc-1bi12j5-0 gSLhUO"
         >
           <path
