@@ -5,7 +5,7 @@ const Volume = () => {
   return (
     <Row className="Volume justify-content-end align-items-center h-100">
       {/* <Col> */}
-      <div>
+      <div className="d-none d-md-flex">
         <span
           aria-hidden="true"
           // class="IconWrapper__Wrapper-sc-16usrgb-0 eFbhGd"
@@ -26,7 +26,7 @@ const Volume = () => {
       </div>
       {/* </Col> */}
       {/* <Col> */}
-      <div>
+      <div className="d-none d-md-flex">
         <span>
           <svg
             role="img"

@@ -108,7 +108,7 @@ const PlayerControls = () => {
         ></audio>
         <Row className="player-buttons w-100 mb-sm-2">
           <Col className="d-flex justify-content-end p-0">
-            <div>
+            <div className="d-none d-sm-flex">
               <svg
                 role="img"
                 height="16"
@@ -157,7 +157,7 @@ const PlayerControls = () => {
                 ></path>
               </svg>
             </div>
-            <div>
+            <div className="d-none d-sm-flex">
               <svg
                 role="img"
                 height="16"
