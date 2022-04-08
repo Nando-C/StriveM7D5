@@ -10,11 +10,13 @@ const Player = () => {
   return (
     <Container className="Player" fluid>
       <Row className="px-3 h-100 align-items-center">
-        <Col>{currentSong.album?.id && <NowPlaying />}</Col>
-        <Col>
+        <Col xs={6} sm={4} lg={3}>
+          {currentSong.album?.id && <NowPlaying />}
+        </Col>
+        <Col xs={6} sm={5} lg={6}>
           <PlayerControls />
         </Col>
-        <Col className="d-none d-sm-block">
+        <Col sm={3} lg={3} className="d-none d-sm-block">
           <Volume />
         </Col>
       </Row>

@@ -8,40 +8,54 @@
   padding: 0;
 }
 
+.info {
+  flex: 2;
+  overflow: hidden;
+}
+
 .info-playing {
-  padding: 14px 14px;
+  padding: 11px 14px;
   color: white;
   font-size: 14px;
   line-height: 16px;
+  overflow: hidden;
 }
 
-div.info-playing > a {
-  /* padding: 0px; */
-  /* margin: 0px; */
+.info-playing > div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info-playing > div > div{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.info-playing a {
   color: #b1b1b1;
-  text-decoration-color: white;
+  text-decoration: none;
+  font-size: smaller;
 }
 
-.info-playing > div > span:hover,
-div.info-playing > a:hover {
+div.info-playing  a:hover {
   color: white;
+  text-decoration: underline;
 }
 
 .like-heart {
-  height: 32px;
-  width: 32px;
   padding: 0px 8px;
-  display: flex;
   align-self: center;
-  align-items: center;
   fill: #b1b1b1;
 }
+
 .like-heart:hover {
   fill: white;
 }
 
 .pip-toggle {
   padding: 0px 8px;
+  align-self: center;
   fill: #b1b1b1;
 }
 .pip-toggle:hover {
