@@ -1,14 +1,114 @@
+import { useEffect, useRef } from "react";
 import { Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setIsPlaying,
+  setDuration,
+  setCurrentTime,
+} from "../../../redux/slices/currentSong";
+import { calculateTime, useHasChanged } from "../../../utils/audioPlayer";
 import "./PlayerControls.css";
 
 const PlayerControls = () => {
+  const track = useSelector((state) => state.currentSong.track);
+  const isPlaying = useSelector((state) => state.currentSong.isPlaying);
+  const duration = useSelector((state) => state.currentSong.duration);
+  const currentTime = useSelector((state) => state.currentSong.currentTime);
+  const currentVolume = useSelector((state) => state.currentSong.volume);
+
+  const dispatch = useDispatch();
+
+  // references
+  const audioPlayer = useRef(); // reference our audio component
+  const progressBar = useRef(); // reference our progress bar
+  const animationRef = useRef(); // reference the animation of progress bar
+
+  const onLoadedMetadata = () => {
+    const seconds = Math.floor(audioPlayer.current.duration);
+    dispatch(setDuration(seconds));
+    progressBar.current.max = seconds;
+  };
+
+  const play = () => {
+    audioPlayer.current.play();
+    animationRef.current = requestAnimationFrame(whilePlaying);
+  };
+
+  const pause = () => {
+    audioPlayer.current.pause();
+    cancelAnimationFrame(animationRef.current);
+  };
+
+  const isNewTrack = useHasChanged(track);
+
+  useEffect(() => {
+    if (isNewTrack) {
+      dispatch(setIsPlaying(true));
+      play();
+    } else if (track.preview && isPlaying) {
+      play();
+    } else if (track.preview && !isPlaying) {
+      pause();
+    }
+  }, [isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    audioPlayer.current.volume = currentVolume;
+    console.log("Volume: ", currentVolume);
+  }, [currentVolume]);
+
+  const togglePlayPause = () => {
+    if (track.preview) {
+      const prevValue = isPlaying;
+      dispatch(setIsPlaying(!prevValue));
+    }
+  };
+
+  const whilePlaying = () => {
+    if (!audioPlayer.current.ended) {
+      progressBar.current.value = audioPlayer.current.currentTime;
+      animationRef.current = requestAnimationFrame(whilePlaying);
+      changePlayerCurrentTime();
+    } else {
+      dispatch(setIsPlaying(false));
+    }
+  };
+
+  const changeRange = () => {
+    audioPlayer.current.currentTime = progressBar.current.value;
+    changePlayerCurrentTime();
+  };
+
+  const changePlayerCurrentTime = () => {
+    dispatch(setCurrentTime(progressBar.current.value));
+    progressBar.current.style.setProperty(
+      "--seek-before-width",
+      `${(progressBar.current.value / duration) * 100}%`
+    );
+  };
+
+  const backfive = () => {
+    progressBar.current.value = parseInt(progressBar.current.value) - 5;
+    changeRange();
+  };
+
+  const forwardfive = () => {
+    progressBar.current.value = parseInt(progressBar.current.value) + 5;
+    changeRange();
+  };
+
   return (
     <>
       <Row className="PlayerControls flex-column justify-content-center align-items-center">
+        <audio
+          ref={audioPlayer}
+          src={track?.preview}
+          preload="metadata"
+          onLoadedMetadata={onLoadedMetadata}
+        ></audio>
         <Row className="player-buttons w-100 mb-sm-2">
           <Col className="d-flex justify-content-end p-0">
-            {/* <Row className="left-buttons justify-content-end"> */}
-            <div>
+            <div className="d-none d-sm-flex">
               <svg
                 role="img"
                 height="16"
@@ -22,38 +122,28 @@ const PlayerControls = () => {
                 ></path>
               </svg>
             </div>
-            <div>
-              <svg
-                role="img"
-                height="16"
-                width="16"
-                viewBox="0 0 16 16"
-                // class="Svg-sc-1bi12j5-0 gSLhUO"
-              >
+            <div onClick={backfive}>
+              <svg role="img" height="16" width="16" viewBox="0 0 16 16">
                 <path
                   //   fill="#b3b3b3"
                   d="M13 2.5L5 7.119V3H3v10h2V8.881l8 4.619z"
                 ></path>
               </svg>
             </div>
-            {/* </Row> */}
           </Col>
           <Col className="col-play d-flex justify-content-center p-0">
-            <div className="play">
-              <svg
-                role="img"
-                height="16"
-                width="16"
-                viewBox="0 0 16 16"
-                // class="Svg-sc-1bi12j5-0 gSLhUO"
-              >
-                <path d="M4.018 14L14.41 8 4.018 2z"></path>
-                {/* <path d="M3 2h3v12H3zm7 0h3v12h-3z"></path> */}
+            <div className="play" onClick={togglePlayPause}>
+              <svg role="img" height="16" width="16" viewBox="0 0 16 16">
+                {isPlaying ? (
+                  <path d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
+                ) : (
+                  <path d="M4.018 14L14.41 8 4.018 2z"></path>
+                )}
               </svg>
             </div>
           </Col>
           <Col className="d-flex justify-content-start p-0">
-            <div>
+            <div onClick={forwardfive}>
               <svg
                 role="img"
                 height="16"
@@ -67,7 +157,7 @@ const PlayerControls = () => {
                 ></path>
               </svg>
             </div>
-            <div>
+            <div className="d-none d-sm-flex">
               <svg
                 role="img"
                 height="16"
@@ -84,14 +174,23 @@ const PlayerControls = () => {
           </Col>
         </Row>
         <Row className="Progress-Bar d-none d-sm-flex">
-          <Col sm={2} className="text-right p-0">
-            <span>0:00</span>
+          <Col sm={2} className="text-end p-0">
+            <span>{calculateTime(currentTime)} </span>
           </Col>
           <Col>
-            <div className="bar"></div>
+            <div>
+              <input
+                type="range"
+                className="bar"
+                defaultValue="0"
+                ref={progressBar}
+                onChange={changeRange}
+                step="0.05"
+              />
+            </div>
           </Col>
-          <Col sm={2} className="text-left p-0">
-            <span>4:10</span>
+          <Col sm={2} className="text-start p-0">
+            <span>{!isNaN(duration) && calculateTime(duration)}</span>
           </Col>
         </Row>
       </Row>
