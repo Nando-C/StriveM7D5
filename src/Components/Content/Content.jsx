@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router";
 import AlbumPage from "./AlbumPage/AlbumPage";
 import Artist from "./Artist/Artist";
 import Home from "./Home/Home";

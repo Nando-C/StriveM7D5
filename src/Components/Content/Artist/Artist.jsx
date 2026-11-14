@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
 import {
   fetchAlbums,

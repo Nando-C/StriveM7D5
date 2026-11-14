@@ -1,5 +1,5 @@
 import { Container, Nav, Row } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import "./BottomNavBar.css";
 
 const BottomNavBar = () => {

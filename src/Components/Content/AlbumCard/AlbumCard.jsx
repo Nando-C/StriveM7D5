@@ -1,6 +1,6 @@
 import { Card, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
 import "./AlbumCard.css";
 

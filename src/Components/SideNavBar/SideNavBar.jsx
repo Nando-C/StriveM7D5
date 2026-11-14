@@ -1,5 +1,5 @@
 import { Col, Container, Nav, Row } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import "./SideNavBar.css";
 
 const SideNavBar = () => {
