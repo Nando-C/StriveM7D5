@@ -21,18 +21,16 @@ const selectedAlbumSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchAlbum.pending, (state, action) => {
+      .addCase(fetchAlbum.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchAlbum.fulfilled, (state, action) => {
         state.status = "succeded";
         state.album = action.payload;
-        // console.log("Album Payload: ", action.payload);
       })
       .addCase(fetchAlbum.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-        console.log(state.error);
       });
   },
 });

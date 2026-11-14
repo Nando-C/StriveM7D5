@@ -12,6 +12,9 @@
 
 .Popular .table {
   color: rgba(255, 255, 255, 0.7);
+  /* Bootstrap 5.3 paints .table cells with the body background and text colour */
+  --bs-table-bg: transparent;
+  --bs-table-color: rgba(255, 255, 255, 0.7);
   margin: 0;
 }
 .Popular .table .table-row {

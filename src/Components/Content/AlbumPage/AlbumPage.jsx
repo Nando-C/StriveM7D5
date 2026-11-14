@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
+import { Link, useParams } from "react-router";
+import { playOrToggle } from "../../../utils/playback";
 import { fetchAlbum } from "../../../redux/slices/selectedAlbum";
 import TrackList from "../../TrackList/TrackList";
 import "./AlbumPage.css";
@@ -24,18 +24,14 @@ const AlbumPage = () => {
     if (parseInt(albumId) !== albumSelected.id) {
       dispatch(fetchAlbum(albumId));
     }
-  }, [albumId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [albumId, albumSelected.id, dispatch]);
 
-  const togglePlayPause = () => {
-    if (track.md5_image !== albumSelected.md5_image) {
-      const trackInfo = {
-        ...firstSong,
-        album: albumSelected,
-      };
-      dispatch(selectSong(trackInfo));
-    }
-    dispatch(setIsPlaying(!isPlaying));
-  };
+  const togglePlayPause = () =>
+    playOrToggle(dispatch, {
+      isSameTrack: track.md5_image === albumSelected.md5_image,
+      isPlaying,
+      track: firstSong && { ...firstSong, album: albumSelected },
+    });
 
   return (
     <Container fluid className="AlbumPage">

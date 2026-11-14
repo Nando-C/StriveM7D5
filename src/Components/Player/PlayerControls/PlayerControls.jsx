@@ -6,7 +6,7 @@ import {
   setDuration,
   setCurrentTime,
 } from "../../../redux/slices/currentSong";
-import { calculateTime, useHasChanged } from "../../../utils/audioPlayer";
+import { calculateTime } from "../../../utils/audioPlayer";
 import "./PlayerControls.css";
 
 const PlayerControls = () => {
@@ -30,7 +30,10 @@ const PlayerControls = () => {
   };
 
   const play = () => {
-    audioPlayer.current.play();
+    // play() rejects when a newer track interrupts it; that is not an error.
+    audioPlayer.current.play()?.catch(() => {});
+    // Never run more than one progress loop.
+    cancelAnimationFrame(animationRef.current);
     animationRef.current = requestAnimationFrame(whilePlaying);
   };
 
@@ -39,23 +42,23 @@ const PlayerControls = () => {
     cancelAnimationFrame(animationRef.current);
   };
 
-  const isNewTrack = useHasChanged(track);
-
+  // Playback follows the store: a new track or a change of isPlaying is what
+  // starts or stops the audio element. By the time this runs React has already
+  // put the new track's src on the element.
   useEffect(() => {
-    if (isNewTrack) {
-      dispatch(setIsPlaying(true));
-      play();
-    } else if (track.preview && isPlaying) {
-      play();
-    } else if (track.preview && !isPlaying) {
-      pause();
-    }
-  }, [isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!track.preview) return;
+    if (isPlaying) play();
+    else pause();
+    // play/pause are recreated every render; only track and isPlaying should
+    // retrigger this.
+  }, [track, isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     audioPlayer.current.volume = currentVolume;
-    console.log("Volume: ", currentVolume);
   }, [currentVolume]);
+
+  // Stop the progress loop if the player ever unmounts.
+  useEffect(() => () => cancelAnimationFrame(animationRef.current), []);
 
   const togglePlayPause = () => {
     if (track.preview) {
@@ -81,9 +84,13 @@ const PlayerControls = () => {
 
   const changePlayerCurrentTime = () => {
     dispatch(setCurrentTime(progressBar.current.value));
+    // Read the bar's own max, not the duration from the store: this function
+    // is called from the progress loop, which keeps the values of the render
+    // it was started in (a duration of 0 for the first track played).
+    const max = Number(progressBar.current.max);
     progressBar.current.style.setProperty(
       "--seek-before-width",
-      `${(progressBar.current.value / duration) * 100}%`
+      max > 0 ? `${(progressBar.current.value / max) * 100}%` : "0%"
     );
   };
 

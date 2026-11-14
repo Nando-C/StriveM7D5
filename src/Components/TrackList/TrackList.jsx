@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { selectSong, setIsPlaying } from "../../redux/slices/currentSong";
+import { Link } from "react-router";
+import { playOrToggle } from "../../utils/playback";
 import "./TrackList.css";
 
 const TrackList = () => {
@@ -11,24 +11,18 @@ const TrackList = () => {
   );
 
   const album = useSelector((state) => state.selectedAlbum.album);
-  // console.log("Album: ", album);
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const selectedTrack = useSelector((state) => state.currentSong.track);
 
   const dispatch = useDispatch();
 
-  const togglePlayPause = (track) => {
-    if (selectedTrack.id !== track.id) {
-      const trackInfo = {
-        ...track,
-        album,
-      };
-      // console.log(trackInfo);
-      dispatch(selectSong(trackInfo));
-    }
-    dispatch(setIsPlaying(!isPlaying));
-  };
+  const togglePlayPause = (track) =>
+    playOrToggle(dispatch, {
+      isSameTrack: selectedTrack.id === track.id,
+      isPlaying,
+      track: { ...track, album },
+    });
 
   return (
     <Container className="TrackList" fluid>
@@ -63,7 +57,7 @@ const TrackList = () => {
                   className="track-number"
                   style={{
                     display:
-                      isPlaying && selectedTrack.id === track.id && "none",
+                      isPlaying && selectedTrack.id === track.id ? "none" : undefined,
                   }}
                 >
                   {i + 1}
@@ -72,7 +66,7 @@ const TrackList = () => {
                   className="play-btn"
                   style={{
                     display:
-                      isPlaying && selectedTrack.id === track.id && "flex",
+                      isPlaying && selectedTrack.id === track.id ? "flex" : undefined,
                   }}
                   onClick={() => togglePlayPause(track)}
                 >
