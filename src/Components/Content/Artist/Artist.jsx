@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
+import { playOrToggle } from "../../../utils/playback";
 import {
   fetchAlbums,
   fetchArtist,
@@ -38,12 +38,15 @@ const Artist = () => {
     }
   }, [artistId, artistSelected.id, dispatch]);
 
-  const togglePlayPause = () => {
-    if (track.artist.id !== artistSelected.id) {
-      dispatch(selectSong(firstSong));
-    }
-    dispatch(setIsPlaying(!isPlaying));
-  };
+  // No track is loaded on a fresh page, so `track.artist` may be undefined.
+  const isThisArtistLoaded = track.artist?.id === artistSelected.id;
+
+  const togglePlayPause = () =>
+    playOrToggle(dispatch, {
+      isSameTrack: isThisArtistLoaded,
+      isPlaying,
+      track: firstSong,
+    });
 
   return (
     <Container fluid className="Artist">
@@ -73,7 +76,7 @@ const Artist = () => {
                   viewBox="0 0 16 16"
                   aria-hidden="true"
                 >
-                  {isPlaying && track.artist.id === artistSelected.id ? (
+                  {isPlaying && isThisArtistLoaded ? (
                     <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
                   ) : (
                     <path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path>

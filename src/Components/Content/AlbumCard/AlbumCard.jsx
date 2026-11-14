@@ -1,7 +1,7 @@
 import { Card, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
-import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
+import { playOrToggle } from "../../../utils/playback";
 import "./AlbumCard.css";
 
 const AlbumCard = (props) => {
@@ -10,12 +10,12 @@ const AlbumCard = (props) => {
 
   const dispatch = useDispatch();
 
-  const togglePlayPause = (id) => {
-    if (track.id !== id) {
-      dispatch(selectSong(props.album));
-    }
-    dispatch(setIsPlaying(!isPlaying));
-  };
+  const togglePlayPause = (id) =>
+    playOrToggle(dispatch, {
+      isSameTrack: track.id === id,
+      isPlaying,
+      track: props.album,
+    });
 
   return (
     <Col className="AlbumCard">

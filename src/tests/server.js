@@ -1,6 +1,13 @@
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { homeTracks, makeTrack } from "./fixtures";
+import {
+  album,
+  artist,
+  artistAlbums,
+  artistTopTracks,
+  homeTracks,
+  makeTrack,
+} from "./fixtures";
 
 // Must match `test.env.VITE_BACKEND_URL` in vite.config.js.
 export const API = "http://localhost:3000/api";
@@ -22,6 +29,14 @@ export const handlers = [
     searchLog.push(q);
     return HttpResponse.json({ data: q === "the" ? homeTracks : searchResult(q) });
   }),
+  http.get(`${API}/artist/:id`, () => HttpResponse.json(artist)),
+  http.get(`${API}/artist/:id/top`, () =>
+    HttpResponse.json({ data: artistTopTracks })
+  ),
+  http.get(`${API}/artist/:id/albums`, () =>
+    HttpResponse.json({ data: artistAlbums })
+  ),
+  http.get(`${API}/album/:id`, () => HttpResponse.json(album)),
 ];
 
 export const server = setupServer(...handlers);

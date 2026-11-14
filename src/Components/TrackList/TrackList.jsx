@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
-import { selectSong, setIsPlaying } from "../../redux/slices/currentSong";
+import { playOrToggle } from "../../utils/playback";
 import "./TrackList.css";
 
 const TrackList = () => {
@@ -17,16 +17,12 @@ const TrackList = () => {
 
   const dispatch = useDispatch();
 
-  const togglePlayPause = (track) => {
-    if (selectedTrack.id !== track.id) {
-      const trackInfo = {
-        ...track,
-        album,
-      };
-      dispatch(selectSong(trackInfo));
-    }
-    dispatch(setIsPlaying(!isPlaying));
-  };
+  const togglePlayPause = (track) =>
+    playOrToggle(dispatch, {
+      isSameTrack: selectedTrack.id === track.id,
+      isPlaying,
+      track: { ...track, album },
+    });
 
   return (
     <Container className="TrackList" fluid>

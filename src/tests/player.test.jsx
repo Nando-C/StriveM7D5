@@ -3,28 +3,15 @@ import { fireEvent } from "@testing-library/react";
 import PlayerControls from "../Components/Player/PlayerControls/PlayerControls";
 import TrackList from "../Components/TrackList/TrackList";
 import { calculateTime } from "../utils/audioPlayer";
+import { stubAudio } from "./audio";
 import { album, makeTrack } from "./fixtures";
 import { renderWithProviders } from "./utils";
 
-// jsdom has no audio playback. The stubs record which `src` the element had
-// at the moment play() was called: "isPlaying is true in the store" is not
-// enough, the failure worth catching is a playing UI over a silent element.
 let playedSrcs;
 let pause;
 
 beforeEach(() => {
-  playedSrcs = [];
-  vi.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(function () {
-    playedSrcs.push(this.getAttribute("src"));
-    return Promise.resolve();
-  });
-  pause = vi
-    .spyOn(HTMLMediaElement.prototype, "pause")
-    .mockImplementation(() => {});
-  // The progress loop reschedules itself every frame and is not what these
-  // tests are about.
-  vi.spyOn(window, "requestAnimationFrame").mockImplementation(() => 1);
-  vi.spyOn(window, "cancelAnimationFrame").mockImplementation(() => {});
+  ({ playedSrcs, pause } = stubAudio());
 });
 
 afterEach(() => vi.restoreAllMocks());

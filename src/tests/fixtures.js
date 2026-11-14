@@ -24,6 +24,24 @@ export const homeTracks = [
   makeTrack(3, "Third Song", { albumId: 102 }),
 ];
 
+// GET /artist/:id, /artist/:id/top and /artist/:id/albums. The top tracks are
+// deliberately not in rank order: the app sorts them, highest rank first.
+export const artist = {
+  id: 10,
+  name: "Test Artist",
+  picture_xl: "http://localhost:3000/covers/artist.jpg",
+  nb_fan: 12345,
+};
+
+export const artistTopTracks = [
+  makeTrack(21, "Lower Ranked", { rank: 100 }),
+  makeTrack(22, "Top Ranked", { rank: 900 }),
+];
+
+export const artistAlbums = [
+  { id: 300, title: "Artist Album", cover_big: "http://localhost:3000/covers/300.jpg" },
+];
+
 // An album as returned by GET /album/:id, with its track list embedded.
 export const album = {
   id: 100,

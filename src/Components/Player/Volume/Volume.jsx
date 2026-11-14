@@ -18,7 +18,7 @@ const Volume = () => {
   }, [currentVolume]);
 
   const changeVolume = () => {
-    dispatch(setCurrentVolume(volumeBar.current.value));
+    dispatch(setCurrentVolume(Number(volumeBar.current.value)));
     volumeBar.current.style.setProperty(
       "--seek-before-width",
       `${volumeBar.current.value * 100}%`

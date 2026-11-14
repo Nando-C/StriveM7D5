@@ -1,6 +1,6 @@
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSong, setIsPlaying } from "../../../redux/slices/currentSong";
+import { playOrToggle } from "../../../utils/playback";
 import "./Popular.css";
 
 const Popular = () => {
@@ -16,12 +16,12 @@ const Popular = () => {
 
   const dispatch = useDispatch();
 
-  const togglePlayPause = (track) => {
-    if (selectedTrack.id !== track.id) {
-      dispatch(selectSong(track));
-    }
-    dispatch(setIsPlaying(!isPlaying));
-  };
+  const togglePlayPause = (track) =>
+    playOrToggle(dispatch, {
+      isSameTrack: selectedTrack.id === track.id,
+      isPlaying,
+      track,
+    });
 
   return (
     <>
