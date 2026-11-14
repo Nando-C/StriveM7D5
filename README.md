@@ -35,27 +35,33 @@ Each with its reason and what it costs.
 ## Architecture
 
 ```mermaid
-flowchart LR
-    subgraph FE["React 19, built by Vite"]
-        Router["React Router 7<br/>/ · /search · /library<br/>/Artist/:id · /Album/:id"]
-        Pages["Pages<br/>Home · Search · Artist · Album"]
-        Store["Redux Toolkit store<br/>home · selectedArtist · selectedAlbum<br/>currentSong"]
-        Player["Player bar<br/>NowPlaying · PlayerControls · Volume"]
-        Audio(["audio element"])
-        Axios["axios instance"]
+flowchart TB
+    Pages["<b>Pages</b><br/>Home · Search · Artist · Album"]
+
+    subgraph Store["Redux store"]
+        direction LR
+        Data["<b>Page data</b><br/>home · selectedArtist · selectedAlbum"]
+        Song["<b>currentSong</b><br/>track · isPlaying · time · volume"]
     end
 
-    Router --> Pages
-    Pages -- "fetch (thunks)" --> Store
-    Pages -- "play this track" --> Store
-    Store -- "track, isPlaying" --> Player
-    Player -- "play, pause, seek" --> Audio
-    Player -- "time, duration" --> Store
-    Store --> Axios
-    Pages -- "search" --> Axios
-    Axios --> Proxy["Deezer proxy"] --> Deezer["Deezer API"]
-    Audio -. "30-second preview" .-> CDN["Deezer's CDN"]
+    Axios["<b>axios instance</b><br/>the only place requests are made"]
+    Player["<b>Player bar</b><br/>plays or pauses when currentSong changes"]
+    Proxy["Deezer proxy"]
+    Audio(["the page's one audio element"])
+    Deezer[("Deezer API")]
+    CDN[("Deezer's CDN")]
+
+    Pages -- "open a page" --> Data
+    Pages -- "press play" --> Song
+    Data -- "thunks fetch through" --> Axios
+    Song -- "track, playing or not" --> Player
+    Axios -- "requests" --> Proxy --> Deezer
+    Player -- "play · pause · seek" --> Audio
+    Audio -. "loads the 30-second preview from" .-> CDN
+    Player -- "progress, every frame" --> Song
 ```
+
+Read it as two columns. On the left, opening a page loads its data into the store through the one axios instance. On the right, pressing play anywhere only changes `currentSong`; the player bar reacts to that and drives the audio element. Search is the exception to the left column: its results stay in the page, so it calls the axios instance directly.
 
 The code is in `src/`: `Components/` (each in its own folder with its stylesheet), `redux/slices/`, `backend/axios.js` (the one place requests are made from), `utils/` and `tests/`.
 
