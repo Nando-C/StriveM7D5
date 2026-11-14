@@ -21,7 +21,7 @@ const YourLibrary = () => {
           </svg>
         </div>
         <h2>Create your first playlist</h2>
-        <span>It's easy, we'll help you.</span>
+        <span>It&apos;s easy, we&apos;ll help you.</span>
         <div>
           <Button variant="light">CREATE PLAYLIST</Button>
         </div>

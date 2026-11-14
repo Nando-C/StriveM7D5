@@ -24,7 +24,7 @@ const AlbumPage = () => {
     if (parseInt(albumId) !== albumSelected.id) {
       dispatch(fetchAlbum(albumId));
     }
-  }, [albumId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [albumId, albumSelected.id, dispatch]);
 
   const togglePlayPause = () => {
     if (track.md5_image !== albumSelected.md5_image) {

@@ -21,7 +21,7 @@ const selectedAlbumSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchAlbum.pending, (state, action) => {
+      .addCase(fetchAlbum.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchAlbum.fulfilled, (state, action) => {

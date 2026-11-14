@@ -49,7 +49,7 @@ const selectedArtistSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchArtist.pending, (state, action) => {
+      .addCase(fetchArtist.pending, (state) => {
         state.artistInfo.status = "loading";
       })
       .addCase(fetchArtist.fulfilled, (state, action) => {
@@ -60,7 +60,7 @@ const selectedArtistSlice = createSlice({
         state.artistInfo.status = "failed";
         state.artistInfo.error = action.error.message;
       })
-      .addCase(fetchAlbums.pending, (state, action) => {
+      .addCase(fetchAlbums.pending, (state) => {
         state.albumList.status = "loading";
       })
       .addCase(fetchAlbums.fulfilled, (state, action) => {
@@ -71,7 +71,7 @@ const selectedArtistSlice = createSlice({
         state.albumList.status = "failed";
         state.albumList.error = action.error.message;
       })
-      .addCase(fetchArtistTopTracks.pending, (state, action) => {
+      .addCase(fetchArtistTopTracks.pending, (state) => {
         state.topTrackList.status = "loading";
       })
       .addCase(fetchArtistTopTracks.fulfilled, (state, action) => {

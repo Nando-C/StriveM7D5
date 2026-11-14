@@ -36,7 +36,7 @@ const Artist = () => {
       dispatch(fetchAlbums(artistId));
       dispatch(fetchArtistTopTracks(artistId));
     }
-  }, [artistId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [artistId, artistSelected.id, dispatch]);
 
   const togglePlayPause = () => {
     if (track.artist.id !== artistSelected.id) {

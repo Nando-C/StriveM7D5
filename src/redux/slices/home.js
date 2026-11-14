@@ -21,7 +21,7 @@ const homeSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchHomeTrackList.pending, (state, action) => {
+      .addCase(fetchHomeTrackList.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchHomeTrackList.fulfilled, (state, action) => {

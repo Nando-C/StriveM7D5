@@ -50,6 +50,8 @@ const PlayerControls = () => {
     } else if (track.preview && !isPlaying) {
       pause();
     }
+    // Deliberately keyed on isPlaying only: play/pause are recreated every
+    // render and the track change is detected with useHasChanged. Reworked in S3.
   }, [isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {

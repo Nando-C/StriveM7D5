@@ -15,7 +15,7 @@ const Volume = () => {
       "--seek-before-width",
       `${currentVolume * 100}%`
     );
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentVolume]);
 
   const changeVolume = () => {
     dispatch(setCurrentVolume(volumeBar.current.value));

@@ -34,7 +34,7 @@ const Search = () => {
           isLoading: false,
           isError: false,
         });
-      } catch (error) {
+      } catch {
         // Aborting is deliberate (new keystroke or unmount), not a failure.
         if (controller.signal.aborted) return;
         setAlbumInfo({ albumList: [], isLoading: false, isError: true });
