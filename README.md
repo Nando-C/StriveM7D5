@@ -67,7 +67,7 @@ The code is in `src/`: `Components/` (each in its own folder with its stylesheet
 
 ## Quick start
 
-You need [Node.js](https://nodejs.org/) 22.12 or newer. Node 20 also works, from 20.19.
+You need [Node.js](https://nodejs.org/) 22 (22.13 or newer), 24 or 26.
 
 ```sh
 npm install
