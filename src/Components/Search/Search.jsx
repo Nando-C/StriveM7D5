@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
-import backend from "../../backend/axios";
+import { useSearchQuery } from "../../redux/api/deezerApi";
 import AlbumCard from "../Content/AlbumCard/AlbumCard";
 import "./Search.css";
 
@@ -10,45 +10,39 @@ const DEBOUNCE_MS = 400;
 
 const Search = () => {
   const [query, setQuery] = useState("");
-  const [albumInfo, setAlbumInfo] = useState({
-    albumList: [],
-    isLoading: true,
-    isError: false,
-  });
+  // The query the results are for: it follows the box after a pause in typing.
+  const [searchedQuery, setSearchedQuery] = useState("");
 
   const trimmedQuery = query.trim();
 
   useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchAlbums = async () => {
-      try {
-        const { data } = await backend.get("/search", {
-          params: { q: trimmedQuery || PLACEHOLDER_QUERY },
-          signal: controller.signal,
-        });
-        // A newer query has replaced this one: drop the late response.
-        if (controller.signal.aborted) return;
-        setAlbumInfo({
-          albumList: data.data ?? [],
-          isLoading: false,
-          isError: false,
-        });
-      } catch {
-        // Aborting is deliberate (new keystroke or unmount), not a failure.
-        if (controller.signal.aborted) return;
-        setAlbumInfo({ albumList: [], isLoading: false, isError: true });
-      }
-    };
-
     // The placeholder list loads straight away; typed queries are debounced.
-    const timer = setTimeout(fetchAlbums, trimmedQuery === "" ? 0 : DEBOUNCE_MS);
-
-    return () => {
-      clearTimeout(timer);
-      controller.abort();
-    };
+    const timer = setTimeout(
+      () => setSearchedQuery(trimmedQuery),
+      trimmedQuery === "" ? 0 : DEBOUNCE_MS
+    );
+    return () => clearTimeout(timer);
   }, [trimmedQuery]);
+
+  // `data` on purpose, not `currentData`: the previous results stay on screen
+  // until the new ones arrive, so the grid does not blink on every search.
+  // A response for an earlier query can never replace them, because the hook
+  // only reports the result of the query it is given.
+  const {
+    data: albumList = [],
+    isLoading,
+    isFetching,
+    isError,
+  } = useSearchQuery(searchedQuery || PLACEHOLDER_QUERY);
+
+  // After a failed search, `data` still holds the results of some earlier
+  // query. Those must not come back while the next search loads, so remember
+  // how the last finished request ended and show the loading state instead.
+  const [lastSearchFailed, setLastSearchFailed] = useState(false);
+  if (!isFetching && lastSearchFailed !== isError) {
+    setLastSearchFailed(isError);
+  }
+  const showLoading = isLoading || (isFetching && lastSearchFailed);
 
   return (
     <Container className="Search">
@@ -77,11 +71,11 @@ const Search = () => {
           </Form>
         </Col>
       </Row>
-      {albumInfo.isLoading && <h2 className="p-4">Loading...</h2>}
-      {albumInfo.isError && (
+      {showLoading && <h2 className="p-4">Loading...</h2>}
+      {isError && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}
-      {!albumInfo.isLoading && !albumInfo.isError && (
+      {!showLoading && !isError && (
         <>
           {trimmedQuery === "" && (
             <Row className="pt-3">
@@ -89,7 +83,7 @@ const Search = () => {
             </Row>
           )}
           <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 py-4">
-            {albumInfo.albumList.map((album) => (
+            {albumList.map((album) => (
               <AlbumCard key={album.id} album={album} source="home" />
             ))}
           </Row>

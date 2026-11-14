@@ -1,15 +1,15 @@
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useGetArtistTopTracksQuery } from "../../../redux/api/deezerApi";
 import { playOrToggle } from "../../../utils/playback";
 import "./Popular.css";
 
-const Popular = () => {
-  const trackStatus = useSelector(
-    (state) => state.selectedArtist.topTrackList.status
-  );
-  const trackList = useSelector(
-    (state) => state.selectedArtist.topTrackList.topTracks
-  );
+const Popular = ({ artistId }) => {
+  const {
+    data: trackList,
+    isLoading,
+    isError,
+  } = useGetArtistTopTracksQuery(artistId);
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const selectedTrack = useSelector((state) => state.currentSong.track);
@@ -25,11 +25,11 @@ const Popular = () => {
 
   return (
     <>
-      {trackStatus === "loading" && <h2 className="p-4">Loading...</h2>}
-      {trackStatus === "failed" && (
+      {isLoading && <h2 className="p-4">Loading...</h2>}
+      {isError && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}
-      {trackStatus === "succeded" && (
+      {trackList && (
         <Row className="Popular mx-0">
           <h2>Popular</h2>
           <Container className="table" fluid>

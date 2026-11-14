@@ -1,13 +1,11 @@
-import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { playOrToggle } from "../../../utils/playback";
 import {
-  fetchAlbums,
-  fetchArtist,
-  fetchArtistTopTracks,
-} from "../../../redux/slices/selectedArtist";
+  useGetArtistQuery,
+  useGetArtistTopTracksQuery,
+} from "../../../redux/api/deezerApi";
 import Albums from "../Albums/Albums";
 import Popular from "../Popular/Popular";
 import "./Artist.css";
@@ -16,30 +14,20 @@ const Artist = () => {
   const { artistId } = useParams();
 
   const dispatch = useDispatch();
-  const artistStatus = useSelector(
-    (state) => state.selectedArtist.artistInfo.status
-  );
-
-  const artistSelected = useSelector(
-    (state) => state.selectedArtist.artistInfo.artist
-  );
+  const {
+    data: artistSelected,
+    isLoading,
+    isError,
+  } = useGetArtistQuery(artistId);
+  const { data: topTracks } = useGetArtistTopTracksQuery(artistId);
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const track = useSelector((state) => state.currentSong.track);
-  const firstSong = useSelector(
-    (state) => state.selectedArtist.topTrackList?.topTracks[0]
-  );
-
-  useEffect(() => {
-    if (parseInt(artistId) !== artistSelected.id) {
-      dispatch(fetchArtist(artistId));
-      dispatch(fetchAlbums(artistId));
-      dispatch(fetchArtistTopTracks(artistId));
-    }
-  }, [artistId, artistSelected.id, dispatch]);
+  const firstSong = topTracks?.[0];
 
   // No track is loaded on a fresh page, so `track.artist` may be undefined.
-  const isThisArtistLoaded = track.artist?.id === artistSelected.id;
+  const isThisArtistLoaded =
+    artistSelected !== undefined && track.artist?.id === artistSelected.id;
 
   const togglePlayPause = () =>
     playOrToggle(dispatch, {
@@ -50,11 +38,11 @@ const Artist = () => {
 
   return (
     <Container fluid className="Artist">
-      {artistStatus === "loading" && <h2 className="p-4">Loading...</h2>}
-      {artistStatus === "failed" && (
+      {isLoading && <h2 className="p-4">Loading...</h2>}
+      {isError && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}
-      {artistStatus === "succeded" && (
+      {artistSelected && (
         <>
           <Row className="banner">
             <Image src={artistSelected.picture_xl} />
@@ -94,8 +82,8 @@ const Artist = () => {
                 </svg>
               </Col>
             </Row>
-            <Popular />
-            <Albums />
+            <Popular artistId={artistId} />
+            <Albums artistId={artistId} />
           </Row>
         </>
       )}

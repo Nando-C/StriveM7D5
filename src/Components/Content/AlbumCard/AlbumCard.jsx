@@ -34,33 +34,36 @@ const AlbumCard = (props) => {
                 src={props.album.cover_big || props.album.album.cover_big}
               />
             </Link>
-            <div
-              className="play-btn"
-              onClick={() => togglePlayPause(props.album.id)}
-              style={{
-                display: props.source !== "home" ? "none" : undefined,
-                opacity:
-                  isPlaying && track.id === props.album.id ? 1 : undefined,
-              }}
-            >
-              <svg
-                height="16"
-                role="img"
-                width="16"
-                viewBox="0 0 16 16"
-                aria-hidden="true"
+            {/* Only a track can be played: on the artist page the card
+                shows an album, which has nothing to play. */}
+            {props.source === "home" && (
+              <div
+                className="play-btn"
+                onClick={() => togglePlayPause(props.album.id)}
+                style={{
+                  opacity:
+                    isPlaying && track.id === props.album.id ? 1 : undefined,
+                }}
               >
-                {isPlaying && track.id === props.album.id ? (
-                  <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
-                ) : (
-                  <path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path>
-                )}
-                {/* <polygon
+                <svg
+                  height="16"
+                  role="img"
+                  width="16"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                >
+                  {isPlaying && track.id === props.album.id ? (
+                    <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
+                  ) : (
+                    <path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path>
+                  )}
+                  {/* <polygon
                   points="21.57 12 5.98 3 5.98 21 21.57 12"
                   fill="white"
                 ></polygon> */}
-              </svg>
-            </div>
+                </svg>
+              </div>
+            )}
           </div>
           <Link
             to={

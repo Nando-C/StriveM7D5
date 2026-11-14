@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, fireEvent, screen } from "@testing-library/react";
+import { delay, http } from "msw";
 import { Route, Routes } from "react-router";
 import AlbumPage from "../Components/Content/AlbumPage/AlbumPage";
 import Artist from "../Components/Content/Artist/Artist";
@@ -8,8 +9,10 @@ import Volume from "../Components/Player/Volume/Volume";
 import TrackList from "../Components/TrackList/TrackList";
 import { selectSong, setIsPlaying } from "../redux/slices/currentSong";
 import { playOrToggle } from "../utils/playback";
+import { toPlayableTrack } from "../utils/track";
 import { stubAudio } from "./audio";
 import { album, artist, makeTrack } from "./fixtures";
+import { API, server } from "./server";
 import { renderWithProviders } from "./utils";
 
 let audioStub;
@@ -18,19 +21,12 @@ beforeEach(() => {
 });
 afterEach(() => vi.restoreAllMocks());
 
-const idle = { status: "idle", error: null };
-
 const renderAlbumTracks = () => {
   const view = renderWithProviders(
     <>
-      <TrackList />
+      <TrackList album={album} />
       <PlayerControls />
-    </>,
-    {
-      preloadedState: {
-        selectedAlbum: { album, status: "succeded", error: null },
-      },
-    }
+    </>
   );
   return {
     ...view,
@@ -104,7 +100,7 @@ describe("progress loop", () => {
 });
 
 describe("Artist page play button", () => {
-  const renderArtist = (preloadedState) => {
+  const renderArtist = () => {
     const view = renderWithProviders(
       <>
         <Routes>
@@ -112,7 +108,7 @@ describe("Artist page play button", () => {
         </Routes>
         <PlayerControls />
       </>,
-      { route: `/Artist/${artist.id}`, preloadedState }
+      { route: `/Artist/${artist.id}` }
     );
     return {
       ...view,
@@ -143,16 +139,11 @@ describe("Artist page play button", () => {
     expect(audioStub.pause).toHaveBeenCalledTimes(1);
   });
 
-  it("does nothing while the top tracks have not loaded", () => {
-    // The artist is already in the store, so the page does not refetch and
-    // the top-track list stays empty.
-    const { store, playButton } = renderArtist({
-      selectedArtist: {
-        artistInfo: { artist, status: "succeded", error: null },
-        albumList: { albums: [], ...idle },
-        topTrackList: { topTracks: [], ...idle },
-      },
-    });
+  it("does nothing while the top tracks have not loaded", async () => {
+    // The artist arrives, the top tracks never do.
+    server.use(http.get(`${API}/artist/:id/top`, () => delay("infinite")));
+    const { store, playButton } = renderArtist();
+    await screen.findByText(artist.name);
 
     fireEvent.click(playButton());
 
@@ -178,7 +169,7 @@ describe("Album page play button", () => {
     fireEvent.click(container.querySelector(".options .play-btn"));
 
     const { track, isPlaying } = store.getState().currentSong;
-    expect(track.id).toBe(album.tracks.data[0].id);
+    expect(track).toEqual(toPlayableTrack(album.tracks.data[0], album));
     expect(track.album.title).toBe("Test Album");
     expect(isPlaying).toBe(true);
     expect(audioStub.playedSrcs.at(-1)).toBe(track.preview);
@@ -219,7 +210,7 @@ describe("playOrToggle", () => {
       playOrToggle(dispatch, { isSameTrack: false, isPlaying, track });
 
       expect(dispatch.mock.calls).toEqual([
-        [selectSong(track)],
+        [selectSong(toPlayableTrack(track))],
         [setIsPlaying(true)],
       ]);
     }
