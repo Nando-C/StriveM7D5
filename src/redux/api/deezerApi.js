@@ -12,6 +12,11 @@ const axiosBaseQuery = async ({ url, params }, { signal }) => {
         error: { status: 200, message: data.error.message ?? "Deezer error" },
       };
     }
+    // A success with nothing in it is a failure too: a page given no data
+    // and no error would wait forever.
+    if (data == null || data === "") {
+      return { error: { status: 200, message: "Empty response" } };
+    }
     return { data };
   } catch (error) {
     return {
@@ -29,7 +34,12 @@ export const deezerApi = createApi({
   // Going back to a page within this time shows it without a request.
   keepUnusedDataFor: 300,
   endpoints: (build) => ({
-    // Also used for the home page's list.
+    // The home page's list is a fixed search. It is an endpoint of its own so
+    // that it is kept as long as a page, not as briefly as a typed search.
+    getHomeTracks: build.query({
+      query: () => ({ url: "/search", params: { q: "the" } }),
+      transformResponse: list,
+    }),
     search: build.query({
       query: (q) => ({ url: "/search", params: { q } }),
       transformResponse: list,
@@ -60,17 +70,18 @@ export const deezerApi = createApi({
 });
 
 // Search and the home page read the hook's result as it is.
-export const { useSearchQuery } = deezerApi;
+export const { useSearchQuery, useGetHomeTracksQuery } = deezerApi;
 
 // The hooks that take an id report only what belongs to that id. RTK Query's
 // own `data` keeps the previous id's result until the new one arrives, which
 // would show one artist's content under another artist's address, so these
 // are built on `currentData`, and "nothing yet and no error" is the loading
 // state (`isLoading` is false once anything has ever loaded).
-const forCurrentId = ({ currentData, isError }) => ({
-  data: currentData,
-  isLoading: currentData === undefined && !isError,
-  isError,
+// Everything else the hook returns (`refetch`, `isFetching`, ...) is passed on.
+const forCurrentId = (result) => ({
+  ...result,
+  data: result.currentData,
+  isLoading: result.currentData === undefined && !result.isError,
 });
 
 export const useGetArtistQuery = (artistId) =>

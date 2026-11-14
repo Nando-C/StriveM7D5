@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { playOrToggle } from "../../../utils/playback";
 import {
+  useGetArtistAlbumsQuery,
   useGetArtistQuery,
   useGetArtistTopTracksQuery,
 } from "../../../redux/api/deezerApi";
@@ -20,6 +21,9 @@ const Artist = () => {
     isError,
   } = useGetArtistQuery(artistId);
   const { data: topTracks } = useGetArtistTopTracksQuery(artistId);
+  // Not read here: `Albums` shows them. Asking now starts the request with
+  // the other two, where `Albums` only mounts once the artist has arrived.
+  useGetArtistAlbumsQuery(artistId);
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const track = useSelector((state) => state.currentSong.track);

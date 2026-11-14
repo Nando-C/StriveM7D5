@@ -1,9 +1,6 @@
 import { Row } from "react-bootstrap";
-import { useSearchQuery } from "../redux/api/deezerApi";
+import { useGetHomeTracksQuery } from "../redux/api/deezerApi";
 import AlbumCard from "./Content/AlbumCard/AlbumCard";
-
-// The home page's list is a fixed search.
-const HOME_QUERY = "the";
 
 const AlbumDeck = () => {
   const {
@@ -11,7 +8,7 @@ const AlbumDeck = () => {
     isLoading,
     isError,
     isSuccess,
-  } = useSearchQuery(HOME_QUERY);
+  } = useGetHomeTracksQuery();
 
   return (
     <>

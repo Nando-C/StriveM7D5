@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, renderHook, screen, waitFor } from "@testing-library/react";
 import { delay, http, HttpResponse } from "msw";
 import { Link, Route, Routes } from "react-router";
 import AlbumPage from "../Components/Content/AlbumPage/AlbumPage";
@@ -10,6 +10,9 @@ import Home from "../Components/Content/Home/Home";
 import Popular from "../Components/Content/Popular/Popular";
 import PlayerControls from "../Components/Player/PlayerControls/PlayerControls";
 import Search from "../Components/Search/Search";
+import { Provider } from "react-redux";
+import { makeStore } from "../redux/app/store";
+import { useGetAlbumQuery } from "../redux/api/deezerApi";
 import { toPlayableTrack } from "../utils/track";
 import { stubAudio } from "./audio";
 import {
@@ -110,6 +113,73 @@ describe("going back to a page", () => {
     await delay(50);
     expect(requestsTo("/album/100")).toBe(1);
     expect(requestLog).toHaveLength(2);
+  });
+});
+
+describe("how long an unused result is kept", () => {
+  const cached = (store) =>
+    Object.values(store.getState().deezerApi.queries).map(
+      (query) => query.endpointName,
+    );
+
+  it("keeps the home list as long as a page, and a search only a minute", async () => {
+    const home = renderWithProviders(<Home />);
+    await screen.findByText(homeTracks[0].title);
+    const search = renderWithProviders(<Search />, { store: home.store });
+    await screen.findByText("Result for i");
+    expect(cached(home.store).sort()).toEqual(["getHomeTracks", "search"]);
+
+    // Only the clock is faked, and only once nothing is on its way.
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout", "Date"] });
+    try {
+      home.unmount();
+      search.unmount();
+
+      vi.advanceTimersByTime(61_000);
+      expect(cached(home.store)).toEqual(["getHomeTracks"]);
+
+      vi.advanceTimersByTime(200_000);
+      expect(cached(home.store)).toEqual(["getHomeTracks"]);
+
+      vi.advanceTimersByTime(60_000);
+      expect(cached(home.store)).toEqual([]);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});
+
+describe("the artist page's requests", () => {
+  it("all start together, without waiting for the artist to arrive", async () => {
+    server.use(http.get(`${API}/artist/10`, slowly(artist)));
+    const { pageHeading } = renderPages(`/Artist/${artist.id}`);
+
+    await waitFor(() => expect(requestLog).toHaveLength(3));
+
+    expect(pageHeading()).toBeNull();
+    expect([...requestLog].sort()).toEqual([
+      "/artist/10",
+      "/artist/10/albums",
+      "/artist/10/top",
+    ]);
+    await waitFor(() => expect(pageHeading()).toHaveTextContent(artist.name));
+    expect(await screen.findByText("Artist Album")).toBeInTheDocument();
+    expect(requestLog).toHaveLength(3);
+  });
+});
+
+describe("the hooks that take an id", () => {
+  it("still pass on the rest of what RTK Query's hook returns", async () => {
+    const store = makeStore();
+    const { result } = renderHook(() => useGetAlbumQuery(album.id), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+    });
+
+    expect(result.current.isLoading).toBe(true);
+    await waitFor(() => expect(result.current.data?.title).toBe(album.title));
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.isSuccess).toBe(true);
+    expect(typeof result.current.refetch).toBe("function");
   });
 });
 
@@ -243,6 +313,19 @@ describe("a Deezer error in a successful response", () => {
 
   it("shows the error state on the artist page", async () => {
     renderPages("/Artist/999");
+
+    expect(await screen.findByText(ERROR)).toBeInTheDocument();
+    expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+  });
+
+  it("shows the error state, not an endless loading state, for an empty response", async () => {
+    server.use(
+      http.get(
+        `${API}/album/100`,
+        () => new HttpResponse(null, { status: 200 }),
+      ),
+    );
+    renderPages(`/Album/${album.id}`);
 
     expect(await screen.findByText(ERROR)).toBeInTheDocument();
     expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
