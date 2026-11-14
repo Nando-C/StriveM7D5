@@ -58,6 +58,9 @@ const PlayerControls = () => {
     audioPlayer.current.volume = currentVolume;
   }, [currentVolume]);
 
+  // Stop the progress loop if the player ever unmounts.
+  useEffect(() => () => cancelAnimationFrame(animationRef.current), []);
+
   const togglePlayPause = () => {
     if (track.preview) {
       const prevValue = isPlaying;
