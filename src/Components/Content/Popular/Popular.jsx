@@ -40,7 +40,7 @@ const Popular = () => {
                     className="track-number"
                     style={{
                       display:
-                        isPlaying && selectedTrack.id === track.id && "none",
+                        isPlaying && selectedTrack.id === track.id ? "none" : undefined,
                     }}
                   >
                     {i + 1}
@@ -49,7 +49,7 @@ const Popular = () => {
                     className="play-btn"
                     style={{
                       display:
-                        isPlaying && selectedTrack.id === track.id && "flex",
+                        isPlaying && selectedTrack.id === track.id ? "flex" : undefined,
                     }}
                     onClick={() => togglePlayPause(track)}
                   >

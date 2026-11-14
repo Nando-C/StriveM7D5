@@ -15,7 +15,7 @@ const AlbumDeck = () => {
       {error && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}
-      {trackList.lenght === 0 && trackListStatus === "succeded" && (
+      {trackList.length === 0 && trackListStatus === "succeded" && (
         <h2>We dont have this album collection</h2>
       )}
       {trackListStatus === "succeded" && (

@@ -11,7 +11,6 @@ const TrackList = () => {
   );
 
   const album = useSelector((state) => state.selectedAlbum.album);
-  // console.log("Album: ", album);
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const selectedTrack = useSelector((state) => state.currentSong.track);
@@ -24,7 +23,6 @@ const TrackList = () => {
         ...track,
         album,
       };
-      // console.log(trackInfo);
       dispatch(selectSong(trackInfo));
     }
     dispatch(setIsPlaying(!isPlaying));
@@ -63,7 +61,7 @@ const TrackList = () => {
                   className="track-number"
                   style={{
                     display:
-                      isPlaying && selectedTrack.id === track.id && "none",
+                      isPlaying && selectedTrack.id === track.id ? "none" : undefined,
                   }}
                 >
                   {i + 1}
@@ -72,7 +70,7 @@ const TrackList = () => {
                   className="play-btn"
                   style={{
                     display:
-                      isPlaying && selectedTrack.id === track.id && "flex",
+                      isPlaying && selectedTrack.id === track.id ? "flex" : undefined,
                   }}
                   onClick={() => togglePlayPause(track)}
                 >

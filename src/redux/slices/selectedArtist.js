@@ -55,12 +55,10 @@ const selectedArtistSlice = createSlice({
       .addCase(fetchArtist.fulfilled, (state, action) => {
         state.artistInfo.status = "succeded";
         state.artistInfo.artist = action.payload;
-        // console.log("Artist Payload: ", action.payload);
       })
       .addCase(fetchArtist.rejected, (state, action) => {
         state.artistInfo.status = "failed";
         state.artistInfo.error = action.error.message;
-        console.log(state.artistInfo.error);
       })
       .addCase(fetchAlbums.pending, (state, action) => {
         state.albumList.status = "loading";
@@ -68,12 +66,10 @@ const selectedArtistSlice = createSlice({
       .addCase(fetchAlbums.fulfilled, (state, action) => {
         state.albumList.status = "succeded";
         state.albumList.albums = action.payload.data;
-        // console.log("Albums Payload: ", action.payload.data);
       })
       .addCase(fetchAlbums.rejected, (state, action) => {
         state.albumList.status = "failed";
         state.albumList.error = action.error.message;
-        console.log(state.albumList.error);
       })
       .addCase(fetchArtistTopTracks.pending, (state, action) => {
         state.topTrackList.status = "loading";
@@ -82,12 +78,10 @@ const selectedArtistSlice = createSlice({
         state.topTrackList.status = "succeded";
         const sortedList = action.payload.data.sort((a, b) => b.rank - a.rank);
         state.topTrackList.topTracks = sortedList;
-        // console.log("Top Tracks Payload: ", action.payload.data);
       })
       .addCase(fetchArtistTopTracks.rejected, (state, action) => {
         state.topTrackList.status = "failed";
         state.topTrackList.error = action.error.message;
-        console.log(state.topTrackList.error);
       });
   },
 });

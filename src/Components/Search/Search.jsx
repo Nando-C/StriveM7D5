@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
+import backend from "../../backend/axios";
 import AlbumCard from "../Content/AlbumCard/AlbumCard";
 import "./Search.css";
 
+// Shown while the search box is empty, so the page isn't blank.
+const PLACEHOLDER_QUERY = "i";
+const DEBOUNCE_MS = 400;
+
 const Search = () => {
-  const baseURL = process.env.REACT_APP_BACKEND_URL;
   const [query, setQuery] = useState("");
   const [albumInfo, setAlbumInfo] = useState({
     albumList: [],
@@ -12,36 +16,39 @@ const Search = () => {
     isError: false,
   });
 
-  const fetchAlbum = async (query = "i") => {
-    try {
-      const response = await fetch(`${baseURL}/search?q=${query}`);
-      if (response.ok) {
-        const albumResponse = await response.json();
-        // console.log("albumResponse: ", albumResponse.data);
+  const trimmedQuery = query.trim();
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchAlbums = async () => {
+      try {
+        const { data } = await backend.get("/search", {
+          params: { q: trimmedQuery || PLACEHOLDER_QUERY },
+          signal: controller.signal,
+        });
+        // A newer query has replaced this one: drop the late response.
+        if (controller.signal.aborted) return;
         setAlbumInfo({
-          albumList: albumResponse.data,
+          albumList: data.data ?? [],
           isLoading: false,
           isError: false,
         });
-      } else {
-        console.log("There was an error retrieving the information!");
-        setAlbumInfo({
-          isLoading: false,
-          isError: true,
-        });
+      } catch (error) {
+        // Aborting is deliberate (new keystroke or unmount), not a failure.
+        if (controller.signal.aborted) return;
+        setAlbumInfo({ albumList: [], isLoading: false, isError: true });
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    };
 
-  useEffect(() => {
-    if (query === "") {
-      fetchAlbum();
-    } else {
-      fetchAlbum(query);
-    }
-  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
+    // The placeholder list loads straight away; typed queries are debounced.
+    const timer = setTimeout(fetchAlbums, trimmedQuery === "" ? 0 : DEBOUNCE_MS);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [trimmedQuery]);
 
   return (
     <Container className="Search">
@@ -76,9 +83,9 @@ const Search = () => {
       )}
       {!albumInfo.isLoading && !albumInfo.isError && (
         <>
-          {query === "" && !albumInfo.isLoading && !albumInfo.isError && (
+          {trimmedQuery === "" && (
             <Row className="pt-3">
-              <h2>Trending</h2>
+              <h2>Explore</h2>
             </Row>
           )}
           <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 py-4">

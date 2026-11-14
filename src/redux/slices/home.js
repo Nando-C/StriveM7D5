@@ -27,12 +27,10 @@ const homeSlice = createSlice({
       .addCase(fetchHomeTrackList.fulfilled, (state, action) => {
         state.status = "succeded";
         state.trackList = action.payload.data;
-        // console.log("Home TrackList Payload: ", action.payload.data);
       })
       .addCase(fetchHomeTrackList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-        console.log(state.error);
       });
   },
 });

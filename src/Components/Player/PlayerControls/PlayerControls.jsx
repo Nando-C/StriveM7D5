@@ -54,7 +54,6 @@ const PlayerControls = () => {
 
   useEffect(() => {
     audioPlayer.current.volume = currentVolume;
-    console.log("Volume: ", currentVolume);
   }, [currentVolume]);
 
   const togglePlayPause = () => {
