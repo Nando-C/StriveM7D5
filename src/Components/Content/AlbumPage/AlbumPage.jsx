@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router";
 import { playOrToggle } from "../../../utils/playback";
-import { fetchAlbum } from "../../../redux/slices/selectedAlbum";
+import { useGetAlbumQuery } from "../../../redux/api/deezerApi";
 import TrackList from "../../TrackList/TrackList";
 import "./AlbumPage.css";
 
@@ -11,35 +10,35 @@ const AlbumPage = () => {
   const { albumId } = useParams();
 
   const dispatch = useDispatch();
-  const albumStatus = useSelector((state) => state.selectedAlbum.status);
-  const albumSelected = useSelector((state) => state.selectedAlbum.album);
+  const {
+    data: albumSelected,
+    isLoading,
+    isError,
+  } = useGetAlbumQuery(albumId);
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const track = useSelector((state) => state.currentSong.track);
-  const firstSong = useSelector(
-    (state) => state.selectedAlbum.album.tracks?.data[0]
-  );
+  const firstSong = albumSelected?.tracks?.data[0];
 
-  useEffect(() => {
-    if (parseInt(albumId) !== albumSelected.id) {
-      dispatch(fetchAlbum(albumId));
-    }
-  }, [albumId, albumSelected.id, dispatch]);
+  // No track is loaded on a fresh page, so `track.album` may be undefined.
+  const isThisAlbumLoaded =
+    albumSelected !== undefined && track.album?.id === albumSelected.id;
 
   const togglePlayPause = () =>
     playOrToggle(dispatch, {
-      isSameTrack: track.md5_image === albumSelected.md5_image,
+      isSameTrack: isThisAlbumLoaded,
       isPlaying,
-      track: firstSong && { ...firstSong, album: albumSelected },
+      track: firstSong,
+      album: albumSelected,
     });
 
   return (
     <Container fluid className="AlbumPage">
-      {albumStatus === "loading" && <h2 className="p-4">Loading...</h2>}
-      {albumStatus === "failed" && (
+      {isLoading && <h2 className="p-4">Loading...</h2>}
+      {isError && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}
-      {albumStatus === "succeded" && (
+      {albumSelected && (
         <>
           <Row className="backgnd">
             <Row className="cover">
@@ -84,7 +83,7 @@ const AlbumPage = () => {
                   viewBox="0 0 16 16"
                   aria-hidden="true"
                 >
-                  {isPlaying && track.md5_image === albumSelected.md5_image ? (
+                  {isPlaying && isThisAlbumLoaded ? (
                     <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
                   ) : (
                     <path fill="white" d="M4.018 14L14.41 8 4.018 2z"></path>
@@ -106,7 +105,7 @@ const AlbumPage = () => {
                 </svg>
               </Col>
             </Row>
-            <TrackList />
+            <TrackList album={albumSelected} />
           </Row>
         </>
       )}

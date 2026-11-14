@@ -67,14 +67,9 @@ describe("track switching from a track list", () => {
   const renderAlbum = () => {
     const view = renderWithProviders(
       <>
-        <TrackList />
+        <TrackList album={album} />
         <PlayerControls />
-      </>,
-      {
-        preloadedState: {
-          selectedAlbum: { album, status: "succeded", error: null },
-        },
-      }
+      </>
     );
     const rowButtons = view.container.querySelectorAll(".table-row .play-btn");
     return { ...view, rowButtons, audio: view.container.querySelector("audio") };

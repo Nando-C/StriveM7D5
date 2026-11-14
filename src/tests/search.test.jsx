@@ -1,10 +1,10 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { delay, http, HttpResponse } from "msw";
 import Search from "../Components/Search/Search";
 import { makeTrack } from "./fixtures";
-import { API, resetSearchLog, searchLog, server } from "./server";
+import { API, searchLog, server } from "./server";
 import { renderWithProviders } from "./utils";
 
 // Real timers throughout: the debounce is 400ms, and fake timers combined
@@ -14,8 +14,6 @@ const input = () => screen.getByPlaceholderText(/artists, songs/i);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe("Search", () => {
-  beforeEach(() => resetSearchLog());
-
   it("loads the placeholder list straight away, under an Explore heading", async () => {
     renderWithProviders(<Search />);
 
@@ -54,7 +52,6 @@ describe("Search", () => {
     server.use(
       http.get(`${API}/search`, async ({ request }) => {
         const q = new URL(request.url).searchParams.get("q");
-        searchLog.push(q);
         if (q === "a") {
           await delay(600);
           return HttpResponse.json({ data: [makeTrack(1, "STALE")] });
@@ -75,6 +72,68 @@ describe("Search", () => {
     expect(screen.queryByText("STALE")).not.toBeInTheDocument();
     expect(screen.getByText("Fresh ab")).toBeInTheDocument();
     expect(screen.queryByText(ERROR)).not.toBeInTheDocument();
+  });
+
+  it("answers a query it has already searched from the cache, without a request", async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<Search />);
+    await screen.findByText("Result for i");
+
+    await user.type(input(), "que");
+    await screen.findByText("Result for que");
+    await user.clear(input());
+    await screen.findByText("Result for i");
+    await user.type(input(), "que");
+
+    expect(await screen.findByText("Result for que")).toBeInTheDocument();
+    expect(searchLog).toEqual(["i", "que"]);
+  });
+
+  it("keeps the previous results on screen while the next search loads", async () => {
+    server.use(
+      http.get(`${API}/search`, async ({ request }) => {
+        const q = new URL(request.url).searchParams.get("q");
+        if (q !== "i") await delay(300);
+        return HttpResponse.json({ data: [makeTrack(1, `Fresh ${q}`)] });
+      })
+    );
+    const user = userEvent.setup();
+    renderWithProviders(<Search />);
+    await screen.findByText("Fresh i");
+
+    await user.type(input(), "slow");
+    await waitFor(() => expect(searchLog).toContain("slow"));
+
+    expect(screen.getByText("Fresh i")).toBeInTheDocument();
+    expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    expect(await screen.findByText("Fresh slow")).toBeInTheDocument();
+  });
+
+  it("does not bring back older results while the search after a failed one loads", async () => {
+    server.use(
+      http.get(`${API}/search`, async ({ request }) => {
+        const q = new URL(request.url).searchParams.get("q");
+        if (q === "abc") return new HttpResponse(null, { status: 500 });
+        if (q === "abcd") await delay(300);
+        return HttpResponse.json({ data: [makeTrack(1, `Fresh ${q}`)] });
+      })
+    );
+    const user = userEvent.setup();
+    renderWithProviders(<Search />);
+    await screen.findByText("Fresh i");
+
+    await user.type(input(), "abc");
+    expect(await screen.findByText(ERROR)).toBeInTheDocument();
+    expect(screen.queryByText("Fresh i")).not.toBeInTheDocument();
+
+    await user.type(input(), "d");
+    await waitFor(() => expect(searchLog).toContain("abcd"));
+
+    expect(screen.queryByText("Fresh i")).not.toBeInTheDocument();
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
+    expect(screen.queryByText(ERROR)).not.toBeInTheDocument();
+    expect(await screen.findByText("Fresh abcd")).toBeInTheDocument();
+    expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
   });
 
   it("shows the error state on a network failure, not an endless spinner", async () => {

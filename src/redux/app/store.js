@@ -1,15 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import homeReducer from "../slices/home";
-import selectedArtistReducer from "../slices/selectedArtist";
-import selectedAlbumReducer from "../slices/selectedAlbum";
+import { deezerApi } from "../api/deezerApi";
 import currentSongReducer from "../slices/currentSong";
 
-export const store = configureStore({
-  reducer: {
-    home: homeReducer,
-    selectedArtist: selectedArtistReducer,
-    selectedAlbum: selectedAlbumReducer,
-    currentSong: currentSongReducer,
-  },
-});
+// A function, so each test can have a store (and a request cache) of its own.
+export const makeStore = (preloadedState) =>
+  configureStore({
+    reducer: {
+      [deezerApi.reducerPath]: deezerApi.reducer,
+      currentSong: currentSongReducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(deezerApi.middleware),
+    preloadedState,
+  });
+
+export const store = makeStore();

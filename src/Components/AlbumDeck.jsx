@@ -1,24 +1,25 @@
-import { useSelector } from "react-redux";
-import { selectTrackList } from "../redux/slices/home";
 import { Row } from "react-bootstrap";
+import { useGetHomeTracksQuery } from "../redux/api/deezerApi";
 import AlbumCard from "./Content/AlbumCard/AlbumCard";
 
 const AlbumDeck = () => {
-  const trackList = useSelector(selectTrackList);
-
-  const trackListStatus = useSelector((state) => state.home.status);
-  const error = useSelector((state) => state.home.error);
+  const {
+    data: trackList = [],
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetHomeTracksQuery();
 
   return (
     <>
-      {trackListStatus === "loading" && <h2 className="p-4">Loading...</h2>}
-      {error && (
+      {isLoading && <h2 className="p-4">Loading...</h2>}
+      {isError && (
         <h1 className="p-4">There was an error retrieving the information</h1>
       )}
-      {trackList.length === 0 && trackListStatus === "succeded" && (
+      {trackList.length === 0 && isSuccess && (
         <h2>We dont have this album collection</h2>
       )}
-      {trackListStatus === "succeded" && (
+      {isSuccess && (
         <div id="cardsDeck">
           <Row id="deckHeader">
             <h3 className="pl-3 mt-4">Recomended for today</h3>

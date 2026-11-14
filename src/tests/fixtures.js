@@ -7,7 +7,6 @@ export const makeTrack = (id, title, overrides = {}) => ({
   duration: 200 + id,
   rank: 1000 * id,
   preview: `http://localhost:3000/previews/${id}.mp3`,
-  md5_image: `md5-album-${overrides.albumId ?? 100}`,
   artist: { id: 10, name: "Test Artist" },
   album: {
     id: overrides.albumId ?? 100,
@@ -42,11 +41,54 @@ export const artistAlbums = [
   { id: 300, title: "Artist Album", cover_big: "http://localhost:3000/covers/300.jpg" },
 ];
 
+// A second artist and a second album, for tests that move between two pages.
+export const otherArtist = {
+  id: 20,
+  name: "Other Artist",
+  picture_xl: "http://localhost:3000/covers/other-artist.jpg",
+  nb_fan: 678,
+};
+
+export const otherArtistTopTracks = [
+  makeTrack(31, "Other Hit", {
+    rank: 500,
+    albumId: 400,
+    artist: { id: 20, name: "Other Artist" },
+  }),
+];
+
+export const otherArtistAlbums = [
+  { id: 400, title: "Other Artist Album", cover_big: "http://localhost:3000/covers/400.jpg" },
+];
+
+export const otherAlbum = {
+  id: 200,
+  title: "Other Album",
+  cover_small: "http://localhost:3000/covers/other-album-small.jpg",
+  cover_big: "http://localhost:3000/covers/other-album-big.jpg",
+  release_date: "2021-01-01",
+  nb_tracks: 1,
+  duration: 200,
+  artist: { id: 20, name: "Other Artist", picture_small: "" },
+  tracks: {
+    data: [
+      makeTrack(41, "Other Album Track", {
+        albumId: 200,
+        artist: { id: 20, name: "Other Artist" },
+      }),
+    ],
+  },
+};
+
+// What Deezer answers, with HTTP 200, for an id it does not know.
+export const deezerError = {
+  error: { type: "DataException", message: "no data", code: 800 },
+};
+
 // An album as returned by GET /album/:id, with its track list embedded.
 export const album = {
   id: 100,
   title: "Test Album",
-  md5_image: "md5-album-100",
   cover_small: "http://localhost:3000/covers/album-small.jpg",
   cover_big: "http://localhost:3000/covers/album-big.jpg",
   release_date: "2020-01-01",
