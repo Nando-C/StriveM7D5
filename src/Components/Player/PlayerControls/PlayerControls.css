@@ -47,26 +47,18 @@
 .PlayerControls .bar {
   --seek-before-width: 0;
   appearance: none;
-  background: #b3b3b3;
+  /* The fill is a background on the input itself: Safari and Firefox do not
+     draw ::before on an input. */
+  background: linear-gradient(
+    to right,
+    coral var(--seek-before-width),
+    #b3b3b3 var(--seek-before-width)
+  );
   border-radius: 2px;
   position: relative;
   height: 4px;
   width: 100%;
   outline: none;
-}
-
-.PlayerControls .bar::before {
-  content: '';
-  height: 4px;
-  width: var(--seek-before-width);
-  background-color: coral;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  cursor: pointer;
 }
 
 .PlayerControls .bar::-webkit-slider-thumb {
@@ -79,6 +71,16 @@
   cursor: pointer;
   position: relative;
   z-index: 4;
+  box-sizing: border-box;
+}
+
+.PlayerControls .bar::-moz-range-thumb {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
   box-sizing: border-box;
 }
 
