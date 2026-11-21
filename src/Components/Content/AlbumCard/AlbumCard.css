@@ -11,9 +11,13 @@
   position: relative;
 }
 
+/* Covers are square. Saying so reserves the space before the image arrives,
+   so the cards do not jump as covers load. */
 .AlbumCard .card img {
   border-radius: 6px;
   margin-bottom: 16px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 .AlbumCard .card .play-btn {
   height: 40px;

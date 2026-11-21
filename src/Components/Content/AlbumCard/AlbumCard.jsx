@@ -4,7 +4,23 @@ import { Link } from "react-router";
 import { playOrToggle } from "../../../utils/playback";
 import "./AlbumCard.css";
 
+// How wide a card is at each of the grid's breakpoints, for `srcset`: the
+// room beside the 240px sidebar, shared by 6, 5, 4, 3 or 2 columns, and the
+// full width on a phone, where there is no sidebar and one column.
+const COVER_SIZES = [
+  "(min-width: 1400px) calc((100vw - 240px) / 6)",
+  "(min-width: 1200px) calc((100vw - 240px) / 5)",
+  "(min-width: 992px) calc((100vw - 240px) / 4)",
+  "(min-width: 768px) calc((100vw - 240px) / 3)",
+  "(min-width: 576px) calc((100vw - 240px) / 2)",
+  "100vw",
+].join(", ");
+
+// `eager`: load the cover at once. For the first cards of a page, which are
+// on screen from the start; the rest load as they are scrolled to.
 const AlbumCard = (props) => {
+  // A track (home, search) keeps its covers on its album; an album has them.
+  const cover = props.album.cover_big ? props.album : props.album.album;
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const track = useSelector((state) => state.currentSong.track);
 
@@ -34,8 +50,17 @@ const AlbumCard = (props) => {
               aria-hidden="true"
               tabIndex={-1}
             >
+              {/* The browser picks the 250px or the 500px cover for the
+                  card's width; `src` is for browsers without `srcset`. */}
               <Card.Img
-                src={props.album.cover_big || props.album.album.cover_big}
+                src={cover.cover_big}
+                srcSet={
+                  cover.cover_medium &&
+                  `${cover.cover_medium} 250w, ${cover.cover_big} 500w`
+                }
+                sizes={COVER_SIZES}
+                loading={props.eager ? "eager" : "lazy"}
+                decoding="async"
                 alt=""
               />
             </Link>

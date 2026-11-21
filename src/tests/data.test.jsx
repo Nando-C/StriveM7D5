@@ -300,6 +300,11 @@ describe("an album card on the artist page", () => {
 
     expect(container.querySelector(".AlbumCard")).not.toBeNull();
     expect(container.querySelector(".AlbumCard .play-btn")).toBeNull();
+    // An album that comes with one cover size only: no choice to offer.
+    const cover = container.querySelector(".AlbumCard img");
+    expect(cover).toHaveAttribute("src", "http://localhost:3000/covers/300.jpg");
+    expect(cover).not.toHaveAttribute("srcset");
+    expect(cover).toHaveAttribute("loading", "lazy");
   });
 });
 

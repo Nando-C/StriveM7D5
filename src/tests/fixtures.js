@@ -12,6 +12,7 @@ export const makeTrack = (id, title, overrides = {}) => ({
     id: overrides.albumId ?? 100,
     title: `${title} (album)`,
     cover_small: `http://localhost:3000/covers/${id}-small.jpg`,
+    cover_medium: `http://localhost:3000/covers/${id}-medium.jpg`,
     cover_big: `http://localhost:3000/covers/${id}-big.jpg`,
   },
   ...overrides,

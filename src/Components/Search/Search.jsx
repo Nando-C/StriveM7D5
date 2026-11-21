@@ -9,6 +9,9 @@ import "./Search.css";
 // Shown while the search box is empty, so the page isn't blank.
 const PLACEHOLDER_QUERY = "i";
 const DEBOUNCE_MS = 400;
+// The covers on screen when results arrive load at once; the rest load as
+// they are scrolled to.
+const EAGER_COVERS = 6;
 
 const Search = () => {
   usePageTitle("Search");
@@ -92,8 +95,13 @@ const Search = () => {
             <h2 className="py-4">No results for "{searchedQuery}"</h2>
           )}
           <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 py-4">
-            {albumList.map((album) => (
-              <AlbumCard key={album.id} album={album} source="home" />
+            {albumList.map((album, i) => (
+              <AlbumCard
+                key={album.id}
+                album={album}
+                source="home"
+                eager={i < EAGER_COVERS}
+              />
             ))}
           </Row>
         </>
