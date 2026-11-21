@@ -52,6 +52,39 @@ describe("PlayerControls", () => {
     expect(playedSrcs).toEqual([]);
   });
 
+  it("shows the controls disabled until a track is loaded", () => {
+    const { container } = renderWithProviders(<PlayerControls />);
+
+    expect(container.querySelector(".PlayerControls")).toHaveClass("no-track");
+    expect(container.querySelector("input.bar")).toBeDisabled();
+  });
+
+  it("does not move the position with the skip buttons when no track is loaded", () => {
+    const { store, container } = renderWithProviders(<PlayerControls />);
+    const forward = container.querySelector('path[d^="M11 3v4.119"]').closest("div");
+
+    fireEvent.click(forward);
+
+    expect(Number(store.getState().currentSong.currentTime)).toBe(0);
+    expect(Number(container.querySelector("input.bar").value)).toBe(0);
+  });
+
+  it("enables the controls once a track is loaded, and the skip button moves on 5 seconds", () => {
+    const { store, container } = renderWithProviders(<PlayerControls />, {
+      preloadedState: {
+        currentSong: currentSong({ track: makeTrack(1, "Loaded") }),
+      },
+    });
+    const forward = container.querySelector('path[d^="M11 3v4.119"]').closest("div");
+
+    expect(container.querySelector(".PlayerControls")).not.toHaveClass("no-track");
+    expect(container.querySelector("input.bar")).not.toBeDisabled();
+
+    fireEvent.click(forward);
+
+    expect(Number(store.getState().currentSong.currentTime)).toBe(5);
+  });
+
   it("applies the stored volume to the audio element", () => {
     const { container } = renderWithProviders(<PlayerControls />, {
       preloadedState: { currentSong: currentSong({ volume: 0.2 }) },

@@ -50,17 +50,19 @@
   padding: 0;
   margin-right: 16px;
 }
+/* The title takes the room left beside the cover and is cut with an
+   ellipsis: it must never wrap under the cover into the next row. */
 .Popular .table .table-row .track-title {
   color: white;
-  width: fit-content;
+  flex: 0 1 auto;
+  min-width: 0;
   padding: 0;
-  overflow-x: hidden;
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 .Popular .table .table-row .track-title span {
   font-weight: 500;
-  /* overflow-x: hidden;
-  text-overflow: ellipsis; */
 }
 
 .Popular .table .table-row .heart-icon {
@@ -91,23 +93,4 @@
 .Popular .see-more-btn:hover {
   color: white;
   user-select: none;
-}
-
-@media screen and (max-width: 667px) {
-  .Popular .table .table-row .track-title {
-    height: 24px;
-    width: 54vh;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-@media screen and (max-width: 568px) {
-  .Popular .table .table-row .track-title {
-    height: 24px;
-    width: 22vh;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 }

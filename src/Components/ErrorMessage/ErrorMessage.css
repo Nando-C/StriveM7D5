@@ -1,0 +1,18 @@
+.ErrorMessage .retry-btn {
+  margin: 0 0 1.5rem 1.5rem;
+  padding: 7px 15px;
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.ErrorMessage .retry-btn:hover,
+.ErrorMessage .retry-btn:focus-visible {
+  border-color: white;
+}

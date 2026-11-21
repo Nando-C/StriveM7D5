@@ -17,6 +17,11 @@ const axiosBaseQuery = async ({ url, params }, { signal }) => {
     if (data == null || data === "") {
       return { error: { status: 200, message: "Empty response" } };
     }
+    // So is anything that is not JSON, such as an HTML page: what a wrong
+    // backend address answers with.
+    if (typeof data !== "object") {
+      return { error: { status: 200, message: "Unexpected response" } };
+    }
     return { data };
   } catch (error) {
     return {

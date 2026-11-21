@@ -18,6 +18,10 @@ const PlayerControls = () => {
 
   const dispatch = useDispatch();
 
+  // Nothing to control until a track is loaded: the buttons and the seek bar
+  // are shown dimmed and do nothing.
+  const hasTrack = Boolean(track.preview);
+
   // references
   const audioPlayer = useRef(); // reference our audio component
   const progressBar = useRef(); // reference our progress bar
@@ -61,10 +65,8 @@ const PlayerControls = () => {
   useEffect(() => () => cancelAnimationFrame(animationRef.current), []);
 
   const togglePlayPause = () => {
-    if (track.preview) {
-      const prevValue = isPlaying;
-      dispatch(setIsPlaying(!prevValue));
-    }
+    if (!hasTrack) return;
+    dispatch(setIsPlaying(!isPlaying));
   };
 
   const whilePlaying = () => {
@@ -95,18 +97,24 @@ const PlayerControls = () => {
   };
 
   const backfive = () => {
+    if (!hasTrack) return;
     progressBar.current.value = parseInt(progressBar.current.value) - 5;
     changeRange();
   };
 
   const forwardfive = () => {
+    if (!hasTrack) return;
     progressBar.current.value = parseInt(progressBar.current.value) + 5;
     changeRange();
   };
 
   return (
     <>
-      <Row className="PlayerControls flex-column justify-content-center align-items-center">
+      <Row
+        className={`PlayerControls flex-column justify-content-center align-items-center${
+          hasTrack ? "" : " no-track"
+        }`}
+      >
         <audio
           ref={audioPlayer}
           src={track?.preview}
@@ -193,6 +201,7 @@ const PlayerControls = () => {
                 ref={progressBar}
                 onChange={changeRange}
                 step="0.05"
+                disabled={!hasTrack}
               />
             </div>
           </Col>

@@ -1,0 +1,9 @@
+.NotFound p {
+  color: #b3b3b3;
+}
+
+.NotFound a {
+  color: white;
+  font-weight: 700;
+  text-decoration: underline;
+}
