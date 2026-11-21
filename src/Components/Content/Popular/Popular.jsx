@@ -2,6 +2,7 @@ import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetArtistTopTracksQuery } from "../../../redux/api/deezerApi";
 import { playOrToggle } from "../../../utils/playback";
+import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import "./Popular.css";
 
 const Popular = ({ artistId }) => {
@@ -9,6 +10,7 @@ const Popular = ({ artistId }) => {
     data: trackList,
     isLoading,
     isError,
+    refetch,
   } = useGetArtistTopTracksQuery(artistId);
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
@@ -26,9 +28,7 @@ const Popular = ({ artistId }) => {
   return (
     <>
       {isLoading && <h2 className="p-4">Loading...</h2>}
-      {isError && (
-        <h1 className="p-4">There was an error retrieving the information</h1>
-      )}
+      {isError && <ErrorMessage onRetry={refetch} />}
       {trackList && (
         <Row className="Popular mx-0">
           <h2>Popular</h2>
@@ -66,7 +66,7 @@ const Popular = ({ artistId }) => {
                   </div>
                 </Col>
                 <Col xs={9} md={7}>
-                  <Row xs="auto" className="align-items-center">
+                  <Row xs="auto" className="align-items-center flex-nowrap">
                     <Col className="img-container">
                       <Image fluid src={track.album.cover_small} />
                     </Col>

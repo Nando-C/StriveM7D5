@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { delay, http, HttpResponse } from "msw";
 import Search from "../Components/Search/Search";
@@ -157,5 +157,35 @@ describe("Search", () => {
 
     expect(await screen.findByText("Result for abba")).toBeInTheDocument();
     expect(screen.queryByText(ERROR)).not.toBeInTheDocument();
+  });
+});
+
+describe("Search: the form and an empty answer", () => {
+  it("does not submit the form on Enter, which would reload the app", async () => {
+    renderWithProviders(<Search />);
+    await screen.findByText("Result for i");
+
+    // fireEvent returns false when the handler prevented the default action.
+    expect(fireEvent.submit(input().closest("form"))).toBe(false);
+  });
+
+  it("says so when a query has no results", async () => {
+    server.use(
+      http.get(`${API}/search`, ({ request }) => {
+        const q = new URL(request.url).searchParams.get("q");
+        return HttpResponse.json({
+          data: q === "zzqq" ? [] : [makeTrack(1, `Result for ${q}`)],
+        });
+      })
+    );
+    const user = userEvent.setup();
+    renderWithProviders(<Search />);
+    await screen.findByText("Result for i");
+    expect(screen.queryByText(/No results/)).not.toBeInTheDocument();
+
+    await user.type(input(), "zzqq");
+
+    expect(await screen.findByText('No results for "zzqq"')).toBeInTheDocument();
+    expect(screen.queryByText("Result for i")).not.toBeInTheDocument();
   });
 });

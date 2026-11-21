@@ -9,6 +9,7 @@ import {
 } from "../../../redux/api/deezerApi";
 import Albums from "../Albums/Albums";
 import Popular from "../Popular/Popular";
+import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import "./Artist.css";
 
 const Artist = () => {
@@ -19,6 +20,7 @@ const Artist = () => {
     data: artistSelected,
     isLoading,
     isError,
+    refetch,
   } = useGetArtistQuery(artistId);
   const { data: topTracks } = useGetArtistTopTracksQuery(artistId);
   // Not read here: `Albums` shows them. Asking now starts the request with
@@ -43,9 +45,7 @@ const Artist = () => {
   return (
     <Container fluid className="Artist">
       {isLoading && <h2 className="p-4">Loading...</h2>}
-      {isError && (
-        <h1 className="p-4">There was an error retrieving the information</h1>
-      )}
+      {isError && <ErrorMessage onRetry={refetch} />}
       {artistSelected && (
         <>
           <Row className="banner">

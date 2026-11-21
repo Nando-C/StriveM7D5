@@ -92,3 +92,21 @@
 .PlayerControls span {
   font-size: 11px;
 }
+
+/* No track loaded: every control is dimmed and none reacts. */
+.PlayerControls.no-track .player-buttons div {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.PlayerControls.no-track .bar {
+  opacity: 0.4;
+}
+
+.PlayerControls.no-track .bar::-webkit-slider-thumb {
+  visibility: hidden;
+}
+
+.PlayerControls.no-track .bar::-moz-range-thumb {
+  visibility: hidden;
+}

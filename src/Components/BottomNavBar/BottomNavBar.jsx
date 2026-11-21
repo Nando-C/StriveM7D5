@@ -12,9 +12,8 @@ const BottomNavBar = () => {
         <Nav
           className="w-100 justify-content-around"
           variant="pills"
-          defaultActiveKey="/home"
         >
-          <NavLink eventKey="home" className="d-flex nav-link" to="/home">
+          <NavLink end className="d-flex nav-link" to="/">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -47,7 +46,7 @@ const BottomNavBar = () => {
                 </small>
               </span> */}
           </NavLink>
-          <NavLink eventKey="search" className="d-flex nav-link" to="/search">
+          <NavLink className="d-flex nav-link" to="/search">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -81,7 +80,7 @@ const BottomNavBar = () => {
                 </small>
               </span> */}
           </NavLink>
-          <NavLink eventKey="library" className="d-flex nav-link" to="/library">
+          <NavLink className="d-flex nav-link" to="/library">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"

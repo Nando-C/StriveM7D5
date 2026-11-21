@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { useSearchQuery } from "../../redux/api/deezerApi";
 import AlbumCard from "../Content/AlbumCard/AlbumCard";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import "./Search.css";
 
 // Shown while the search box is empty, so the page isn't blank.
@@ -33,6 +34,7 @@ const Search = () => {
     isLoading,
     isFetching,
     isError,
+    refetch,
   } = useSearchQuery(searchedQuery || PLACEHOLDER_QUERY);
 
   // After a failed search, `data` still holds the results of some earlier
@@ -48,7 +50,8 @@ const Search = () => {
     <Container className="Search">
       <Row className="row-form">
         <Col sm={9} className="form-container">
-          <Form>
+          {/* Enter must not submit the form: that reloads the whole app. */}
+          <Form onSubmit={(e) => e.preventDefault()}>
             <Form.Control
               placeholder="Artists, songs, or podcasts"
               value={query}
@@ -72,15 +75,18 @@ const Search = () => {
         </Col>
       </Row>
       {showLoading && <h2 className="p-4">Loading...</h2>}
-      {isError && (
-        <h1 className="p-4">There was an error retrieving the information</h1>
-      )}
+      {isError && <ErrorMessage onRetry={refetch} />}
       {!showLoading && !isError && (
         <>
           {trimmedQuery === "" && (
             <Row className="pt-3">
               <h2>Explore</h2>
             </Row>
+          )}
+          {/* Only once the answer for the typed query is in: while it loads,
+              the list on screen still belongs to the query before it. */}
+          {!isFetching && searchedQuery !== "" && albumList.length === 0 && (
+            <h2 className="py-4">No results for "{searchedQuery}"</h2>
           )}
           <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 py-4">
             {albumList.map((album) => (

@@ -7,7 +7,7 @@ const SideNavBar = () => {
     <Container className="SideNavBar d-none d-sm-block" fluid>
       <Row className="d-column pt-4">
         <Col className="pb-2">
-          <Link to="/home">
+          <Link to="/">
             <svg viewBox="0 0 1134 340" className="spotify-logo pl-2">
               <title>Spotify</title>
               <path
@@ -19,10 +19,9 @@ const SideNavBar = () => {
         </Col>
         <Nav
           variant="pills"
-          defaultActiveKey="home"
           className="px-2 flex-column w-100"
         >
-          <NavLink eventKey="home" className="d-flex nav-link" to="/home">
+          <NavLink end className="d-flex nav-link" to="/">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -55,7 +54,7 @@ const SideNavBar = () => {
               </small>
             </span>
           </NavLink>
-          <NavLink eventKey="search" className="d-flex nav-link" to="/search">
+          <NavLink className="d-flex nav-link" to="/search">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"
@@ -89,7 +88,7 @@ const SideNavBar = () => {
               </small>
             </span>
           </NavLink>
-          <NavLink eventKey="library" className="d-flex nav-link" to="/library">
+          <NavLink className="d-flex nav-link" to="/library">
             <div className="home-icon">
               <svg
                 viewBox="0 0 512 512"

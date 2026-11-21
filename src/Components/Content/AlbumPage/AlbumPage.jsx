@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router";
 import { playOrToggle } from "../../../utils/playback";
 import { useGetAlbumQuery } from "../../../redux/api/deezerApi";
 import TrackList from "../../TrackList/TrackList";
+import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import "./AlbumPage.css";
 
 const AlbumPage = () => {
@@ -14,6 +15,7 @@ const AlbumPage = () => {
     data: albumSelected,
     isLoading,
     isError,
+    refetch,
   } = useGetAlbumQuery(albumId);
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
@@ -35,9 +37,7 @@ const AlbumPage = () => {
   return (
     <Container fluid className="AlbumPage">
       {isLoading && <h2 className="p-4">Loading...</h2>}
-      {isError && (
-        <h1 className="p-4">There was an error retrieving the information</h1>
-      )}
+      {isError && <ErrorMessage onRetry={refetch} />}
       {albumSelected && (
         <>
           <Row className="backgnd">
