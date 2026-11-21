@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 const Player = () => {
   const currentSong = useSelector((state) => state.currentSong.track);
   return (
-    <Container className="Player" fluid>
+    <Container as="section" aria-label="Player" className="Player" fluid>
       <Row className="px-3 h-100 align-items-center">
         <Col xs={7} sm={4} lg={3}>
           {currentSong.album?.id && <NowPlaying />}

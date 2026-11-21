@@ -13,7 +13,7 @@ const Content = () => {
   const { pathname } = useLocation();
 
   return (
-    <Container className="Content p-0" fluid>
+    <Container as="main" className="Content p-0" fluid>
       {/* Keyed by address: going to another page clears a caught error. */}
       <ErrorBoundary key={pathname}>
         <Routes>

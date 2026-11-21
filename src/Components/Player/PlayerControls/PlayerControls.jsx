@@ -125,7 +125,7 @@ const PlayerControls = () => {
           <Col className="d-flex justify-content-end p-0">
             <div className="d-none d-sm-flex">
               <svg
-                role="img"
+                aria-hidden="true"
                 height="16"
                 width="16"
                 viewBox="0 0 16 16"
@@ -137,30 +137,48 @@ const PlayerControls = () => {
                 ></path>
               </svg>
             </div>
-            <div onClick={backfive}>
-              <svg role="img" height="16" width="16" viewBox="0 0 16 16">
+            <button
+              type="button"
+              className="icon-btn"
+              aria-label="Back 5 seconds"
+              disabled={!hasTrack}
+              onClick={backfive}
+            >
+              <svg aria-hidden="true" height="16" width="16" viewBox="0 0 16 16">
                 <path
                   //   fill="#b3b3b3"
                   d="M13 2.5L5 7.119V3H3v10h2V8.881l8 4.619z"
                 ></path>
               </svg>
-            </div>
+            </button>
           </Col>
           <Col className="col-play d-flex justify-content-center p-0">
-            <div className="play" onClick={togglePlayPause}>
-              <svg role="img" height="16" width="16" viewBox="0 0 16 16">
+            <button
+              type="button"
+              className="play icon-btn"
+              aria-label={isPlaying ? "Pause" : "Play"}
+              disabled={!hasTrack}
+              onClick={togglePlayPause}
+            >
+              <svg aria-hidden="true" height="16" width="16" viewBox="0 0 16 16">
                 {isPlaying ? (
                   <path d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
                 ) : (
                   <path d="M4.018 14L14.41 8 4.018 2z"></path>
                 )}
               </svg>
-            </div>
+            </button>
           </Col>
           <Col className="d-flex justify-content-start p-0">
-            <div onClick={forwardfive}>
+            <button
+              type="button"
+              className="icon-btn"
+              aria-label="Forward 5 seconds"
+              disabled={!hasTrack}
+              onClick={forwardfive}
+            >
               <svg
-                role="img"
+                aria-hidden="true"
                 height="16"
                 width="16"
                 viewBox="0 0 16 16"
@@ -171,10 +189,10 @@ const PlayerControls = () => {
                   d="M11 3v4.119L3 2.5v11l8-4.619V13h2V3z"
                 ></path>
               </svg>
-            </div>
+            </button>
             <div className="d-none d-sm-flex">
               <svg
-                role="img"
+                aria-hidden="true"
                 height="16"
                 width="16"
                 viewBox="0 0 16 16"
@@ -197,6 +215,7 @@ const PlayerControls = () => {
               <input
                 type="range"
                 className="bar"
+                aria-label="Seek"
                 defaultValue="0"
                 ref={progressBar}
                 onChange={changeRange}

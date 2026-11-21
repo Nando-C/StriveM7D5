@@ -10,7 +10,8 @@
   gap: 8px;
 }
 
-.PlayerControls .player-buttons div {
+.PlayerControls .player-buttons div,
+.PlayerControls .player-buttons button {
   height: 32px;
   width: 32px;
   display: flex;
@@ -19,7 +20,8 @@
   fill: #b3b3b3;
 }
 
-.PlayerControls .player-buttons div:hover {
+.PlayerControls .player-buttons div:hover,
+.PlayerControls .player-buttons button:hover {
   fill: white;
 }
 
@@ -94,7 +96,8 @@
 }
 
 /* No track loaded: every control is dimmed and none reacts. */
-.PlayerControls.no-track .player-buttons div {
+.PlayerControls.no-track .player-buttons div,
+.PlayerControls.no-track .player-buttons button {
   opacity: 0.4;
   pointer-events: none;
 }
@@ -109,4 +112,10 @@
 
 .PlayerControls.no-track .bar::-moz-range-thumb {
   visibility: hidden;
+}
+
+/* The bar removes the browser's outline, so keyboard focus is drawn here. */
+.PlayerControls .bar:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 6px;
 }

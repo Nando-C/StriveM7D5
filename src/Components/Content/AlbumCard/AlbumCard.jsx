@@ -22,6 +22,8 @@ const AlbumCard = (props) => {
       <Card>
         <Card.Body>
           <div className="img-container">
+            {/* The title below links to the same album, so this link is
+                kept out of the tab order and away from screen readers. */}
             <Link
               to={
                 "/Album/" +
@@ -29,16 +31,23 @@ const AlbumCard = (props) => {
                   ? props.album.album.id
                   : props.album.id)
               }
+              aria-hidden="true"
+              tabIndex={-1}
             >
               <Card.Img
                 src={props.album.cover_big || props.album.album.cover_big}
+                alt=""
               />
             </Link>
             {/* Only a track can be played: on the artist page the card
                 shows an album, which has nothing to play. */}
             {props.source === "home" && (
-              <div
-                className="play-btn"
+              <button
+                type="button"
+                className="play-btn icon-btn"
+                aria-label={`${
+                  isPlaying && track.id === props.album.id ? "Pause" : "Play"
+                } ${props.album.title}`}
                 onClick={() => togglePlayPause(props.album.id)}
                 style={{
                   opacity:
@@ -46,11 +55,10 @@ const AlbumCard = (props) => {
                 }}
               >
                 <svg
+                  aria-hidden="true"
                   height="16"
-                  role="img"
                   width="16"
                   viewBox="0 0 16 16"
-                  aria-hidden="true"
                 >
                   {isPlaying && track.id === props.album.id ? (
                     <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
@@ -62,7 +70,7 @@ const AlbumCard = (props) => {
                   fill="white"
                 ></polygon> */}
                 </svg>
-              </div>
+              </button>
             )}
           </div>
           <Link

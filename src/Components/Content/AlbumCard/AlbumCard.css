@@ -32,9 +32,17 @@
   transition: opacity 0.3s, transform 0.4s cubic-bezier(0.3, 0, 0, 1);
 }
 
-.AlbumCard .card:hover .play-btn {
+.AlbumCard .card:hover .play-btn,
+.AlbumCard .card:focus-within .play-btn {
   opacity: 1;
   transform: translateY(-8px);
+}
+
+/* No hover on a touch screen: the button is always there to tap. */
+@media (hover: none) {
+  .AlbumCard .card .play-btn {
+    opacity: 1;
+  }
 }
 
 .AlbumCard .card:hover {

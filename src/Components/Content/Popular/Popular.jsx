@@ -34,26 +34,25 @@ const Popular = ({ artistId }) => {
           <h2>Popular</h2>
           <Container className="table" fluid>
             {trackList.map((track, i) => (
-              <Row key={track.id} className="table-row align-items-center">
-                <Col className="d-flex flex-row justify-content-center" xs={1}>
-                  <div
-                    className="track-number"
-                    style={{
-                      display:
-                        isPlaying && selectedTrack.id === track.id ? "none" : undefined,
-                    }}
-                  >
+              <Row
+                key={track.id}
+                className={`table-row align-items-center${
+                  isPlaying && selectedTrack.id === track.id ? " is-playing" : ""
+                }`}
+              >
+                <Col className="number-cell d-flex flex-row justify-content-center" xs={1}>
+                  <div className="track-number">
                     {i + 1}
                   </div>
-                  <div
-                    className="play-btn"
-                    style={{
-                      display:
-                        isPlaying && selectedTrack.id === track.id ? "flex" : undefined,
-                    }}
+                  <button
+                    type="button"
+                    className="play-btn icon-btn"
+                    aria-label={`${
+                      isPlaying && selectedTrack.id === track.id ? "Pause" : "Play"
+                    } ${track.title}`}
                     onClick={() => togglePlayPause(track)}
                   >
-                    <svg height="16" role="img" width="16" viewBox="0 0 16 16">
+                    <svg aria-hidden="true" height="16" width="16" viewBox="0 0 16 16">
                       {isPlaying && selectedTrack.id === track.id ? (
                         <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
                       ) : (
@@ -63,12 +62,12 @@ const Popular = ({ artistId }) => {
                         ></path>
                       )}
                     </svg>
-                  </div>
+                  </button>
                 </Col>
                 <Col xs={9} md={7}>
                   <Row xs="auto" className="align-items-center flex-nowrap">
                     <Col className="img-container">
-                      <Image fluid src={track.album.cover_small} />
+                      <Image fluid src={track.album.cover_small} alt="" />
                     </Col>
                     <Col className="track-title">
                       <span>{track.title}</span>
@@ -82,7 +81,7 @@ const Popular = ({ artistId }) => {
                   <Row xs="auto" className="align-items-center">
                     <Col className="heart-icon d-none d-md-flex">
                       <svg
-                        role="img"
+                        aria-hidden="true"
                         height="16"
                         width="16"
                         viewBox="0 0 16 16"

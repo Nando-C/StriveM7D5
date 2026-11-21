@@ -100,13 +100,14 @@ Vite reads it when it builds, so a deployment needs it set where the build runs.
 npm test
 ```
 
-The suite runs with Vitest, Testing Library and MSW in jsdom: 69 tests over the home page, search, the data layer, playback and the app shell. MSW answers every request at the network layer and fails a test that makes one it did not expect, so nothing reaches the real API and no `.env` is needed. It covers:
+The suite runs with Vitest, Testing Library and MSW in jsdom: 88 tests over the home page, search, the data layer, playback, the app shell and accessibility. MSW answers every request at the network layer and fails a test that makes one it did not expect, so nothing reaches the real API and no `.env` is needed. It covers:
 
 - **Home:** the loading, error and empty states, and trying again after a failure.
 - **Search:** the debounce, encoding, a late response to an earlier query, a repeated query answered from the cache, error states, recovery without older results coming back, a query with no results, and Enter not reloading the app.
 - **Data layer:** going back to an artist or an album sends no request, moving from one artist or album to another never shows the previous one's content, how long an unused result is kept, and a Deezer error, an empty body or a non-JSON body inside a successful response shows the error state.
 - **Player:** play and pause, changing track while one is playing, the end of a track, the single progress loop, the progress bar's fill, the play buttons of the artist and album pages, the one track shape from every page, and the controls staying disabled until a track is loaded.
 - **App shell:** the not-found page, the old `/home` address, a page that throws while rendering, and which nav item is highlighted.
+- **Accessibility:** every play control is a button found by its role and name ("Play Discovery", "Pause", "Forward 5 seconds"), the sliders and the search box are labelled, every image has alt text and every icon is hidden from screen readers, the page has main, navigation and player landmarks, and each page sets the tab title.
 
 ## About
 
