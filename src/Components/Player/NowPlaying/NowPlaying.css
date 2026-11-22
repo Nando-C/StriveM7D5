@@ -61,3 +61,8 @@ div.info-playing  a:hover {
 .pip-toggle:hover {
   fill: white;
 }
+
+.NowPlaying .load-failed {
+  color: #b3b3b3;
+  font-size: 11px;
+}

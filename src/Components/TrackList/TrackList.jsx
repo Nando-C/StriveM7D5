@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
-import { playOrToggle } from "../../utils/playback";
+import { NO_PREVIEW, playOrToggle } from "../../utils/playback";
 import "./TrackList.css";
 
 // `album` is the loaded album: the album page renders this once it has it.
@@ -60,6 +60,8 @@ const TrackList = ({ album }) => {
                   isPlaying && selectedTrack.id === track.id ? "Pause" : "Play"
                 } ${track.title}`}
                 onClick={() => togglePlayPause(track)}
+                disabled={!track.preview}
+                title={track.preview ? undefined : NO_PREVIEW}
               >
                 <svg aria-hidden="true" height="16" width="16" viewBox="0 0 16 16">
                   {isPlaying && selectedTrack.id === track.id ? (

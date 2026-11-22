@@ -12,5 +12,6 @@ afterEach(() => {
   cleanup();
   server.resetHandlers();
   resetRequestLogs();
+  localStorage.clear(); // the player remembers the last track there
 });
 afterAll(() => server.close());

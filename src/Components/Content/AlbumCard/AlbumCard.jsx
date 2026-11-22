@@ -1,7 +1,7 @@
 import { Card, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
-import { playOrToggle } from "../../../utils/playback";
+import { NO_PREVIEW, playOrToggle } from "../../../utils/playback";
 import "./AlbumCard.css";
 
 // How wide a card is at each of the grid's breakpoints, for `srcset`: the
@@ -74,6 +74,8 @@ const AlbumCard = (props) => {
                   isPlaying && track.id === props.album.id ? "Pause" : "Play"
                 } ${props.album.title}`}
                 onClick={() => togglePlayPause(props.album.id)}
+                disabled={!props.album.preview}
+                title={props.album.preview ? undefined : NO_PREVIEW}
                 style={{
                   opacity:
                     isPlaying && track.id === props.album.id ? 1 : undefined,

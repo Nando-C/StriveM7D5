@@ -32,7 +32,8 @@ const Artist = () => {
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const track = useSelector((state) => state.currentSong.track);
-  const firstSong = topTracks?.[0];
+  // The first track that can be played: Deezer has no preview for some.
+  const firstSong = topTracks?.find((candidate) => candidate.preview);
 
   // No track is loaded on a fresh page, so `track.artist` may be undefined.
   const isThisArtistLoaded =
