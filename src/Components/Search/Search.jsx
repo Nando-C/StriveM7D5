@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { useSearchQuery } from "../../redux/api/deezerApi";
+import { usePageTitle } from "../../utils/pageTitle";
 import AlbumCard from "../Content/AlbumCard/AlbumCard";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import "./Search.css";
@@ -8,8 +9,13 @@ import "./Search.css";
 // Shown while the search box is empty, so the page isn't blank.
 const PLACEHOLDER_QUERY = "i";
 const DEBOUNCE_MS = 400;
+// The covers on screen when results arrive load at once; the rest load as
+// they are scrolled to.
+const EAGER_COVERS = 6;
 
 const Search = () => {
+  usePageTitle("Search");
+
   const [query, setQuery] = useState("");
   // The query the results are for: it follows the box after a pause in typing.
   const [searchedQuery, setSearchedQuery] = useState("");
@@ -54,17 +60,17 @@ const Search = () => {
           <Form onSubmit={(e) => e.preventDefault()}>
             <Form.Control
               placeholder="Artists, songs, or podcasts"
+              aria-label="Search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
             <div className="search-icon">
               <span>
                 <svg
-                  role="img"
+                  aria-hidden="true"
                   height="24"
                   width="24"
                   // class="Svg-sc-1bi12j5-0 gSLhUO _pxQadHFO3vmadLs8OPr"
-                  aria-hidden="true"
                   viewBox="0 0 24 24"
                 >
                   <path d="M16.387 16.623A8.47 8.47 0 0019 10.5a8.5 8.5 0 10-8.5 8.5 8.454 8.454 0 005.125-1.73l4.401 5.153.76-.649-4.399-5.151zM10.5 18C6.364 18 3 14.636 3 10.5S6.364 3 10.5 3 18 6.364 18 10.5 14.636 18 10.5 18z"></path>
@@ -89,8 +95,13 @@ const Search = () => {
             <h2 className="py-4">No results for "{searchedQuery}"</h2>
           )}
           <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 py-4">
-            {albumList.map((album) => (
-              <AlbumCard key={album.id} album={album} source="home" />
+            {albumList.map((album, i) => (
+              <AlbumCard
+                key={album.id}
+                album={album}
+                source="home"
+                eager={i < EAGER_COVERS}
+              />
             ))}
           </Row>
         </>

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import Home from "../Components/Content/Home/Home";
-import { homeTracks } from "./fixtures";
+import { homeTracks, makeTrack } from "./fixtures";
 import { API, server } from "./server";
 import { renderWithProviders } from "./utils";
 
@@ -84,5 +84,32 @@ describe("Home", () => {
     expect(
       await screen.findByText("There was an error retrieving the information")
     ).toBeInTheDocument();
+  });
+
+  it("loads the first covers at once and the rest as they are scrolled to", async () => {
+    const tracks = Array.from({ length: 8 }, (_, i) => makeTrack(i + 1, `Song ${i + 1}`));
+    server.use(http.get(`${API}/search`, () => HttpResponse.json({ data: tracks })));
+    const { container } = renderWithProviders(<Home />);
+    await screen.findByText("Song 8");
+
+    const covers = [...container.querySelectorAll(".AlbumCard img")];
+    expect(covers.map((img) => img.getAttribute("loading"))).toEqual([
+      ...Array(6).fill("eager"),
+      "lazy",
+      "lazy",
+    ]);
+  });
+
+  it("offers the 250px and the 500px cover and lets the browser choose", async () => {
+    const { container } = renderWithProviders(<Home />);
+    await screen.findByText(homeTracks[0].title);
+
+    const cover = container.querySelector(".AlbumCard img");
+    expect(cover).toHaveAttribute("src", homeTracks[0].album.cover_big);
+    expect(cover).toHaveAttribute(
+      "srcset",
+      `${homeTracks[0].album.cover_medium} 250w, ${homeTracks[0].album.cover_big} 500w`
+    );
+    expect(cover.getAttribute("sizes")).toMatch(/100vw$/);
   });
 });

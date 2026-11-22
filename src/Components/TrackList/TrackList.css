@@ -38,8 +38,20 @@
   align-items: center;
 }
 
+/* The play button sits in the number's cell. It is always in the page, so
+   the keyboard can reach it, and shows in place of the number when the row
+   is hovered, focused or playing, and always on a touch screen. */
+.TrackList .table .number-cell {
+  position: relative;
+}
+
 .TrackList .table .play-btn {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  position: absolute;
+  opacity: 0;
 }
 
 .TrackList .table .table-row:hover {
@@ -48,13 +60,28 @@
   user-select: none;
 }
 
-.TrackList .table .table-row:hover .track-number {
+.TrackList .table .table-row:hover .track-number,
+.TrackList .table .table-row:focus-within .track-number,
+.TrackList .table .table-row.is-playing .track-number {
   display: none;
 }
 
-.TrackList .table .table-row:hover .play-btn {
-  display: flex;
-  align-self: center;
+.TrackList .table .table-row:hover .play-btn,
+.TrackList .table .table-row:focus-within .play-btn,
+.TrackList .table .table-row.is-playing .play-btn {
+  position: static;
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .TrackList .table .table-row .track-number {
+    display: none;
+  }
+
+  .TrackList .table .table-row .play-btn {
+    position: static;
+    opacity: 1;
+  }
 }
 
 .TrackList .table .table-row .track-text {

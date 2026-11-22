@@ -1,6 +1,7 @@
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { usePageTitle } from "../../../utils/pageTitle";
 import { playOrToggle } from "../../../utils/playback";
 import {
   useGetArtistAlbumsQuery,
@@ -27,6 +28,8 @@ const Artist = () => {
   // the other two, where `Albums` only mounts once the artist has arrived.
   useGetArtistAlbumsQuery(artistId);
 
+  usePageTitle(artistSelected?.name);
+
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const track = useSelector((state) => state.currentSong.track);
   const firstSong = topTracks?.[0];
@@ -49,7 +52,7 @@ const Artist = () => {
       {artistSelected && (
         <>
           <Row className="banner">
-            <Image src={artistSelected.picture_xl} />
+            <Image src={artistSelected.picture_xl} alt="" />
             <Row className="banner-text flex-column justify-content-end">
               <h1>{artistSelected.name}</h1>
               <h4>
@@ -60,13 +63,20 @@ const Artist = () => {
           </Row>
           <Row className="artist-content m-0 px-3">
             <Row xs="auto" className="options">
-              <Col className="play-btn" onClick={togglePlayPause}>
+              <Col
+                as="button"
+                type="button"
+                className="play-btn icon-btn"
+                aria-label={`${
+                  isPlaying && isThisArtistLoaded ? "Pause" : "Play"
+                } ${artistSelected.name}`}
+                onClick={togglePlayPause}
+              >
                 <svg
+                  aria-hidden="true"
                   height="32"
-                  role="img"
                   width="32"
                   viewBox="0 0 16 16"
-                  aria-hidden="true"
                 >
                   {isPlaying && isThisArtistLoaded ? (
                     <path fill="white" d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
@@ -81,7 +91,7 @@ const Artist = () => {
               </Col>
               <Col className="follow-btn">FOLLOW</Col>
               <Col className="ellipsis-btn">
-                <svg role="img" height="32" width="32" viewBox="0 0 32 32">
+                <svg aria-hidden="true" height="32" width="32" viewBox="0 0 32 32">
                   <path d="M5.998 13.999A2 2 0 105.999 18a2 2 0 00-.001-4zm10.001 0A2 2 0 1016 18a2 2 0 000-4zm10.001 0A2 2 0 1026.001 18 2 2 0 0026 14z"></path>
                 </svg>
               </Col>

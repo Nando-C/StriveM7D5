@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { fireEvent } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import PlayerControls from "../Components/Player/PlayerControls/PlayerControls";
 import TrackList from "../Components/TrackList/TrackList";
 import { calculateTime } from "../utils/audioPlayer";
@@ -28,10 +28,10 @@ const currentSong = (overrides) => ({
 describe("PlayerControls", () => {
   it("plays and pauses the loaded track from the player bar", () => {
     const track = makeTrack(1, "Loaded");
-    const { store, container } = renderWithProviders(<PlayerControls />, {
+    const { store } = renderWithProviders(<PlayerControls />, {
       preloadedState: { currentSong: currentSong({ track }) },
     });
-    const button = container.querySelector(".play");
+    const button = screen.getByRole("button", { name: "Play" });
 
     fireEvent.click(button);
     expect(store.getState().currentSong.isPlaying).toBe(true);
@@ -44,9 +44,9 @@ describe("PlayerControls", () => {
   });
 
   it("does nothing when no track is loaded", () => {
-    const { store, container } = renderWithProviders(<PlayerControls />);
+    const { store } = renderWithProviders(<PlayerControls />);
 
-    fireEvent.click(container.querySelector(".play"));
+    fireEvent.click(screen.getByRole("button", { name: "Play" }));
 
     expect(store.getState().currentSong.isPlaying).toBe(false);
     expect(playedSrcs).toEqual([]);
@@ -61,7 +61,7 @@ describe("PlayerControls", () => {
 
   it("does not move the position with the skip buttons when no track is loaded", () => {
     const { store, container } = renderWithProviders(<PlayerControls />);
-    const forward = container.querySelector('path[d^="M11 3v4.119"]').closest("div");
+    const forward = screen.getByRole("button", { name: "Forward 5 seconds" });
 
     fireEvent.click(forward);
 
@@ -75,7 +75,7 @@ describe("PlayerControls", () => {
         currentSong: currentSong({ track: makeTrack(1, "Loaded") }),
       },
     });
-    const forward = container.querySelector('path[d^="M11 3v4.119"]').closest("div");
+    const forward = screen.getByRole("button", { name: "Forward 5 seconds" });
 
     expect(container.querySelector(".PlayerControls")).not.toHaveClass("no-track");
     expect(container.querySelector("input.bar")).not.toBeDisabled();

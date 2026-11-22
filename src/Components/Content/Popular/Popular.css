@@ -25,8 +25,20 @@
   border: none;
 }
 
+/* The play button sits in the number's cell. It is always in the page, so
+   the keyboard can reach it, and shows in place of the number when the row
+   is hovered, focused or playing, and always on a touch screen. */
+.Popular .table .number-cell {
+  position: relative;
+}
+
 .Popular .table .play-btn {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  position: absolute;
+  opacity: 0;
 }
 
 .Popular .table .table-row:hover {
@@ -35,13 +47,28 @@
   user-select: none;
 }
 
-.Popular .table .table-row:hover .track-number {
+.Popular .table .table-row:hover .track-number,
+.Popular .table .table-row:focus-within .track-number,
+.Popular .table .table-row.is-playing .track-number {
   display: none;
 }
 
-.Popular .table .table-row:hover .play-btn {
-  display: flex;
-  align-self: center;
+.Popular .table .table-row:hover .play-btn,
+.Popular .table .table-row:focus-within .play-btn,
+.Popular .table .table-row.is-playing .play-btn {
+  position: static;
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .Popular .table .table-row .track-number {
+    display: none;
+  }
+
+  .Popular .table .table-row .play-btn {
+    position: static;
+    opacity: 1;
+  }
 }
 
 .Popular .table .table-row .img-container {

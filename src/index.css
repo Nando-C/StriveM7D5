@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* A <button> that shows only an icon: the browser's own button look removed.
+   The component's stylesheet gives it its size and colours. */
+.icon-btn {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.icon-btn:disabled {
+  cursor: default;
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}

@@ -5,6 +5,8 @@ import "./BottomNavBar.css";
 const BottomNavBar = () => {
   return (
     <Container
+      as="nav"
+      aria-label="Main"
       className="BottomNavBar d-flex flex-column justify-content-center d-sm-none"
       fluid
     >
@@ -13,9 +15,10 @@ const BottomNavBar = () => {
           className="w-100 justify-content-around"
           variant="pills"
         >
-          <NavLink end className="d-flex nav-link" to="/">
+          <NavLink end className="d-flex nav-link" to="/" aria-label="Home">
             <div className="home-icon">
               <svg
+                aria-hidden="true"
                 viewBox="0 0 512 512"
                 width="24"
                 height="24"
@@ -29,6 +32,7 @@ const BottomNavBar = () => {
             </div>
             <div className="home-active-icon">
               <svg
+                aria-hidden="true"
                 viewBox="0 0 512 512"
                 width="24"
                 height="24"
@@ -46,9 +50,14 @@ const BottomNavBar = () => {
                 </small>
               </span> */}
           </NavLink>
-          <NavLink className="d-flex nav-link" to="/search">
+          <NavLink
+            className="d-flex nav-link"
+            to="/search"
+            aria-label="Search"
+          >
             <div className="home-icon">
               <svg
+                aria-hidden="true"
                 viewBox="0 0 512 512"
                 width="24"
                 height="24"
@@ -63,6 +72,7 @@ const BottomNavBar = () => {
             </div>
             <div className="home-active-icon">
               <svg
+                aria-hidden="true"
                 viewBox="0 0 512 512"
                 width="24"
                 height="24"
@@ -80,9 +90,14 @@ const BottomNavBar = () => {
                 </small>
               </span> */}
           </NavLink>
-          <NavLink className="d-flex nav-link" to="/library">
+          <NavLink
+            className="d-flex nav-link"
+            to="/library"
+            aria-label="Your Library"
+          >
             <div className="home-icon">
               <svg
+                aria-hidden="true"
                 viewBox="0 0 512 512"
                 width="24"
                 height="24"
@@ -96,6 +111,7 @@ const BottomNavBar = () => {
             </div>
             <div className="home-active-icon">
               <svg
+                aria-hidden="true"
                 viewBox="0 0 512 512"
                 width="24"
                 height="24"
