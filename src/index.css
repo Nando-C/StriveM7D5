@@ -31,3 +31,8 @@ code {
   outline: 2px solid white;
   outline-offset: 2px;
 }
+
+/* A play button whose track has no preview. */
+.play-btn:disabled svg {
+  opacity: 0.35;
+}

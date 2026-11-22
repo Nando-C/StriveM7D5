@@ -1,11 +1,15 @@
 import { selectSong, setIsPlaying } from "../redux/slices/currentSong";
 import { toPlayableTrack } from "./track";
 
+// Shown on the play button of a track Deezer has no preview for.
+export const NO_PREVIEW = "No preview available";
+
 // The click behaviour shared by every play button outside the player bar.
 // - Same track as the one loaded: toggle play/pause.
 // - A different track: load it and play it. PlayerControls reacts to the
 //   track change itself, so this only has to say "playing".
-// - No track to play yet (its list is still loading): do nothing.
+// - No track to play yet (its list is still loading), or a track Deezer
+//   has no preview for: do nothing.
 //
 // `track` is the object as the API returned it; it is converted to the
 // player's own shape here, so no call site can forget to. Pass `album` when
@@ -18,7 +22,7 @@ export const playOrToggle = (
     dispatch(setIsPlaying(!isPlaying));
     return;
   }
-  if (!track) return;
+  if (!track?.preview) return;
   dispatch(selectSong(toPlayableTrack(track, album)));
   dispatch(setIsPlaying(true));
 };

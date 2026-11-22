@@ -5,6 +5,7 @@ import "./NowPlaying.css";
 
 const NowPlaying = () => {
   const currentSong = useSelector((state) => state.currentSong.track);
+  const loadFailed = useSelector((state) => state.currentSong.loadFailed);
 
   return (
     <Row
@@ -24,11 +25,17 @@ const NowPlaying = () => {
           <div>
             <div>{currentSong.title_short}</div>
           </div>
-          <div>
-            <Link to={`/Artist/${currentSong.artist.id}`}>
-              {currentSong.artist.name}
-            </Link>
-          </div>
+          {loadFailed ? (
+            <div className="load-failed" role="status">
+              This preview can&apos;t be played
+            </div>
+          ) : (
+            <div>
+              <Link to={`/Artist/${currentSong.artist.id}`}>
+                {currentSong.artist.name}
+              </Link>
+            </div>
+          )}
         </div>
         <div className="like-heart d-none d-sm-block">
           <svg aria-hidden="true" height="16" width="16" viewBox="0 0 16 16">

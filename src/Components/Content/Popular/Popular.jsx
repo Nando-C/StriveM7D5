@@ -1,7 +1,7 @@
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetArtistTopTracksQuery } from "../../../redux/api/deezerApi";
-import { playOrToggle } from "../../../utils/playback";
+import { NO_PREVIEW, playOrToggle } from "../../../utils/playback";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import "./Popular.css";
 
@@ -51,6 +51,8 @@ const Popular = ({ artistId }) => {
                       isPlaying && selectedTrack.id === track.id ? "Pause" : "Play"
                     } ${track.title}`}
                     onClick={() => togglePlayPause(track)}
+                    disabled={!track.preview}
+                    title={track.preview ? undefined : NO_PREVIEW}
                   >
                     <svg aria-hidden="true" height="16" width="16" viewBox="0 0 16 16">
                       {isPlaying && selectedTrack.id === track.id ? (

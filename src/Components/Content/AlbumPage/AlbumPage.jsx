@@ -23,7 +23,10 @@ const AlbumPage = () => {
 
   const isPlaying = useSelector((state) => state.currentSong.isPlaying);
   const track = useSelector((state) => state.currentSong.track);
-  const firstSong = albumSelected?.tracks?.data[0];
+  // The first track that can be played: Deezer has no preview for some.
+  const firstSong = albumSelected?.tracks?.data?.find(
+    (candidate) => candidate.preview,
+  );
 
   // No track is loaded on a fresh page, so `track.album` may be undefined.
   const isThisAlbumLoaded =

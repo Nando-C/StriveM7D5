@@ -1,11 +1,14 @@
 import { useEffect, useRef } from "react";
 import { Col, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import {
+  selectSong,
   setIsPlaying,
   setDuration,
   setCurrentTime,
+  setLoadFailed,
 } from "../../../redux/slices/currentSong";
+import { fetchFreshTrack } from "../../../utils/freshTrack";
 import { calculateTime } from "../../../utils/audioPlayer";
 import "./PlayerControls.css";
 
@@ -17,6 +20,7 @@ const PlayerControls = () => {
   const currentVolume = useSelector((state) => state.currentSong.volume);
 
   const dispatch = useDispatch();
+  const store = useStore();
 
   // Nothing to control until a track is loaded: the buttons and the seek bar
   // are shown dimmed and do nothing.
@@ -26,11 +30,40 @@ const PlayerControls = () => {
   const audioPlayer = useRef(); // reference our audio component
   const progressBar = useRef(); // reference our progress bar
   const animationRef = useRef(); // reference the animation of progress bar
+  const lastSecond = useRef(0); // the whole second last sent to the store
+  const refreshedFor = useRef(null); // the track a fresh link was fetched for
 
   const onLoadedMetadata = () => {
     const seconds = Math.floor(audioPlayer.current.duration);
     dispatch(setDuration(seconds));
     progressBar.current.max = seconds;
+    // The audio loads: a later failure of this track gets a fresh link again.
+    refreshedFor.current = null;
+  };
+
+  // The audio could not be loaded. The usual reason is that Deezer's preview
+  // links expire about 15 minutes after the API handed them out, and the
+  // page, or the remembered track, is older than that. Get a fresh link once
+  // and carry on; if that fails too, stop and say so.
+  const onAudioError = async () => {
+    const failed = track;
+    if (!failed.preview) return;
+    const giveUp = () => {
+      dispatch(setIsPlaying(false));
+      dispatch(setLoadFailed(true));
+    };
+    if (refreshedFor.current === failed.id) return giveUp();
+    refreshedFor.current = failed.id;
+
+    const fresh = await fetchFreshTrack(dispatch, {
+      id: failed.id,
+      albumId: failed.album.id,
+    });
+    // Another track was chosen while waiting: this one no longer matters.
+    if (store.getState().currentSong.track !== failed) return;
+    // Loading the fresh track is what starts it, if it was meant to play.
+    if (fresh && fresh.preview !== failed.preview) dispatch(selectSong(fresh));
+    else giveUp();
   };
 
   const play = () => {
@@ -85,7 +118,13 @@ const PlayerControls = () => {
   };
 
   const changePlayerCurrentTime = () => {
-    dispatch(setCurrentTime(progressBar.current.value));
+    // The store only shows whole seconds, so it is told once a second, not
+    // on every frame. The bar itself is moved on every frame, above.
+    const second = Math.floor(progressBar.current.value);
+    if (second !== lastSecond.current) {
+      lastSecond.current = second;
+      dispatch(setCurrentTime(second));
+    }
     // Read the bar's own max, not the duration from the store: this function
     // is called from the progress loop, which keeps the values of the render
     // it was started in (a duration of 0 for the first track played).
@@ -120,6 +159,7 @@ const PlayerControls = () => {
           src={track?.preview}
           preload="metadata"
           onLoadedMetadata={onLoadedMetadata}
+          onError={onAudioError}
         ></audio>
         <Row className="player-buttons w-100 mb-sm-2">
           <Col className="d-flex justify-content-end p-0">
